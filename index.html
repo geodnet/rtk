@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GEODNET RTK Portal - Centimeter-Accurate GNSS Positioning</title>
+  <meta name="description" content="Access next-generation RTK corrections or manage RTK user accounts with the GEODNET enterprise API. Find compatible hardware and explore coordinates systems.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  
+  <div id="app-container">
+    <!-- Sidebar Navigation -->
+    <aside id="sidebar">
+      <div class="logo-container">
+        <!-- High-Fidelity GEODNET Logo -->
+        <svg class="logo-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Orbit Ring -->
+          <ellipse cx="50" cy="50" rx="45" ry="12" stroke="url(#logo-grad)" stroke-width="3" transform="rotate(-30, 50, 50)" stroke-dasharray="150 20" />
+          <!-- Central Globe -->
+          <circle cx="50" cy="50" r="30" fill="#0A0E17" stroke="url(#logo-grad)" stroke-width="3" />
+          <!-- Longitude Lines -->
+          <path d="M50 20C58 30 58 70 50 80M50 20C42 30 42 70 50 80" stroke="url(#logo-grad)" stroke-width="1.5" opacity="0.7" />
+          <!-- Latitude Lines -->
+          <path d="M22 40C35 48 65 48 78 40M20 50C35 58 65 58 80 50" stroke="url(#logo-grad)" stroke-width="1.5" opacity="0.7" />
+          <line x1="50" y1="20" x2="50" y2="80" stroke="url(#logo-grad)" stroke-width="2" />
+          <line x1="20" y1="50" x2="80" y2="50" stroke="url(#logo-grad)" stroke-width="2" />
+          <!-- Pulse Node -->
+          <circle cx="65" cy="41" r="3.5" fill="#00F2FE" />
+          <circle cx="35" cy="59" r="3" fill="#9D4EDD" />
+          
+          <defs>
+            <linearGradient id="logo-grad" x1="0" y1="0" x2="100" y2="100">
+              <stop offset="0%" stop-color="#00F2FE" />
+              <stop offset="100%" stop-color="#9D4EDD" />
+            </linearGradient>
+          </defs>
+        </svg>
+        <span class="logo-text">GEODNET</span>
+      </div>
+      
+      <nav>
+        <a href="#dashboard" class="nav-link active" data-section="dashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="9" rx="1"></rect><rect x="14" y="3" width="7" height="5" rx="1"></rect><rect x="14" y="12" width="7" height="9" rx="1"></rect><rect x="3" y="16" width="7" height="5" rx="1"></rect></svg>
+          <span>Dashboard</span>
+        </a>
+        <a href="#coverage" class="nav-link" data-section="coverage">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          <span>Coverage Map</span>
+        </a>
+        <a href="#coordinates" class="nav-link" data-section="coordinates">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+          <span>Mountpoints & Datums</span>
+        </a>
+        <a href="#api" class="nav-link" data-section="api">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+          <span>Reseller API Center</span>
+        </a>
+        <a href="#kb" class="nav-link" data-section="kb">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+          <span>Knowledge Base</span>
+        </a>
+        <a href="#hardware" class="nav-link" data-section="hardware">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+          <span>Hardware Catalog</span>
+        </a>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <a href="https://rtk.geodnet.com/coverage/rtk-service" target="_blank" class="trial-btn">Start Free Trial</a>
+      </div>
+    </aside>
+    
+    <!-- Main Content Area -->
+    <main>
+      <!-- Shared Header -->
+      <header>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <!-- Menu Toggle Button for mobile -->
+          <button class="menu-toggle" id="menu-btn" aria-label="Toggle Navigation Menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+          <h2 class="page-title" id="current-page-title">Dashboard</h2>
+        </div>
+        <div class="header-actions">
+          <span class="badge badge-live">GEODNET CORS Network</span>
+        </div>
+      </header>
+      
+      <!-- Section: Dashboard -->
+      <section id="dashboard" class="page-section active">
+        <!-- Hero section -->
+        <div class="card hero-card" style="margin-bottom: 40px;">
+          <h1 class="hero-title">Centimeter-Level Accuracy Everywhere</h1>
+          <p class="hero-subtitle">GEODNET RTK provides triple-band, multi-constellation real-time kinematic corrections powered by the world's largest decentralized space weather station network.</p>
+          <div class="btn-group">
+            <a href="#coverage" class="btn btn-primary">Check Coverage map</a>
+            <a href="#api" class="btn btn-secondary">Reseller API Access</a>
+          </div>
+        </div>
+        
+        <!-- Live Stats Grid -->
+        <div class="dashboard-stats">
+          <div class="card stat-card">
+            <div class="stat-val">20,000+</div>
+            <div class="stat-lbl">Global Reference Stations</div>
+          </div>
+          <div class="card stat-card">
+            <div class="stat-val">150+</div>
+            <div class="stat-lbl">Countries Covered</div>
+          </div>
+          <div class="card stat-card">
+            <div class="stat-val">1-2 cm</div>
+            <div class="stat-lbl">Real-Time Precision</div>
+          </div>
+          <div class="card stat-card">
+            <div class="stat-val">99.9%</div>
+            <div class="stat-lbl">Service Uptime</div>
+          </div>
+        </div>
+        
+        <div class="dashboard-layout">
+          <!-- Main Details -->
+          <div class="grid-stack">
+            <div class="card">
+              <h3 class="section-header">Next-Generation CORS Correction Service</h3>
+              <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 24px;">
+                GEODNET is a Web3-incentivized Decentralized Physical Infrastructure Network (DePIN) providing dense, high-accuracy GNSS corrections. Using high-grade triple-frequency receivers, our nodes continuously monitor space weather and satellite signal distortions to broadcast precise differential correctives.
+              </p>
+              
+              <div class="features-grid">
+                <div class="feature-item">
+                  <div class="feature-icon-wrapper">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+                  </div>
+                  <div class="feature-content">
+                    <h4>Triple-Band Correction</h4>
+                    <p>Supports L1, L2, and L5 frequencies for instant integer ambiguity resolution (RTK Fix).</p>
+                  </div>
+                </div>
+                
+                <div class="feature-item">
+                  <div class="feature-icon-wrapper purple">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+                  </div>
+                  <div class="feature-content">
+                    <h4>Full-Constellation Tracking</h4>
+                    <p>Corrections for GPS, GLONASS, Galileo, BeiDou, QZSS, and IRNSS constellations.</p>
+                  </div>
+                </div>
+                
+                <div class="feature-item">
+                  <div class="feature-icon-wrapper">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                  </div>
+                  <div class="feature-content">
+                    <h4>Standard NTRIP & RTCM</h4>
+                    <p>Industry-standard NTRIP client compatibility with RTCM v3.2 MSM message formatting.</p>
+                  </div>
+                </div>
+                
+                <div class="feature-item">
+                  <div class="feature-icon-wrapper purple">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                  </div>
+                  <div class="feature-content">
+                    <h4>High-Density Coverage</h4>
+                    <p>Decentralized station deployment leads to short baselines for higher positioning reliability.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Side Panel / Quick Links -->
+          <div class="grid-stack">
+            <div class="card">
+              <h3 class="section-header" style="font-size: 1.15rem;">NTRIP Connection Settings</h3>
+              <div class="info-item" style="margin-top: 16px;">
+                <div class="info-item-title">Standard NTRIP Host</div>
+                <div class="info-item-code">rtk.geodnet.com</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">IP Address: 13.56.117.10</div>
+              </div>
+              <div class="info-item">
+                <div class="info-item-title">Standard Ports</div>
+                <div class="info-item-value"><code class="info-item-code">2101</code> (RTCM 3.2 MSM)</div>
+                <div class="info-item-value" style="margin-top: 8px;"><code class="info-item-code">3101</code> (Legacy/Alternative)</div>
+              </div>
+              <div class="info-item">
+                <div class="info-item-title">NTRIP Mountpoint</div>
+                <div class="info-item-value"><code class="info-item-code">AUTO</code> (Recommended)</div>
+              </div>
+              <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; border-top: 1px solid var(--border-color); padding-top: 12px; margin-top: 12px;">
+                <strong>Note:</strong> Rovers MUST transmit their position via NMEA GGA sentences to the caster to receive RTK differential streams.
+              </p>
+            </div>
+            
+            <div class="card" style="background: linear-gradient(135deg, rgba(157, 78, 221, 0.1) 0%, rgba(0, 242, 254, 0.05) 100%), var(--bg-card);">
+              <h3 class="section-header" style="font-size: 1.15rem;">Reseller Accounts</h3>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 16px;">
+                Are you an enterprise reseller? Build and manage user licenses instantly using our REST API. Query user logs, status, or create trial logins programmatically.
+              </p>
+              <a href="#api" class="btn btn-secondary" style="width: 100%; justify-content: center; font-size: 0.85rem;">Manage Accounts</a>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Section: Coverage Map -->
+      <section id="coverage" class="page-section">
+        <div class="section-header">
+          <p class="section-desc">Verify real-time base station coverage and density for your region. Zoom, search your coordinates, and locate nearby station clusters.</p>
+        </div>
+        
+        <div class="map-layout">
+          <!-- The Coverage map placeholder/visualizer -->
+          <div class="map-wrapper card" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 40px; background: radial-gradient(circle, rgba(0, 242, 254, 0.06) 0%, rgba(8, 11, 17, 0.9) 70%), var(--bg-card); position: relative; border-color: rgba(0, 242, 254, 0.15); height: auto; min-height: 550px;">
+            <!-- Pulse Radar Animation SVG -->
+            <div style="position: relative; width: 120px; height: 120px; margin-bottom: 24px; display: flex; align-items: center; justify-content: center;">
+              <div style="position: absolute; width: 100%; height: 100%; border: 2px solid var(--primary); border-radius: 50%; opacity: 0.2; animation: ping 3s infinite;"></div>
+              <div style="position: absolute; top: 15px; left: 15px; width: 90px; height: 90px; border: 2px solid var(--secondary); border-radius: 50%; opacity: 0.3; animation: ping 2s infinite;"></div>
+              <div style="position: absolute; top: 30px; left: 30px; width: 60px; height: 60px; border: 2px solid var(--primary); border-radius: 50%; opacity: 0.4; animation: ping 1.5s infinite;"></div>
+              <svg style="width: 40px; height: 40px; color: var(--primary); z-index: 2;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                <path d="M2 12h20"></path>
+              </svg>
+            </div>
+            <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 12px; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Interactive Coverage Map</h3>
+            <p style="color: var(--text-secondary); max-width: 500px; line-height: 1.6; margin-bottom: 24px; font-size: 0.95rem;">
+              Due to browser security protocols and frame security headers, the interactive Mapbox map must be viewed directly in its verified portal. Click below to launch the real-time GEODNET station density mapping.
+            </p>
+            <a href="https://rtk.geodnet.com/coverage" target="_blank" class="btn btn-primary" style="padding: 14px 28px; box-shadow: 0 0 20px rgba(0, 242, 254, 0.3); margin-bottom: 8px;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              Launch Interactive Live Map
+            </a>
+
+            <!-- Embedded Live Coverage Checker tool -->
+            <div style="width: 100%; border-top: 1px solid var(--border-color); margin-top: 32px; padding-top: 24px; text-align: left;">
+              <h4 style="font-size: 1.05rem; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--primary);"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                Estimated Regional Coverage Checker
+              </h4>
+              <div style="width: 100%; display: flex; gap: 12px; flex-wrap: wrap;">
+                <select id="coverage-checker-select" class="input-ctrl" style="flex-grow: 1; min-width: 200px; padding: 10px 14px; background-color: rgba(0,0,0,0.3); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary);">
+                  <option value="" disabled selected>Select your region / country...</option>
+                  <option value="usa">United States & North America</option>
+                  <option value="can">Canada</option>
+                  <option value="eur">Europe (Germany, France, UK, Italy, etc.)</option>
+                  <option value="tur">Turkey</option>
+                  <option value="egy">Egypt</option>
+                  <option value="nga">Nigeria</option>
+                  <option value="phl">Philippines</option>
+                  <option value="mex">Mexico</option>
+                  <option value="ken">Kenya</option>
+                  <option value="chn">China</option>
+                  <option value="jpn">Japan</option>
+                  <option value="idn">Indonesia</option>
+                  <option value="zaf">South Africa</option>
+                  <option value="twn">Taiwan</option>
+                  <option value="tha">Thailand</option>
+                  <option value="kor">South Korea</option>
+                  <option value="mys">Malaysia</option>
+                  <option value="are">United Arab Emirates</option>
+                  <option value="sam">South America (Brazil, Argentina, etc.)</option>
+                  <option value="aus">Australia & New Zealand</option>
+                </select>
+                <button class="btn btn-secondary" id="check-coverage-btn" style="padding: 10px 20px; white-space: nowrap;">Check Status</button>
+              </div>
+              <div id="coverage-checker-result" style="margin-top: 16px; display: none; padding: 16px; border-radius: 8px; border: 1px solid transparent; line-height: 1.5; font-size: 0.9rem; transition: var(--transition);">
+                <!-- Result displayed by app.js -->
+              </div>
+            </div>
+          </div>
+          
+          <!-- Map Sidebar Information -->
+          <div class="map-sidebar">
+            <div class="card">
+              <h3 class="section-header" style="font-size: 1.15rem; margin-bottom: 16px;">How Coverage Works</h3>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 16px;">
+                Our RTK caster serves rovers within 20km to 50km of any active base station. Yellow and blue regions on the map represent areas with high station density where multi-station VRS correction is optimized.
+              </p>
+              
+              <div class="info-item">
+                <div class="info-item-title">Regional NTRIP Casters</div>
+                <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 6px;">
+                  <div><span style="font-size: 0.75rem; color: var(--text-muted);">USA / Global</span><br><code class="info-item-code" style="margin: 0;">rtk.geodnet.com</code> <span style="font-size: 0.75rem; color: var(--text-muted);">(IP: 13.56.117.10)</span></div>
+                  <div><span style="font-size: 0.75rem; color: var(--text-muted);">Europe</span><br><code class="info-item-code" style="margin: 0;">eu.geodnet.com</code> <span style="font-size: 0.75rem; color: var(--text-muted);">(IP: 3.73.41.96)</span></div>
+                  <div><span style="font-size: 0.75rem; color: var(--text-muted);">South America</span><br><code class="info-item-code" style="margin: 0;">sa.geodnet.com</code> <span style="font-size: 0.75rem; color: var(--text-muted);">(IP: 18.230.73.64)</span></div>
+                  <div><span style="font-size: 0.75rem; color: var(--text-muted);">Australia</span><br><code class="info-item-code" style="margin: 0;">aus.geodnet.com</code> <span style="font-size: 0.75rem; color: var(--text-muted);">(IP: 54.206.56.130)</span></div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="card" style="border-color: rgba(16, 185, 129, 0.2);">
+              <h4 style="color: var(--success); display: flex; align-items: center; gap: 8px; font-size: 1rem; margin-bottom: 8px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                Station Compliance
+              </h4>
+              <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4;">
+                Every GEODNET station is vetted through space-weather criteria and calibrated antennas (NGS) ensuring survey-grade output.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Section: Mountpoints & Datums -->
+      <section id="coordinates" class="page-section">
+        <div class="section-header">
+          <p class="section-desc">Explore NTRIP mountpoints and regional datums supported by the GEODNET RTK network. Search by coordinate system name or country code.</p>
+        </div>
+        
+        <div class="card" style="margin-bottom: 32px;">
+          <h3 class="section-header" style="font-size: 1.25rem;">NTRIP Mountpoints (Table 1)</h3>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width: 50px;">#</th>
+                  <th style="width: 180px;">Mountpoint</th>
+                  <th>Details & Reference Frame</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td class="td-code">AUTO</td>
+                  <td><strong>Regional Geodetic Coordinate System (RGCS)</strong>: Dynamically maps base station coordinate output to matches local regional mapping datums (e.g. NAD83 in North America, ETRS89 in Europe). <span class="badge badge-live" style="display:inline-flex; vertical-align:middle; margin-left: 8px; padding: 2px 8px;">Recommended</span></td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td class="td-code">AUTO_ITRF2020</td>
+                  <td>ITRF2020 Geodetic Coordinate System at current epoch. Used for scientific operations and global tracking.</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td class="td-code">AUTO_ITRF2014</td>
+                  <td>ITRF2014 Geodetic Coordinate System at current epoch. Supports older standard global workflows.</td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td class="td-code">AUTO_WGS84</td>
+                  <td>WGS84(G2139) mapping in the middle of the current year (e.g., 2026.5 for 2026). Aligned with dynamic GNSS orbit data.</td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td class="td-code">BRDC</td>
+                  <td>Global Ephemeris raw data broadcast from satellites.</td>
+                </tr>
+                <tr>
+                  <td>6</td>
+                  <td class="td-code">NATRF2020</td>
+                  <td>Test RTK service mapped to the North American Terrestrial Reference Frame of 2020 (NATRF2020) (Active in North America only).</td>
+                </tr>
+                <tr>
+                  <td>7</td>
+                  <td class="td-code">SIRGAS2000(2026.5)</td>
+                  <td>Test RTK service for SIRGAS2000 coordinate frame in the middle of the current year (Active in South America only).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="search-filter-bar">
+            <h3 class="section-header" style="font-size: 1.25rem; margin-bottom: 0;">Regional Geodetic Coordinate Systems (Table 2)</h3>
+            <div class="search-input-wrapper">
+              <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="text" class="search-input" id="coord-search" placeholder="Search datums, region, country...">
+            </div>
+            <div class="filter-tabs" id="coord-filter-tabs">
+              <button class="filter-tab active" data-filter="all">All</button>
+              <button class="filter-tab" data-filter="namerica">N. America</button>
+              <button class="filter-tab" data-filter="europe">Europe</button>
+              <button class="filter-tab" data-filter="asiapac">Asia-Pac</button>
+              <button class="filter-tab" data-filter="others">Others</button>
+            </div>
+          </div>
+          
+          <div class="table-wrapper">
+            <table id="coord-table">
+              <thead>
+                <tr>
+                  <th style="width: 60px;">#</th>
+                  <th>Coordinate System Name</th>
+                  <th style="width: 120px;">Epoch</th>
+                  <th>Effective Regions</th>
+                  <th style="width: 100px;">Region Code</th>
+                </tr>
+              </thead>
+              <tbody id="coord-table-body">
+                <!-- Javascript will populate this -->
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="info-alert">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            <div>
+              <strong>AUTO Regional Selection:</strong> When using the <code>AUTO</code> mountpoint, the GEODNET RTK Caster automatically detects the country your rover is in from your uploaded NMEA GGA string. It then matches the location with the Regional Coordinate System specified in Table 2 above. If you are located in a region not listed (or in international waters), it defaults to <code>WGS84(G2139)</code>.
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Section: Reseller API Center -->
+      <section id="api" class="page-section">
+        <div class="section-header">
+          <p class="section-desc">Leverage GEODNET RTK API endpoints to manage accounts, passwords, trial periods, and fetch base station statuses. Compute MD5 request signatures live.</p>
+        </div>
+        
+        <div class="api-layout">
+          <!-- API Endpoints Menu -->
+          <div class="api-sidebar card" style="padding: 16px;">
+            <span class="api-sidebar-title">User Management</span>
+            <div class="api-menu" id="api-menu-list">
+              <!-- JS dynamically generates menu items -->
+            </div>
+          </div>
+          
+          <!-- API documentation details & playground -->
+          <div class="api-details-grid">
+            <!-- Details Card (Left) -->
+            <div class="card" id="api-docs-details">
+              <div class="api-endpoint-header">
+                <span class="badge" id="api-method-badge" style="display: inline-block;">POST</span>
+                <h3 id="api-title" style="margin-top: 8px;">Create account</h3>
+                <p id="api-desc" style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 6px;">Creates a new RTK NTRIP account under the reseller's billing plan.</p>
+              </div>
+              
+              <div class="api-route-block">
+                <span class="api-method-badge post">POST</span>
+                <span class="api-route-path" id="api-url">/api/v3/user/create</span>
+              </div>
+              
+              <h4 style="margin-top: 24px; margin-bottom: 12px; font-size: 1rem;">Request Parameters</h4>
+              <div class="table-wrapper">
+                <table class="api-table">
+                  <thead>
+                    <tr>
+                      <th>Parameter</th>
+                      <th>Type</th>
+                      <th>Req</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody id="api-params-body">
+                    <!-- Dynamic -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            
+            <!-- Snippets & Output (Right) -->
+            <div class="grid-stack">
+              <div class="card" style="padding: 0; overflow: hidden; border-radius: var(--radius);">
+                <div class="code-panel-header">
+                  <div class="code-panel-lang-selector">
+                    <button class="code-lang-btn active" data-lang="curl">cURL</button>
+                    <button class="code-lang-btn" data-lang="js">Javascript</button>
+                    <button class="code-lang-btn" data-lang="python">Python</button>
+                  </div>
+                  <button class="copy-btn" id="copy-snippet-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre class="code-wrapper"><code id="code-snippet-box">Loading...</code></pre>
+              </div>
+              
+              <div class="card" style="background-color: rgba(10, 14, 23, 0.4);">
+                <h4 style="margin-bottom: 12px; font-size: 1rem;">Response Example</h4>
+                <pre style="margin: 0; padding: 16px; background-color: rgba(0, 0, 0, 0.25); border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; overflow-x: auto; color: var(--text-secondary); border: 1px solid var(--border-color);"><code id="api-response-box">Loading...</code></pre>
+              </div>
+            </div>
+            
+            <!-- API Signature Generator Tool -->
+            <div class="card sig-generator">
+              <h3 class="section-header" style="font-size: 1.25rem;">Interactive API Signature Calculator</h3>
+              <p style="color: var(--text-secondary); font-size: 0.9rem;">The GEODNET API requires requests to be signed using an MD5 hash of your sorted parameters + your <code>appKey</code>. Compute your signatures and build JSON payloads instantly below.</p>
+              
+              <div class="sig-grid">
+                <!-- Inputs -->
+                <div>
+                  <div class="form-row-group">
+                    <div class="form-group">
+                      <label class="form-label">Application ID (appId)</label>
+                      <input type="text" class="input-ctrl" id="sig-appid" value="geodnet">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Application Key (appKey)</label>
+                      <input type="password" class="input-ctrl" id="sig-appkey" value="2916350764adb542" placeholder="Reseller Key">
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label class="form-label">Server Timestamp (time in ms)</label>
+                    <div class="input-with-btn">
+                      <input type="number" class="input-ctrl" id="sig-time" value="1718150400000">
+                      <button class="input-btn" id="sig-current-time-btn">Set Current</button>
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label class="form-label" style="display: flex; justify-content: space-between;">
+                      <span>Additional Request Parameters</span>
+                      <button class="input-btn" id="add-param-row-btn" style="padding: 2px 8px; font-size: 0.75rem;">+ Add Parameter</button>
+                    </label>
+                    <div class="param-grid" id="sig-params-grid">
+                      <!-- Parameter Rows Added Dynamically -->
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Computations & Outputs -->
+                <div class="sig-output-section">
+                  <div class="sig-output-card">
+                    <div class="sig-output-title">1. Sorted Keys Sequence</div>
+                    <div class="sig-output-value" id="sig-out-keys">-</div>
+                  </div>
+                  <div class="sig-output-card">
+                    <div class="sig-output-title">2. Value Concatenation String</div>
+                    <div class="sig-output-value" id="sig-out-concat">-</div>
+                  </div>
+                  <div class="sig-output-card">
+                    <div class="sig-output-title">3. Final String with appKey</div>
+                    <div class="sig-output-value" id="sig-out-final">-</div>
+                  </div>
+                  <div class="sig-output-card" style="border-color: rgba(0, 242, 254, 0.4); background-color: rgba(0, 242, 254, 0.02);">
+                    <div class="sig-output-title" style="color: var(--primary);">4. MD5 Hash Signature (sign)</div>
+                    <div class="sig-output-value highlight" id="sig-out-signature">-</div>
+                  </div>
+                  <div class="sig-output-card">
+                    <div class="sig-output-title">JSON Request Body</div>
+                    <pre style="margin: 0; padding: 8px; background-color: rgba(0,0,0,0.3); border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; overflow-x: auto; color: var(--text-secondary); max-height: 120px; border: 1px solid var(--border-color);"><code id="sig-out-json">{}</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Business Codes Appendix -->
+            <div class="card" style="grid-column: 1 / -1;">
+              <h3 class="section-header" style="font-size: 1.25rem;">Appendix: Status Code List</h3>
+              <div class="table-wrapper">
+                <table>
+                  <thead>
+                    <tr>
+                      <th style="width: 100px;">Code</th>
+                      <th>Status Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td class="td-code">1000</td><td style="color: var(--success); font-weight: 500;">Success (OK)</td></tr>
+                    <tr><td class="td-code">1001</td><td>Invalid appId</td></tr>
+                    <tr><td class="td-code">1002</td><td>appId is disabled</td></tr>
+                    <tr><td class="td-code">1003</td><td style="color: var(--warning);">sign error (check MD5 signature calculator)</td></tr>
+                    <tr><td class="td-code">1004</td><td>Username already exists in ecosystem</td></tr>
+                    <tr><td class="td-code">1005</td><td>Username does not exist</td></tr>
+                    <tr><td class="td-code">1006</td><td>The requested API is not authorized for this appId</td></tr>
+                    <tr><td class="td-code">1007</td><td>Expiration time format or range is invalid</td></tr>
+                    <tr><td class="td-code">1008</td><td>Station ID does not exist in caster database</td></tr>
+                    <tr><td class="td-code">1009</td><td>startTime must be within the last 6 months</td></tr>
+                    <tr><td class="td-code">1010</td><td>Time range cannot exceed 7 days</td></tr>
+                    <tr><td class="td-code">1011</td><td>startTime cannot be greater than endTime</td></tr>
+                    <tr><td class="td-code">1099</td><td style="color: var(--danger);">System error (please contact support)</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Section: Knowledge Base -->
+      <section id="kb" class="page-section">
+        <div class="section-header">
+          <p class="section-desc">Search and read through our technical articles on GNSS, RTK algorithms, NTRIP casters, RTCM standards, and Geodetic datums.</p>
+        </div>
+        
+        <div class="kb-grid">
+          <!-- Left categories sticky menu -->
+          <div class="card kb-sidebar-card">
+            <div class="search-input-wrapper" style="margin-bottom: 16px; max-width: 100%;">
+              <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="text" class="search-input" id="kb-search" placeholder="Search KB articles...">
+            </div>
+            <div class="kb-categories" id="kb-cats">
+              <a href="#kb-gnss" class="kb-cat-item active" data-cat="gnss">Global GNSS Systems</a>
+              <a href="#kb-rtk" class="kb-cat-item" data-cat="rtk">RTK Technology</a>
+              <a href="#kb-ntrip" class="kb-cat-item" data-cat="ntrip">NTRIP Broadcasting</a>
+              <a href="#kb-rtcm" class="kb-cat-item" data-cat="rtcm">RTCM Messages</a>
+              <a href="#kb-coordinate" class="kb-cat-item" data-cat="coord">Geodetic Coordinate Systems</a>
+              <a href="#kb-projected" class="kb-cat-item" data-cat="proj">Projected Coordinate Systems</a>
+            </div>
+          </div>
+          
+          <!-- Articles list -->
+          <div class="kb-articles" id="kb-articles-list">
+            <!-- Article: GNSS -->
+            <div class="card kb-article-card" id="kb-gnss">
+              <h3 class="kb-article-title">GNSS (Global Navigation Satellite System)</h3>
+              <div class="kb-content">
+                <p>Global Navigation Satellite System (GNSS) is the umbrella term for satellite constellations that provide autonomous geo-spatial positioning with global coverage. Standard GNSS positioning uses triangulation from at least four satellites to solve for latitude, longitude, altitude, and receiver clock bias.</p>
+                
+                <h4>Key Satellite Constellations</h4>
+                <ul>
+                  <li><strong>GPS (United States):</strong> Navstar system operating on L1 (1575.42 MHz), L2 (1227.60 MHz), and L5 (1176.45 MHz) carrier waves.</li>
+                  <li><strong>GLONASS (Russia):</strong> Mapped on FDMA (Frequency Division) and newer CDMA channels.</li>
+                  <li><strong>Galileo (European Union):</strong> Highly precise civilian-controlled system using E1, E5a, E5b, and E6 signals.</li>
+                  <li><strong>BeiDou (China):</strong> Chinese satellite constellation deploying B1, B2, and B3 frequencies.</li>
+                  <li><strong>Regional Systems:</strong> Includes QZSS (Japan) and IRNSS/NavIC (India) providing focused regional coverage.</li>
+                </ul>
+                
+                <h4>GNSS Error Sources</h4>
+                <p>Standard GNSS is prone to several errors that limit accuracy to 2–5 meters:</p>
+                <ol>
+                  <li><strong>Atmospheric Delays:</strong> Ionospheric scintillation and tropospheric water vapor slow down satellite signals.</li>
+                  <li><strong>Multipath Interference:</strong> Signals bounce off buildings, trees, or the ground before hitting the receiver antenna.</li>
+                  <li><strong>Ephemeris & Clock Errors:</strong> Minor drift in satellite atomic clocks or calculated orbit paths.</li>
+                </ol>
+                <p><em>GEODNET stations monitor these atmospheric and orbital drifts dynamically, enabling the correction engine to subtract them.</em></p>
+              </div>
+            </div>
+            
+            <!-- Article: RTK -->
+            <div class="card kb-article-card" id="kb-rtk">
+              <h3 class="kb-article-title">RTK (Real-Time Kinematic)</h3>
+              <div class="kb-content">
+                <p>Real-Time Kinematic (RTK) is a differential GNSS technique that improves positioning accuracy to centimeter-level. While standard GNSS measures the arrival time of the satellite code (pseudorange), RTK measures the phase of the carrier signal wave, which has a wavelength of about 19 centimeters.</p>
+                
+                <h4>Double-Differencing Technique</h4>
+                <p>RTK relies on a static base station with known coordinates and a moving rover. By subtracting base station measurements from rover measurements (double-differencing), common errors like satellite clock drift, ephemeris bias, and atmospheric delays are mathematically canceled out.</p>
+                
+                <h4>Carrier-Phase Ambiguity: Float vs. Fix</h4>
+                <ul>
+                  <li><strong>RTK Float:</strong> The receiver is calculating the integer number of wavelengths between the satellite and the antenna. At this stage, accuracy is decimeter-level (10–50 cm).</li>
+                  <li><strong>RTK Fix:</strong> The RTK algorithm resolves the carrier-phase ambiguity. The exact integer number of cycles is locked. The position shifts to centimeter-level accuracy (1–2 cm).</li>
+                </ul>
+                
+                <h4>Baseline Limitation</h4>
+                <p>Because atmospheric characteristics change over distance, the cancellation of errors decreases as the baseline (distance between base and rover) increases. Standard single-base RTK baseline is limited to about 20–30 km. GEODNET resolves this by providing a dense grid of base stations, facilitating short baselines globally.</p>
+              </div>
+            </div>
+            
+            <!-- Article: NTRIP -->
+            <div class="card kb-article-card" id="kb-ntrip">
+              <h3 class="kb-article-title">NTRIP (Networked Transport of RTCM via Internet Protocol)</h3>
+              <div class="kb-content">
+                <p>NTRIP stands for Networked Transport of RTCM via Internet Protocol. It is an application-level protocol designed for streaming differential GNSS corrections over mobile internet connections (cellular, Wi-Fi).</p>
+                
+                <h4>NTRIP Architecture Components</h4>
+                <ol>
+                  <li><strong>NTRIP Source:</strong> The GNSS base station (e.g. GEODNET receiver) which records satellite phase data and generates RTCM correction streams.</li>
+                  <li><strong>NTRIP Server:</strong> The transfer agent that pushes the RTCM data from the source to the caster.</li>
+                  <li><strong>NTRIP Caster:</strong> An internet server acting as an HTTP proxy. It manages user logins, holds a "Source Table" listing all available streams (mountpoints), and broadcasts corrections. GEODNET's main caster is located at <code>rtk.geodnet.com</code>.</li>
+                  <li><strong>NTRIP Client:</strong> The GNSS rover receiver (or autopilot software) that logs in to the caster, selects a mountpoint, and receives the RTCM correction stream.</li>
+                </ol>
+                
+                <h4>NMEA GGA Upload Requirement</h4>
+                <p>For smart casters (like GEODNET's <code>AUTO</code> mountpoint), the NTRIP client must upload its approximate position using an NMEA GGA string. The caster uses this location to select the closest base station or compute virtual correction data for the client's position.</p>
+              </div>
+            </div>
+            
+            <!-- Article: RTCM -->
+            <div class="card kb-article-card" id="kb-rtcm">
+              <h3 class="kb-article-title">RTCM Messages & Message Structure</h3>
+              <div class="kb-content">
+                <p>The Radio Technical Commission for Maritime Services (RTCM) defines the standard binary protocols for differential GNSS correction messages. The most widely used format is RTCM v3.2, which utilizes Multiple Signal Messages (MSM) to deliver full-constellation, multi-frequency carrier phase data.</p>
+                
+                <h4>Breakdown of GEODNET RTCM Messages</h4>
+                <div class="table-wrapper" style="margin-top: 12px; margin-bottom: 16px;">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>RTCM Message ID</th>
+                        <th>Standard Message Contents</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr><td class="td-code">1005</td><td>Station coordinates (antenna reference point coordinates in ECEF XYZ)</td></tr>
+                      <tr><td class="td-code">1008</td><td>Antenna descriptor and serial number (for phase center calibration)</td></tr>
+                      <tr><td class="td-code">1013</td><td>System parameters and leap second announcements</td></tr>
+                      <tr><td class="td-code">1074 / 1077</td><td>GPS MSM4 (Standard) / MSM7 (High-Resolution phase, SNR, pseudorange)</td></tr>
+                      <tr><td class="td-code">1084 / 1087</td><td>GLONASS MSM4 / MSM7 differential correction streams</td></tr>
+                      <tr><td class="td-code">1094 / 1097</td><td>Galileo MSM4 / MSM7 differential correction streams</td></tr>
+                      <tr><td class="td-code">1114 / 1117</td><td>QZSS MSM4 / MSM7 differential correction streams</td></tr>
+                      <tr><td class="td-code">1124 / 1127</td><td>BeiDou MSM4 / MSM7 differential correction streams</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>MSM7 messages contain higher precision phase range and Signal-to-Noise Ratio (SNR) data, yielding faster RTK fixing times for advanced rovers.</p>
+              </div>
+            </div>
+            
+            <!-- Article: Geodetic Coordinate Systems -->
+            <div class="card kb-article-card" id="kb-coordinate">
+              <h3 class="kb-article-title">Geodetic Coordinate Systems</h3>
+              <div class="kb-content">
+                <p>A Geodetic Coordinate System is a coordinate system used to locate points on the Earth's surface using latitude, longitude, and ellipsoidal height. It consists of a reference ellipsoid and a datum (datum defines the position and orientation of the ellipsoid relative to the Earth's center).</p>
+                
+                <h4>Global Datums vs. Tectonic Plates</h4>
+                <p>The Earth is composed of moving tectonic plates. Because of this, we have two types of coordinate frames:</p>
+                <ul>
+                  <li><strong>Global Dynamic Frames (e.g., ITRF2020, WGS84):</strong> These coordinates are Earth-Centered, Earth-Fixed (ECEF) and are anchored to the center of mass of the Earth. A physical base station's coordinates in ITRF will drift by 1–5 cm per year as its tectonic plate moves.</li>
+                  <li><strong>Regional Static Frames (e.g., NAD83 in USA, ETRS89 in Europe):</strong> These datums are locked to a specific tectonic plate. In the US, coordinates in NAD83 do not shift over time for local physical objects because the ellipsoid moves along with the North American plate.</li>
+                </ul>
+                
+                <h4>The Role of Epochs</h4>
+                <p>An epoch specifies the exact point in time a coordinate was recorded (e.g., Epoch 2010.0). Since global datums are dynamic, a coordinate is only complete if it specifies both the datum and the epoch (e.g., ITRF2014 at epoch 2026.35).</p>
+              </div>
+            </div>
+            
+            <!-- Article: Projected Coordinate Systems -->
+            <div class="card kb-article-card" id="kb-projected">
+              <h3 class="kb-article-title">Projected Coordinate Systems</h3>
+              <div class="kb-content">
+                <p>While geodetic coordinates represent points on a three-dimensional curved surface (ellipsoid), surveying and engineering drawings require a flat, two-dimensional surface. A Projected Coordinate System (PCS) projects ellipsoidal latitude and longitude coordinates onto a flat grid using plane coordinates (Northing and Easting, or X and Y).</p>
+                
+                <h4>Common Map Projections</h4>
+                <ol>
+                  <li><strong>Universal Transverse Mercator (UTM):</strong> Divides the Earth into 60 zones, each 6 degrees of longitude wide. It uses a conformal cylinder projection to minimize distortion of angles and shapes within each zone.</li>
+                  <li><strong>State Plane Coordinate System (SPCS):</strong> A local coordinate system used in the United States to reduce scale distortions in engineering. Individual states are divided into zones based on Lambert Conformal Conic or Transverse Mercator projections.</li>
+                </ol>
+                
+                <h4>RTK Mapping Workflows</h4>
+                <p>A typical surveying workflow involves receiving centimeter-accurate coordinates in a geodetic datum (via the GEODNET <code>AUTO</code> mountpoint), and then using a rover field controller (e.g., CAD/GIS software) to perform a coordinate projection into the local UTM grid or State Plane zone for building and construction designs.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Section: Hardware Catalog -->
+      <section id="hardware" class="page-section">
+        <div class="section-header">
+          <p class="section-desc">Browse GNSS RTK hardware compatible with the GEODNET CORS correction streams. Filter by integration level or manufacturer.</p>
+        </div>
+        
+        <!-- Hardware level tabs -->
+        <div class="hardware-tabs" id="hw-tabs">
+          <button class="hw-tab-btn active" data-tab="chip">GNSS RTK Chips</button>
+          <button class="hw-tab-btn" data-tab="module">GNSS RTK Modules</button>
+          <button class="hw-tab-btn" data-tab="product">End-Product Receivers</button>
+        </div>
+        
+        <!-- Search and filters -->
+        <div class="search-filter-bar">
+          <div class="search-input-wrapper">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" class="search-input" id="hw-search" placeholder="Search hardware by name, specs, brand...">
+          </div>
+        </div>
+        
+        <!-- Grid list of hardware -->
+        <div class="hardware-grid" id="hw-grid-list">
+          <!-- Populated by JavaScript -->
+        </div>
+      </section>
+      
+      <!-- Footer -->
+      <footer>
+        <div class="footer-container">
+          <div class="footer-left">
+            <svg class="logo-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 28px; height: 28px;">
+              <!-- Orbit Ring -->
+              <ellipse cx="50" cy="50" rx="45" ry="12" stroke="url(#logo-grad-footer)" stroke-width="3" transform="rotate(-30, 50, 50)" stroke-dasharray="150 20" />
+              <!-- Central Globe -->
+              <circle cx="50" cy="50" r="30" fill="#0A0E17" stroke="url(#logo-grad-footer)" stroke-width="3" />
+              <!-- Longitude Lines -->
+              <path d="M50 20C58 30 58 70 50 80M50 20C42 30 42 70 50 80" stroke="url(#logo-grad-footer)" stroke-width="1.5" opacity="0.7" />
+              <!-- Latitude Lines -->
+              <path d="M22 40C35 48 65 48 78 40M20 50C35 58 65 58 80 50" stroke="url(#logo-grad-footer)" stroke-width="1.5" opacity="0.7" />
+              <line x1="50" y1="20" x2="50" y2="80" stroke="url(#logo-grad-footer)" stroke-width="2" />
+              <line x1="20" y1="50" x2="80" y2="50" stroke="url(#logo-grad-footer)" stroke-width="2" />
+              <!-- Pulse Node -->
+              <circle cx="65" cy="41" r="3.5" fill="#00F2FE" />
+              <circle cx="35" cy="59" r="3" fill="#9D4EDD" />
+              
+              <defs>
+                <linearGradient id="logo-grad-footer" x1="0" y1="0" x2="100" y2="100">
+                  <stop offset="0%" stop-color="#00F2FE" />
+                  <stop offset="100%" stop-color="#9D4EDD" />
+                </linearGradient>
+              </defs>
+            </svg>
+            <span class="logo-text" style="font-size: 1rem;">GEODNET</span>
+          </div>
+          <div class="footer-copy">&copy; 2026 GEODNET RTK Network. All rights reserved.</div>
+          <div class="footer-links">
+            <a href="https://rtk.geodnet.com/coverage" target="_blank" class="footer-link">Official Map</a>
+            <a href="https://github.com/geodnet/GEODNET_API" target="_blank" class="footer-link">GitHub API</a>
+            <a href="https://rtk.geodnet.com/coverage/rtk-service" target="_blank" class="footer-link">RTK Service</a>
+          </div>
+        </div>
+      </footer>
+    </main>
+  </div>
+  
+  <!-- Overlay for mobile navigation drawer -->
+  <div class="overlay" id="nav-overlay"></div>
+  
+  <!-- App JavaScript logic -->
+  <script src="app.js"></script>
+</body>
+</html>
