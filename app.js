@@ -2726,7 +2726,29 @@ function initCoverageMap() {
     });
   }
 
-  // Get transition events by time range
+  let repoEvents = [];
+  let repoSummary = {};
+
+  // Load historical transition data stored in GitHub repository
+  async function loadRepoHistory() {
+    try {
+      const [eventsRes, summaryRes] = await Promise.allSettled([
+        fetch("data/station_events.json?v=" + Date.now()),
+        fetch("data/daily_summary.json?v=" + Date.now())
+      ]);
+
+      if (eventsRes.status === "fulfilled" && eventsRes.value.ok) {
+        repoEvents = await eventsRes.value.json();
+      }
+      if (summaryRes.status === "fulfilled" && summaryRes.value.ok) {
+        repoSummary = await summaryRes.value.json();
+      }
+    } catch (err) {
+      console.warn("Could not load repo history files:", err);
+    }
+  }
+
+  // Get transition events by time range (merging GitHub repo history + local session diffs)
   async function getDynamicsEvents(rangeKey) {
     const now = Date.now();
     let minTime = 0;
@@ -2738,31 +2760,42 @@ function initCoverageMap() {
       minTime = now - 30 * 24 * 60 * 60 * 1000;
     }
 
+    let localEvents = [];
     const db = await openDynamicsDB();
     if (!db) {
       try {
         const raw = localStorage.getItem("geodnet_dynamics_events");
-        const list = raw ? JSON.parse(raw) : [];
-        const filtered = minTime > 0 ? list.filter(evt => evt.timestamp >= minTime) : list;
-        filtered.sort((a, b) => b.timestamp - a.timestamp);
-        return filtered;
-      } catch (e) { return []; }
+        localEvents = raw ? JSON.parse(raw) : [];
+      } catch (e) { localEvents = []; }
+    } else {
+      localEvents = await new Promise((resolve) => {
+        try {
+          const tx = db.transaction(STORE_EVENTS, "readonly");
+          const store = tx.objectStore(STORE_EVENTS);
+          const req = store.getAll();
+          req.onsuccess = () => resolve(req.result || []);
+          req.onerror = () => resolve([]);
+        } catch (e) { resolve([]); }
+      });
     }
 
-    return new Promise((resolve) => {
-      try {
-        const tx = db.transaction(STORE_EVENTS, "readonly");
-        const store = tx.objectStore(STORE_EVENTS);
-        const req = store.getAll();
-        req.onsuccess = () => {
-          const all = req.result || [];
-          const filtered = minTime > 0 ? all.filter(e => e.timestamp >= minTime) : all;
-          filtered.sort((a, b) => b.timestamp - a.timestamp);
-          resolve(filtered);
-        };
-        req.onerror = () => resolve([]);
-      } catch (e) { resolve([]); }
+    // Merge and deduplicate events by unique key
+    const seen = new Set();
+    const merged = [];
+
+    [...localEvents, ...repoEvents].forEach(e => {
+      if (!e) return;
+      const key = `${e.name}_${e.timestamp}_${e.type}`;
+      if (!seen.has(key)) {
+        seen.add(key);
+        if (minTime === 0 || e.timestamp >= minTime) {
+          merged.push(e);
+        }
+      }
     });
+
+    merged.sort((a, b) => b.timestamp - a.timestamp);
+    return merged;
   }
 
   // State Diffing Engine: compare incoming station list against stored baseline
@@ -3008,6 +3041,11 @@ function initCoverageMap() {
     if (typeFilterEl) typeFilterEl.addEventListener("change", updateDynamicsDashboardUI);
     if (searchFilterEl) searchFilterEl.addEventListener("input", updateDynamicsDashboardUI);
   }
+
+  // Load historical transitions from GitHub repository
+  loadRepoHistory().then(() => {
+    updateDynamicsDashboardUI();
+  });
 
   // Initialize auto-sync timer
   initAutoSyncTimer();
