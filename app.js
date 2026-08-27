@@ -2046,7 +2046,7 @@ function initCoverageMap() {
                 ${stationSt}
               </span>
             </div>
-            ${isStationPpp ? `<div style="margin-bottom: 6px;"><span class="badge" style="background: rgba(217, 70, 239, 0.2); color: #E879F9; border: 1px solid #D946EF; font-size: 0.7rem; padding: 2px 6px; font-weight: 600;">Global PPP Station (G001–G120)</span></div>` : ''}
+            ${isStationPpp ? `<div style="margin-bottom: 6px;"><span class="badge" style="background: rgba(217, 70, 239, 0.2); color: #E879F9; border: 1px solid #D946EF; font-size: 0.7rem; padding: 2px 6px; font-weight: 600;">Global PPP Station</span></div>` : ''}
             ${station.stationId != null ? `<div style="font-size: 0.76rem; color: #9ca3af; margin-bottom: 6px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 4px;">RTCM Station ID: <strong style="color: var(--primary); font-family: 'JetBrains Mono', monospace;">#${station.stationId}</strong></div>` : `<div style="margin-bottom: 6px;"></div>`}
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 0.78rem; margin-bottom: 8px;">
               <div>
