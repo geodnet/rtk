@@ -1979,7 +1979,7 @@ function initCoverageMap() {
               ${st}
             </span>
           </div>
-          ${station.stationId != null ? `<div style="font-size: 0.76rem; color: #9ca3af; margin-bottom: 6px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 4px;">Station ID: <strong style="color: var(--primary); font-family: 'JetBrains Mono', monospace;">#${station.stationId}</strong></div>` : `<div style="margin-bottom: 6px;"></div>`}
+          ${station.stationId != null ? `<div style="font-size: 0.76rem; color: #9ca3af; margin-bottom: 6px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 4px;">RTCM Station ID: <strong style="color: var(--primary); font-family: 'JetBrains Mono', monospace;">#${station.stationId}</strong></div>` : `<div style="margin-bottom: 6px;"></div>`}
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 0.78rem; margin-bottom: 8px;">
             <div>
               <span style="color: #9ca3af; font-size: 0.7rem;">Latitude:</span><br>

@@ -9,7 +9,7 @@ A premium, high-fidelity Single Page Application (SPA) designed for **GEODNET RT
    - Direct integration with GEODNET's live coverage endpoint (`https://rtk.geodnet.com/api/v2/coverage_stations`) displaying ~20,000 global CORS base stations in real time.
    - High-performance Canvas rendering (60 FPS) with status filtering (`ACTIVE`, `ONLINE`, `OFFLINE`).
    - 20km / 40km RTK Range Radius buffer visualization.
-   - Real-time station search (by masked ID, city, or coordinates) and quick region navigation presets.
+   - Real-time station search (by RTCM Station ID, masked name, city, or coordinates) and quick region navigation presets.
    - **Station Telemetry Inspector**: Interactive popups and sidebar inspector with geodetic coordinates, NTRIP routing, and copy tools.
    - **RTK Baseline & Rover Distance Analyzer**: Calculates baseline distance in kilometers between rover coordinates and nearest base station with positioning precision ratings.
    - **Estimated Regional Coverage Checker**: Country-to-datum and regional caster mapping.
@@ -110,7 +110,7 @@ The portal integrates directly with GEODNET's public RTK Coverage API endpoint:
   - `30 – 50 km`: Extended Single-Base / VRS Fix (2.0 – 4.0 cm)
   - `> 50 km`: Long Baseline (> 50 km, PPP mode recommended)
 - **Multi-Basemap Switching**: Switch between Esri Dark Gray Canvas (Dark), Esri World Imagery (Satellite), and OpenStreetMap (Streets) — all 100% keyless and watermark-free.
-- **Fast Search & Region Navigation**: Search by station masked ID, coordinates, or city/country address via OpenStreetMap Nominatim geocoding.
+- **Fast Search & Region Navigation**: Search by RTCM Station ID, station masked name, coordinates, or city/country address via OpenStreetMap Nominatim geocoding.
 
 ---
 
