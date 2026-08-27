@@ -2374,18 +2374,31 @@ function initCoverageMap() {
       }
     }
 
-    // 2. Check if query is an RTCM stationId (e.g. "3320" or "#3320") or station name (e.g. "CA599" or "****CA599")
-    const cleanQuery = query.replace(/[\*#\s]/g, "").toUpperCase();
+    // 2. Check if query is an RTCM stationId, full unmasked station name, or masked station name
+    const cleanQuery = query.trim().replace(/^0x/i, "").replace(/[\*#\s\-_]/g, "").toUpperCase();
     
     // Check if query is numeric (RTCM Station ID, non-unique 12-bit integer)
-    const isNumericId = !isNaN(cleanQuery) && cleanQuery !== "";
+    const isNumericId = /^\d+$/.test(cleanQuery);
     let matchingStations = [];
 
     if (isNumericId) {
       matchingStations = allStations.filter(s => s.stationId != null && String(s.stationId) === cleanQuery);
     } else {
-      const byName = allStations.find(s => s.name && s.name.replace(/\*/g, "").toUpperCase().includes(cleanQuery));
-      if (byName) matchingStations = [byName];
+      // If user inputs full unmasked station name (e.g. 24D04CA59 / 9 chars), truncate to match the masked suffix (e.g. CA599 / last 5 chars)
+      const targetSuffix = cleanQuery.length > 5 ? cleanQuery.slice(-5) : cleanQuery;
+
+      matchingStations = allStations.filter(s => {
+        if (!s.name) return false;
+        const unmasked = s.name.replace(/\*/g, "").toUpperCase();
+        // Exact match with unmasked part
+        if (unmasked === cleanQuery) return true;
+        // Full unmasked name ending with the masked suffix
+        if (cleanQuery.endsWith(unmasked)) return true;
+        // Truncated suffix matching the masked suffix
+        if (unmasked === targetSuffix || unmasked.endsWith(targetSuffix)) return true;
+        // Substring match
+        return unmasked.includes(cleanQuery);
+      });
     }
 
     if (matchingStations.length > 0) {
@@ -2394,7 +2407,7 @@ function initCoverageMap() {
         map.flyTo([target.lat, target.lng], 13, { duration: 1.2 });
         inspectStation(target);
       } else {
-        // Multiple stations share this RTCM Station ID (12-bit broadcast ID reused globally)
+        // Multiple stations match (e.g. shared RTCM Station ID or partial name)
         // Find match closest to current map center
         const center = map.getCenter();
         let closest = matchingStations[0];
