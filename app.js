@@ -2374,17 +2374,20 @@ function initCoverageMap() {
       }
     }
 
-    // 2. Check if query is an RTCM stationId, full unmasked station name, or masked station name
-    const cleanQuery = query.trim().replace(/^0x/i, "").replace(/[\*#\s\-_]/g, "").toUpperCase();
+    // 2. Check if query is an RTCM stationId, full unmasked MAC/serial/station name, or masked station name
+    // Strip colons, dashes, spaces, *, #, and leading 0x (e.g. "38:18:2B:F7:5F:39", "38182BF75F39", "0x24D04CA59", "****CA599")
+    const cleanQuery = query.trim().replace(/^0x/i, "").replace(/[\*#\s\-:_]/g, "").toUpperCase();
     
-    // Check if query is numeric (RTCM Station ID, non-unique 12-bit integer)
-    const isNumericId = /^\d+$/.test(cleanQuery);
+    // Check if query is an RTCM Station ID (12-bit integer: 0 - 4095, max 4 digits)
+    const isRtcmNumericId = /^\d{1,4}$/.test(cleanQuery) && parseInt(cleanQuery, 10) <= 4095;
     let matchingStations = [];
 
-    if (isNumericId) {
+    if (isRtcmNumericId) {
       matchingStations = allStations.filter(s => s.stationId != null && String(s.stationId) === cleanQuery);
-    } else {
-      // If user inputs full unmasked station name (e.g. 24D04CA59 / 9 chars), truncate to match the masked suffix (e.g. CA599 / last 5 chars)
+    }
+
+    if (matchingStations.length === 0) {
+      // Hardware MAC/serial or full station name can be up to 12 chars (e.g. 38182BF75F39 -> 75F39, or 24D04CA59 -> CA599)
       const targetSuffix = cleanQuery.length > 5 ? cleanQuery.slice(-5) : cleanQuery;
 
       matchingStations = allStations.filter(s => {
@@ -2392,8 +2395,8 @@ function initCoverageMap() {
         const unmasked = s.name.replace(/\*/g, "").toUpperCase();
         // Exact match with unmasked part
         if (unmasked === cleanQuery) return true;
-        // Full unmasked name ending with the masked suffix
-        if (cleanQuery.endsWith(unmasked)) return true;
+        // Full unmasked MAC/serial or name containing the unmasked suffix (e.g. "38182BF75F39".includes("75F39"))
+        if (cleanQuery.endsWith(unmasked) || cleanQuery.includes(unmasked)) return true;
         // Truncated suffix matching the masked suffix
         if (unmasked === targetSuffix || unmasked.endsWith(targetSuffix)) return true;
         // Substring match
@@ -2402,27 +2405,46 @@ function initCoverageMap() {
     }
 
     if (matchingStations.length > 0) {
-      if (matchingStations.length === 1) {
-        const target = matchingStations[0];
-        map.flyTo([target.lat, target.lng], 13, { duration: 1.2 });
-        inspectStation(target);
-      } else {
-        // Multiple stations match (e.g. shared RTCM Station ID or partial name)
-        // Find match closest to current map center
+      // If multiple stations match, select the one closest to current map center
+      let target = matchingStations[0];
+      if (matchingStations.length > 1) {
         const center = map.getCenter();
-        let closest = matchingStations[0];
         let minDist = Infinity;
         matchingStations.forEach(st => {
           const dist = calculateDistanceKm(center.lat, center.lng, st.lat, st.lng);
           if (dist < minDist) {
             minDist = dist;
-            closest = st;
+            target = st;
           }
         });
-
-        map.flyTo([closest.lat, closest.lng], 12, { duration: 1.2 });
-        inspectStation(closest);
       }
+
+      // If the found station's status is currently filtered out (e.g. searching for an ONLINE/OFFLINE station when filter is ACTIVE),
+      // auto-switch the filter to ALL so the marker appears on screen
+      const currentFilter = statusFilterSelect ? statusFilterSelect.value : "ALL";
+      const targetStatus = (target.status || "OFFLINE").toUpperCase();
+      if (currentFilter !== "ALL" && currentFilter !== targetStatus) {
+        if (statusFilterSelect) statusFilterSelect.value = "ALL";
+        renderStations();
+      }
+
+      // Fly to station coordinates
+      map.flyTo([target.lat, target.lng], 13, { duration: 1.0 });
+      inspectStation(target);
+
+      // Open the marker's popup on the map
+      setTimeout(() => {
+        const m = stationMarkers.find(marker => {
+          if (marker.stationGroup) {
+            return marker.stationGroup.stations.some(s => s.name === target.name);
+          }
+          return marker.stationData && marker.stationData.name === target.name;
+        });
+        if (m) {
+          m.openPopup();
+        }
+      }, 400);
+
       return;
     }
 
