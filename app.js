@@ -1722,6 +1722,9 @@ function initCoverageMap() {
       // Render Stations & Delaunay Network on Map
       renderStations();
 
+      // Process Station Network Dynamics & State Transition Diffing
+      processStationDynamics(allStations);
+
       if (loader) {
         loaderText.textContent = `Rendered ${allStations.length.toLocaleString()} stations`;
         setTimeout(() => loader.classList.add("hidden"), 300);
@@ -2610,7 +2613,404 @@ function initCoverageMap() {
   if (rangeToggleSelect) rangeToggleSelect.addEventListener("change", renderStations);
 
   // 17. Refresh Button
-  if (refreshBtn) refreshBtn.addEventListener("click", fetchStationData);
+  if (refreshBtn) refreshBtn.addEventListener("click", () => {
+    fetchStationData();
+    nextSyncTime = Date.now() + AUTO_SYNC_INTERVAL_MS;
+  });
+
+  // ==========================================
+  // STATION NETWORK DYNAMICS & 10-MIN AUTO-SYNC
+  // ==========================================
+
+  const DB_NAME = "geodnet_rtk_dynamics_v1";
+  const STORE_SNAPSHOTS = "snapshots";
+  const STORE_EVENTS = "events";
+  const AUTO_SYNC_INTERVAL_MS = 10 * 60 * 1000; // 10 minutes
+
+  let nextSyncTime = Date.now() + AUTO_SYNC_INTERVAL_MS;
+  let syncCountdownTimer = null;
+  let autoSyncInterval = null;
+  let currentDynamicsRange = "day"; // 'day' | 'week' | 'month' | 'all'
+
+  // IndexedDB Helper
+  function openDynamicsDB() {
+    return new Promise((resolve) => {
+      if (!window.indexedDB) {
+        resolve(null);
+        return;
+      }
+      try {
+        const request = indexedDB.open(DB_NAME, 1);
+        request.onupgradeneeded = (e) => {
+          const db = e.target.result;
+          if (!db.objectStoreNames.contains(STORE_SNAPSHOTS)) {
+            db.createObjectStore(STORE_SNAPSHOTS, { keyPath: "id" });
+          }
+          if (!db.objectStoreNames.contains(STORE_EVENTS)) {
+            const eventStore = db.createObjectStore(STORE_EVENTS, { keyPath: "id", autoIncrement: true });
+            eventStore.createIndex("timestamp", "timestamp", { unique: false });
+            eventStore.createIndex("type", "type", { unique: false });
+          }
+        };
+        request.onsuccess = (e) => resolve(e.target.result);
+        request.onerror = () => resolve(null);
+      } catch (err) {
+        resolve(null);
+      }
+    });
+  }
+
+  // Get stored baseline snapshot
+  async function getStoredBaseline() {
+    const db = await openDynamicsDB();
+    if (!db) {
+      try {
+        const raw = localStorage.getItem("geodnet_station_baseline");
+        return raw ? JSON.parse(raw) : null;
+      } catch (e) { return null; }
+    }
+    return new Promise((resolve) => {
+      try {
+        const tx = db.transaction(STORE_SNAPSHOTS, "readonly");
+        const store = tx.objectStore(STORE_SNAPSHOTS);
+        const req = store.get("baseline");
+        req.onsuccess = () => resolve(req.result ? req.result.stations : null);
+        req.onerror = () => resolve(null);
+      } catch (e) { resolve(null); }
+    });
+  }
+
+  // Save baseline snapshot
+  async function saveStoredBaseline(stationsMap) {
+    const db = await openDynamicsDB();
+    const timestamp = Date.now();
+    if (!db) {
+      try {
+        localStorage.setItem("geodnet_station_baseline", JSON.stringify(stationsMap));
+      } catch (e) {}
+      return;
+    }
+    return new Promise((resolve) => {
+      try {
+        const tx = db.transaction(STORE_SNAPSHOTS, "readwrite");
+        const store = tx.objectStore(STORE_SNAPSHOTS);
+        store.put({ id: "baseline", timestamp, stations: stationsMap });
+        tx.oncomplete = () => resolve(true);
+        tx.onerror = () => resolve(false);
+      } catch (e) { resolve(false); }
+    });
+  }
+
+  // Record transition events
+  async function recordDynamicsEvents(newEvents) {
+    if (!newEvents || newEvents.length === 0) return;
+    const db = await openDynamicsDB();
+    if (!db) {
+      try {
+        const raw = localStorage.getItem("geodnet_dynamics_events");
+        const list = raw ? JSON.parse(raw) : [];
+        list.push(...newEvents);
+        if (list.length > 1000) list.splice(0, list.length - 1000);
+        localStorage.setItem("geodnet_dynamics_events", JSON.stringify(list));
+      } catch (e) {}
+      return;
+    }
+    return new Promise((resolve) => {
+      try {
+        const tx = db.transaction(STORE_EVENTS, "readwrite");
+        const store = tx.objectStore(STORE_EVENTS);
+        newEvents.forEach(evt => store.add(evt));
+        tx.oncomplete = () => resolve(true);
+        tx.onerror = () => resolve(false);
+      } catch (e) { resolve(false); }
+    });
+  }
+
+  // Get transition events by time range
+  async function getDynamicsEvents(rangeKey) {
+    const now = Date.now();
+    let minTime = 0;
+    if (rangeKey === "day") {
+      minTime = now - 24 * 60 * 60 * 1000;
+    } else if (rangeKey === "week") {
+      minTime = now - 7 * 24 * 60 * 60 * 1000;
+    } else if (rangeKey === "month") {
+      minTime = now - 30 * 24 * 60 * 60 * 1000;
+    }
+
+    const db = await openDynamicsDB();
+    if (!db) {
+      try {
+        const raw = localStorage.getItem("geodnet_dynamics_events");
+        const list = raw ? JSON.parse(raw) : [];
+        const filtered = minTime > 0 ? list.filter(evt => evt.timestamp >= minTime) : list;
+        filtered.sort((a, b) => b.timestamp - a.timestamp);
+        return filtered;
+      } catch (e) { return []; }
+    }
+
+    return new Promise((resolve) => {
+      try {
+        const tx = db.transaction(STORE_EVENTS, "readonly");
+        const store = tx.objectStore(STORE_EVENTS);
+        const req = store.getAll();
+        req.onsuccess = () => {
+          const all = req.result || [];
+          const filtered = minTime > 0 ? all.filter(e => e.timestamp >= minTime) : all;
+          filtered.sort((a, b) => b.timestamp - a.timestamp);
+          resolve(filtered);
+        };
+        req.onerror = () => resolve([]);
+      } catch (e) { resolve([]); }
+    });
+  }
+
+  // State Diffing Engine: compare incoming station list against stored baseline
+  async function processStationDynamics(currentStationsList) {
+    const currentMap = {};
+    currentStationsList.forEach(s => {
+      if (s && s.name) {
+        currentMap[s.name] = {
+          status: (s.status || "OFFLINE").toUpperCase(),
+          stationId: s.stationId,
+          lat: s.lat,
+          lng: s.lng
+        };
+      }
+    });
+
+    const baseline = await getStoredBaseline();
+    const timestamp = Date.now();
+
+    if (!baseline) {
+      // First run: save as initial baseline
+      await saveStoredBaseline(currentMap);
+      updateDynamicsDashboardUI();
+      return;
+    }
+
+    // Detect state transitions
+    const detectedEvents = [];
+
+    for (const [name, cur] of Object.entries(currentMap)) {
+      const prev = baseline[name];
+      if (!prev) {
+        // Newly deployed station
+        if (cur.status === "ACTIVE") {
+          detectedEvents.push({
+            timestamp,
+            type: "NEW_ACTIVE",
+            name,
+            stationId: cur.stationId,
+            lat: cur.lat,
+            lng: cur.lng,
+            fromStatus: "NONE",
+            toStatus: "ACTIVE"
+          });
+        } else if (cur.status === "ONLINE") {
+          detectedEvents.push({
+            timestamp,
+            type: "NEW_ONLINE",
+            name,
+            stationId: cur.stationId,
+            lat: cur.lat,
+            lng: cur.lng,
+            fromStatus: "NONE",
+            toStatus: "ONLINE"
+          });
+        }
+      } else if (prev.status !== cur.status) {
+        // Status changed
+        let eventType = "STATUS_CHANGED";
+        if (prev.status === "ACTIVE" && cur.status === "ONLINE") {
+          eventType = "ACTIVE_TO_ONLINE";
+        } else if (prev.status === "ACTIVE" && cur.status === "OFFLINE") {
+          eventType = "ACTIVE_TO_OFFLINE";
+        } else if ((prev.status === "ONLINE" || prev.status === "OFFLINE") && cur.status === "ACTIVE") {
+          eventType = "TO_ACTIVE";
+        } else if (prev.status === "OFFLINE" && cur.status === "ONLINE") {
+          eventType = "OFFLINE_TO_ONLINE";
+        } else if (prev.status === "ONLINE" && cur.status === "OFFLINE") {
+          eventType = "ONLINE_TO_OFFLINE";
+        }
+
+        detectedEvents.push({
+          timestamp,
+          type: eventType,
+          name,
+          stationId: cur.stationId != null ? cur.stationId : prev.stationId,
+          lat: cur.lat,
+          lng: cur.lng,
+          fromStatus: prev.status,
+          toStatus: cur.status
+        });
+      }
+    }
+
+    // Save detected events and update baseline
+    if (detectedEvents.length > 0) {
+      await recordDynamicsEvents(detectedEvents);
+    }
+    await saveStoredBaseline(currentMap);
+
+    // Refresh Dashboard UI
+    updateDynamicsDashboardUI();
+  }
+
+  // Render Dynamics Dashboard UI
+  async function updateDynamicsDashboardUI() {
+    const kpiNewActive = document.getElementById("kpi-new-active");
+    const kpiNewOnline = document.getElementById("kpi-new-online");
+    const kpiActiveToDegraded = document.getElementById("kpi-active-to-degraded");
+    const kpiPromotedToActive = document.getElementById("kpi-promoted-to-active");
+    const baselineCountEl = document.getElementById("dynamics-baseline-count");
+    const eventsTableBody = document.getElementById("dynamics-events-body");
+    const typeFilterEl = document.getElementById("dynamics-type-filter");
+    const searchFilterEl = document.getElementById("dynamics-search-filter");
+
+    if (baselineCountEl) {
+      baselineCountEl.textContent = allStations.length.toLocaleString();
+    }
+
+    const events = await getDynamicsEvents(currentDynamicsRange);
+
+    // Calculate KPI Counts
+    let newActiveCount = 0;
+    let newOnlineCount = 0;
+    let degradedCount = 0;
+    let promotedCount = 0;
+
+    events.forEach(e => {
+      if (e.type === "NEW_ACTIVE") newActiveCount++;
+      else if (e.type === "NEW_ONLINE") newOnlineCount++;
+      else if (e.type === "ACTIVE_TO_ONLINE" || e.type === "ACTIVE_TO_OFFLINE") degradedCount++;
+      else if (e.type === "TO_ACTIVE" || e.toStatus === "ACTIVE") promotedCount++;
+    });
+
+    if (kpiNewActive) kpiNewActive.textContent = newActiveCount.toLocaleString();
+    if (kpiNewOnline) kpiNewOnline.textContent = newOnlineCount.toLocaleString();
+    if (kpiActiveToDegraded) kpiActiveToDegraded.textContent = degradedCount.toLocaleString();
+    if (kpiPromotedToActive) kpiPromotedToActive.textContent = promotedCount.toLocaleString();
+
+    // Filter event table rows
+    if (!eventsTableBody) return;
+
+    const selectedType = typeFilterEl ? typeFilterEl.value : "ALL";
+    const searchQuery = (searchFilterEl ? searchFilterEl.value : "").trim().toUpperCase();
+
+    const filteredEvents = events.filter(e => {
+      if (selectedType !== "ALL") {
+        if (selectedType === "TO_ACTIVE" && !(e.type === "TO_ACTIVE" || e.toStatus === "ACTIVE")) return false;
+        if (selectedType !== "TO_ACTIVE" && e.type !== selectedType) return false;
+      }
+      if (searchQuery) {
+        const matchesName = (e.name || "").toUpperCase().includes(searchQuery);
+        const matchesId = e.stationId != null && String(e.stationId).includes(searchQuery);
+        if (!matchesName && !matchesId) return false;
+      }
+      return true;
+    });
+
+    if (filteredEvents.length === 0) {
+      eventsTableBody.innerHTML = `
+        <tr>
+          <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 24px;">
+            ${events.length === 0 ? "No state transitions recorded in this timeframe. Baseline actively monitored." : "No transitions match your search filter."}
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    eventsTableBody.innerHTML = filteredEvents.slice(0, 100).map(evt => {
+      const timeStr = new Date(evt.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + 
+                      ` <span style="font-size: 0.68rem; color: var(--text-muted);">(${new Date(evt.timestamp).toLocaleDateString([], { month: 'short', day: 'numeric' })})</span>`;
+      
+      let badgeHtml = "";
+      if (evt.type === "NEW_ACTIVE") {
+        badgeHtml = `<span class="badge badge-live" style="font-size: 0.7rem; padding: 2px 6px;">New Active (RTK Ready)</span>`;
+      } else if (evt.type === "NEW_ONLINE") {
+        badgeHtml = `<span class="badge" style="background: rgba(245, 158, 11, 0.15); color: var(--warning); font-size: 0.7rem; padding: 2px 6px;">New Online</span>`;
+      } else if (evt.type === "ACTIVE_TO_ONLINE") {
+        badgeHtml = `<span style="font-size: 0.72rem; color: var(--danger); font-weight: 600;">ACTIVE &rarr; <span style="color: var(--warning);">ONLINE</span></span>`;
+      } else if (evt.type === "ACTIVE_TO_OFFLINE") {
+        badgeHtml = `<span style="font-size: 0.72rem; color: var(--danger); font-weight: 600;">ACTIVE &rarr; OFFLINE</span>`;
+      } else if (evt.toStatus === "ACTIVE") {
+        badgeHtml = `<span style="font-size: 0.72rem; color: var(--success); font-weight: 600;">${evt.fromStatus} &rarr; <span style="color: var(--success);">ACTIVE (RTK Ready)</span></span>`;
+      } else {
+        badgeHtml = `<span style="font-size: 0.72rem; color: var(--text-secondary);">${evt.fromStatus} &rarr; ${evt.toStatus}</span>`;
+      }
+
+      return `
+        <tr>
+          <td style="font-size: 0.75rem; white-space: nowrap;">${timeStr}</td>
+          <td><strong style="font-family: 'JetBrains Mono', monospace; color: var(--text-primary);">${evt.name}</strong></td>
+          <td style="font-family: 'JetBrains Mono', monospace; color: var(--primary); font-size: 0.8rem;">${evt.stationId != null ? '#' + evt.stationId : '--'}</td>
+          <td>${badgeHtml}</td>
+          <td style="font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text-muted);">${evt.lat != null ? evt.lat.toFixed(4) + '°, ' + evt.lng.toFixed(4) + '°' : '--'}</td>
+          <td style="text-align: center;">
+            <button class="btn btn-secondary" onclick="window.inspectStationByName('${evt.name}')" style="padding: 2px 6px; font-size: 0.7rem;">View</button>
+          </td>
+        </tr>
+      `;
+    }).join("");
+  }
+
+  // 10-Minute Auto-Sync Countdown Timer
+  function initAutoSyncTimer() {
+    nextSyncTime = Date.now() + AUTO_SYNC_INTERVAL_MS;
+
+    if (syncCountdownTimer) clearInterval(syncCountdownTimer);
+    if (autoSyncInterval) clearInterval(autoSyncInterval);
+
+    const syncTextEl = document.getElementById("sync-timer-text");
+
+    syncCountdownTimer = setInterval(() => {
+      const remainingMs = Math.max(0, nextSyncTime - Date.now());
+      const totalSec = Math.floor(remainingMs / 1000);
+      const mins = Math.floor(totalSec / 60);
+      const secs = totalSec % 60;
+      const timeFormatted = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+
+      if (syncTextEl) {
+        syncTextEl.innerHTML = `Auto-Sync: 10m &bull; Next in <strong>${timeFormatted}</strong>`;
+      }
+    }, 1000);
+
+    autoSyncInterval = setInterval(() => {
+      fetchStationData();
+      nextSyncTime = Date.now() + AUTO_SYNC_INTERVAL_MS;
+    }, AUTO_SYNC_INTERVAL_MS);
+
+    // Manual Sync Now button listener
+    const manualSyncBtn = document.getElementById("manual-sync-now-btn");
+    if (manualSyncBtn) {
+      manualSyncBtn.addEventListener("click", () => {
+        fetchStationData();
+        nextSyncTime = Date.now() + AUTO_SYNC_INTERVAL_MS;
+      });
+    }
+
+    // Dynamics Time Filter Tabs
+    const timeTabs = document.querySelectorAll("#dynamics-time-tabs .filter-tab");
+    timeTabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        timeTabs.forEach(t => t.classList.remove("active"));
+        tab.classList.add("active");
+        currentDynamicsRange = tab.getAttribute("data-range") || "day";
+        updateDynamicsDashboardUI();
+      });
+    });
+
+    // Dynamics search and type filter listeners
+    const typeFilterEl = document.getElementById("dynamics-type-filter");
+    const searchFilterEl = document.getElementById("dynamics-search-filter");
+    if (typeFilterEl) typeFilterEl.addEventListener("change", updateDynamicsDashboardUI);
+    if (searchFilterEl) searchFilterEl.addEventListener("input", updateDynamicsDashboardUI);
+  }
+
+  // Initialize auto-sync timer
+  initAutoSyncTimer();
 
   // Initial Fetch
   fetchStationData();

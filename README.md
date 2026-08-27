@@ -106,6 +106,17 @@ The portal integrates directly with GEODNET's public RTK Coverage API endpoint:
 - **Dynamic Edge Lengths in KM (Detailed Zoom View)**:
   - When zoomed into a detailed view (**Zoom ≥ 9**), automatically displays distance badges in kilometers along visible Delaunay baseline edges.
   - Hides distance text when zoomed out to maintain a clean, uncluttered global map.
+- **10-Minute Background Auto-Sync & Dynamics Engine**:
+  - Automatically synchronizes live station data every 10 minutes with a real-time countdown status pill (`Auto-Sync: 10m • Next in mm:ss`).
+  - Employs an IndexedDB-backed state-diffing machine that tracks all network delta transitions over time.
+- **Station Network Dynamics & Transition Analytics**:
+  - Summarizes network evolution across selectable timeframes: **Today (24h)**, **This Week (7d)**, **This Month (30d)**, and **All Time**.
+  - 4 Key Transition Metrics:
+    - 🟢 **New Active Stations** (Newly deployed & RTK ready)
+    - 🟡 **New Online Stations** (Newly connected base stations)
+    - 🟠 **Active &rarr; Online / Offline** (Degraded or RTK disabled)
+    - 🔵 **Offline / Online &rarr; Active** (Recovered / promoted to RTK ready)
+  - Interactive, searchable transition events feed with 1-click **"View"** navigation to jump directly to and highlight transitioning stations on the map.
 - **Status & PPP Layer Filter**: Toggle between `All Stations`, `Active Only (RTK Ready)`, `Online Only`, `Offline Only`, and **`Global PPP Station`** to isolate GEODNET's intercontinental PPP tracker backbone.
 - **Dynamic Station Selection Highlighting**: Whenever a station is searched, clicked, or inspected, a glowing pulsating target ring highlights the exact station position on the map canvas.
 - **RTK Baseline Range Buffers**: Visualizes standard 20 km (Core RTK Fix) and 40 km (Extended RTK Fix) coverage radius circles around active reference stations.

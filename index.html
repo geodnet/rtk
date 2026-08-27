@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GEODNET RTK Portal - Centimeter-Accurate GNSS Positioning</title>
   <meta name="description" content="Access next-generation RTK corrections or manage RTK user accounts with the GEODNET enterprise API. Find compatible hardware and explore coordinates systems.">
-  <link rel="stylesheet" href="styles.css?v=1.3.0">
+  <link rel="stylesheet" href="styles.css?v=1.4.0">
   <!-- Leaflet CSS for RTK Coverage Map -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 </head>
@@ -577,6 +577,130 @@
             </div>
           </div>
         </div>
+
+        <!-- Station Network Dynamics & State Transition Analytics -->
+        <div class="card" style="margin-top: 24px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">
+            <div>
+              <h3 style="font-size: 1.25rem; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--primary);"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                Station Network Dynamics &amp; State Transitions
+              </h3>
+              <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">
+                Auto-syncs every 10 minutes. Tracking newly deployed stations, RTK promotions, and network state changes over time.
+              </p>
+            </div>
+
+            <!-- Sync Timer / Status Pill -->
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <div class="badge" id="sync-timer-badge" style="background: rgba(0, 242, 254, 0.1); color: var(--primary); border: 1px solid rgba(0, 242, 254, 0.25); font-size: 0.75rem; padding: 6px 12px; display: flex; align-items: center; gap: 6px;">
+                <span class="pulse-dot" style="width: 6px; height: 6px; background: var(--primary); border-radius: 50%;"></span>
+                <span id="sync-timer-text">Auto-Sync: 10m &bull; Next in 10:00</span>
+              </div>
+              <button id="manual-sync-now-btn" class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.78rem;">Sync Now</button>
+            </div>
+          </div>
+
+          <!-- Time Range Filter Tabs -->
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 16px;">
+            <div class="filter-tabs" id="dynamics-time-tabs">
+              <button class="filter-tab active" data-range="day">Today (24h)</button>
+              <button class="filter-tab" data-range="week">This Week (7d)</button>
+              <button class="filter-tab" data-range="month">This Month (30d)</button>
+              <button class="filter-tab" data-range="all">All Time</button>
+            </div>
+            
+            <div style="font-size: 0.75rem; color: var(--text-muted);" id="dynamics-snapshot-info">
+              Baseline Index: <strong style="color: var(--text-primary);" id="dynamics-baseline-count">--</strong> stations
+            </div>
+          </div>
+
+          <!-- 4 State Transition KPI Metric Cards -->
+          <div class="dynamics-kpi-grid">
+            <!-- 1. New Active Stations -->
+            <div class="dynamics-kpi-card" style="border-left: 3px solid var(--success);">
+              <div class="dynamics-kpi-header">
+                <span class="dynamics-kpi-title">New Active Stations</span>
+                <span class="badge badge-live" style="font-size: 0.65rem; padding: 2px 6px;">RTK Ready</span>
+              </div>
+              <div class="dynamics-kpi-value" id="kpi-new-active" style="color: var(--success);">0</div>
+              <div class="dynamics-kpi-subtitle">Newly deployed &amp; active in network</div>
+            </div>
+
+            <!-- 2. New Online Stations -->
+            <div class="dynamics-kpi-card" style="border-left: 3px solid var(--warning);">
+              <div class="dynamics-kpi-header">
+                <span class="dynamics-kpi-title">New Online Stations</span>
+                <span class="badge" style="font-size: 0.65rem; padding: 2px 6px; background: rgba(245, 158, 11, 0.15); color: var(--warning);">Connecting</span>
+              </div>
+              <div class="dynamics-kpi-value" id="kpi-new-online" style="color: var(--warning);">0</div>
+              <div class="dynamics-kpi-subtitle">Newly connected base stations</div>
+            </div>
+
+            <!-- 3. Active -> Online / Offline (Degraded) -->
+            <div class="dynamics-kpi-card" style="border-left: 3px solid var(--danger);">
+              <div class="dynamics-kpi-header">
+                <span class="dynamics-kpi-title">Active &rarr; Online / Offline</span>
+                <span class="badge" style="font-size: 0.65rem; padding: 2px 6px; background: rgba(239, 68, 68, 0.15); color: var(--danger);">Degraded</span>
+              </div>
+              <div class="dynamics-kpi-value" id="kpi-active-to-degraded" style="color: var(--danger);">0</div>
+              <div class="dynamics-kpi-subtitle">Switched from Active to Online/Offline</div>
+            </div>
+
+            <!-- 4. Offline / Online -> Active (Promoted / Recovered) -->
+            <div class="dynamics-kpi-card" style="border-left: 3px solid var(--primary);">
+              <div class="dynamics-kpi-header">
+                <span class="dynamics-kpi-title">Offline / Online &rarr; Active</span>
+                <span class="badge" style="font-size: 0.65rem; padding: 2px 6px; background: rgba(0, 242, 254, 0.15); color: var(--primary);">Recovered</span>
+              </div>
+              <div class="dynamics-kpi-value" id="kpi-promoted-to-active" style="color: var(--primary);">0</div>
+              <div class="dynamics-kpi-subtitle">Promoted / restored to RTK Ready</div>
+            </div>
+          </div>
+
+          <!-- Transition Events Feed Table -->
+          <div style="margin-top: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
+              <h4 style="font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin: 0;">
+                Recent Transition Events Log
+              </h4>
+              
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <input type="text" id="dynamics-search-filter" class="input-ctrl" placeholder="Filter by station or RTCM ID..." style="font-size: 0.78rem; padding: 4px 10px; width: 220px;">
+                <select id="dynamics-type-filter" class="input-ctrl" style="font-size: 0.78rem; padding: 4px 8px;">
+                  <option value="ALL">All Transition Types</option>
+                  <option value="NEW_ACTIVE">New Active Stations</option>
+                  <option value="NEW_ONLINE">New Online Stations</option>
+                  <option value="ACTIVE_TO_ONLINE">Active &rarr; Online</option>
+                  <option value="ACTIVE_TO_OFFLINE">Active &rarr; Offline</option>
+                  <option value="TO_ACTIVE">To Active (Recovered)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="table-wrapper" style="max-height: 320px; overflow-y: auto;">
+              <table id="dynamics-events-table">
+                <thead>
+                  <tr>
+                    <th style="width: 130px;">Time</th>
+                    <th>Station Name</th>
+                    <th style="width: 110px;">RTCM ID</th>
+                    <th>State Transition</th>
+                    <th>Coordinates</th>
+                    <th style="width: 70px; text-align: center;">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="dynamics-events-body">
+                  <tr>
+                    <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 24px;">
+                      Initializing state baseline... Next 10-minute sync will record live state transitions.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </section>
       
       <!-- Section: Mountpoints & Datums -->
@@ -1130,6 +1254,6 @@
   <script src="https://unpkg.com/delaunator@5.0.1/delaunator.min.js"></script>
   
   <!-- App JavaScript logic -->
-  <script src="app.js?v=1.3.0"></script>
+  <script src="app.js?v=1.4.0"></script>
 </body>
 </html>
