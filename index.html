@@ -6,6 +6,8 @@
   <title>GEODNET RTK Portal - Centimeter-Accurate GNSS Positioning</title>
   <meta name="description" content="Access next-generation RTK corrections or manage RTK user accounts with the GEODNET enterprise API. Find compatible hardware and explore coordinates systems.">
   <link rel="stylesheet" href="styles.css">
+  <!-- Leaflet CSS for RTK Coverage Map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 </head>
 <body>
   
@@ -213,41 +215,256 @@
       <!-- Section: Coverage Map -->
       <section id="coverage" class="page-section">
         <div class="section-header">
-          <p class="section-desc">Verify real-time base station coverage and density for your region. Zoom, search your coordinates, and locate nearby station clusters.</p>
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px;">
+            <div>
+              <h2 style="font-size: 1.75rem; font-weight: 700; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 6px;">RTK Base Station Coverage Map</h2>
+              <p class="section-desc">Live global CORS reference station network powered by <code style="color: var(--primary);">https://rtk.geodnet.com/api/v2/coverage_stations</code>. Pan, zoom, inspect stations, and analyze RTK baseline coverage.</p>
+            </div>
+            <div style="display: flex; gap: 10px; align-items: center;">
+              <button id="refresh-coverage-btn" class="btn btn-secondary" style="padding: 8px 16px; font-size: 0.85rem; display: flex; align-items: center; gap: 6px;" title="Fetch latest station data from API">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="refresh-spinner-icon"><path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                <span>Refresh API</span>
+              </button>
+              <div class="badge badge-live" style="padding: 6px 12px; font-size: 0.75rem;" id="api-status-badge">
+                <span class="pulse-dot" style="width: 6px; height: 6px; background: var(--primary); border-radius: 50%; display: inline-block; box-shadow: 0 0 8px var(--primary);"></span>
+                API Connected
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Station Network Statistics Bar -->
+        <div class="coverage-metrics-bar">
+          <div class="coverage-metric-card">
+            <div class="metric-icon-wrap" style="color: var(--primary);">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+            </div>
+            <div>
+              <div class="metric-val" id="stat-total-stations">Loading...</div>
+              <div class="metric-label">Total Global Stations</div>
+            </div>
+          </div>
+          <div class="coverage-metric-card">
+            <div class="metric-icon-wrap" style="color: var(--success);">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            </div>
+            <div>
+              <div class="metric-val" style="color: var(--success);" id="stat-active-stations">--</div>
+              <div class="metric-label">Active (RTK / VRS Ready)</div>
+            </div>
+          </div>
+          <div class="coverage-metric-card">
+            <div class="metric-icon-wrap" style="color: var(--warning);">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            </div>
+            <div>
+              <div class="metric-val" style="color: var(--warning);" id="stat-online-stations">--</div>
+              <div class="metric-label">Online (Connecting)</div>
+            </div>
+          </div>
+          <div class="coverage-metric-card">
+            <div class="metric-icon-wrap" style="color: var(--text-muted);">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
+            </div>
+            <div>
+              <div class="metric-val" style="color: var(--text-muted);" id="stat-offline-stations">--</div>
+              <div class="metric-label">Offline / Maintenance</div>
+            </div>
+          </div>
         </div>
         
         <div class="map-layout">
-          <!-- The Coverage map placeholder/visualizer -->
-          <div class="map-wrapper card" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 40px; background: radial-gradient(circle, rgba(0, 242, 254, 0.06) 0%, rgba(8, 11, 17, 0.9) 70%), var(--bg-card); position: relative; border-color: rgba(0, 242, 254, 0.15); height: auto; min-height: 550px;">
-            <!-- Pulse Radar Animation SVG -->
-            <div style="position: relative; width: 120px; height: 120px; margin-bottom: 24px; display: flex; align-items: center; justify-content: center;">
-              <div style="position: absolute; width: 100%; height: 100%; border: 2px solid var(--primary); border-radius: 50%; opacity: 0.2; animation: ping 3s infinite;"></div>
-              <div style="position: absolute; top: 15px; left: 15px; width: 90px; height: 90px; border: 2px solid var(--secondary); border-radius: 50%; opacity: 0.3; animation: ping 2s infinite;"></div>
-              <div style="position: absolute; top: 30px; left: 30px; width: 60px; height: 60px; border: 2px solid var(--primary); border-radius: 50%; opacity: 0.4; animation: ping 1.5s infinite;"></div>
-              <svg style="width: 40px; height: 40px; color: var(--primary); z-index: 2;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-                <path d="M2 12h20"></path>
-              </svg>
-            </div>
-            <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 12px; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Interactive Coverage Map</h3>
-            <p style="color: var(--text-secondary); max-width: 500px; line-height: 1.6; margin-bottom: 24px; font-size: 0.95rem;">
-              Due to browser security protocols and frame security headers, the interactive Mapbox map must be viewed directly in its verified portal. Click below to launch the real-time GEODNET station density mapping.
-            </p>
-            <a href="https://rtk.geodnet.com/coverage" target="_blank" class="btn btn-primary" style="padding: 14px 28px; box-shadow: 0 0 20px rgba(0, 242, 254, 0.3); margin-bottom: 8px;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-              Launch Interactive Live Map
-            </a>
+          <!-- Main Map Column -->
+          <div class="map-main-column">
+            <!-- Map Controls & Search Toolbar -->
+            <div class="map-toolbar card">
+              <div class="toolbar-row">
+                <!-- Search Input -->
+                <div class="search-input-group">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="search-icon"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                  <input type="text" id="map-search-input" placeholder="Search city, country, station ID (e.g. CA599), or lat,lng..." autocomplete="off">
+                  <button id="map-search-btn" class="btn btn-primary" style="padding: 6px 14px; font-size: 0.85rem;">Find</button>
+                  <button id="map-locate-btn" class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.85rem;" title="Locate My GPS Position">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  </button>
+                </div>
 
-            <!-- Embedded Live Coverage Checker tool -->
-            <div style="width: 100%; border-top: 1px solid var(--border-color); margin-top: 32px; padding-top: 24px; text-align: left;">
-              <h4 style="font-size: 1.05rem; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--primary);"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
-                Estimated Regional Coverage Checker
+                <!-- Filters & Toggles -->
+                <div class="toolbar-controls-group">
+                  <!-- Status Filter -->
+                  <div class="control-select-wrap">
+                    <label for="map-status-filter">Status:</label>
+                    <select id="map-status-filter" class="input-ctrl">
+                      <option value="ALL">All Stations</option>
+                      <option value="ACTIVE" selected>Active Only (VRS)</option>
+                      <option value="ONLINE">Online Only</option>
+                      <option value="OFFLINE">Offline Only</option>
+                    </select>
+                  </div>
+
+                  <!-- Range Buffer Selector -->
+                  <div class="control-select-wrap">
+                    <label for="map-range-toggle">RTK Range:</label>
+                    <select id="map-range-toggle" class="input-ctrl">
+                      <option value="none">Points Only</option>
+                      <option value="20" selected>20 km (Core RTK)</option>
+                      <option value="40">40 km (Extended RTK)</option>
+                    </select>
+                  </div>
+
+                  <!-- Basemap Selector -->
+                  <div class="control-select-wrap">
+                    <label for="map-tile-select">Basemap:</label>
+                    <select id="map-tile-select" class="input-ctrl">
+                      <option value="dark" selected>Dark Matter</option>
+                      <option value="satellite">Satellite Imagery</option>
+                      <option value="streets">Street Map</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Quick Region Jump Bar -->
+              <div class="quick-regions-bar">
+                <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600; letter-spacing: 0.05em; align-self: center;">Jump To:</span>
+                <button class="region-jump-btn active" data-region="global">Global View</button>
+                <button class="region-jump-btn" data-region="north-america">North America</button>
+                <button class="region-jump-btn" data-region="europe">Europe</button>
+                <button class="region-jump-btn" data-region="asia">East & South Asia</button>
+                <button class="region-jump-btn" data-region="south-america">South America</button>
+                <button class="region-jump-btn" data-region="australia">Australia / NZ</button>
+                <button class="region-jump-btn" data-region="middle-east">Middle East</button>
+                <button class="region-jump-btn" data-region="africa">Africa</button>
+              </div>
+            </div>
+
+            <!-- The Interactive Map Container -->
+            <div class="map-wrapper card" style="height: 620px; position: relative; padding: 0;">
+              <!-- Leaflet Map Div -->
+              <div id="rtk-leaflet-map" style="width: 100%; height: 100%; z-index: 1; border-radius: inherit; background: #0b0f19;"></div>
+
+              <!-- Map Loading Spinner Overlay -->
+              <div id="map-loader" class="map-loader-overlay">
+                <div class="loader-spinner"></div>
+                <div style="font-weight: 600; color: var(--text-primary); font-size: 1rem;" id="loader-status-text">Fetching live station data from GEODNET API...</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">Synchronizing ~20,000 CORS base stations globally</div>
+              </div>
+
+              <!-- Floating Map Legend Overlay -->
+              <div class="map-floating-legend">
+                <div class="legend-title">Station & RTK Status</div>
+                <div class="legend-item">
+                  <span class="legend-dot active"></span>
+                  <span>Active Base (RTK / VRS Ready)</span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-dot online"></span>
+                  <span>Online (Synchronizing)</span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-dot offline"></span>
+                  <span>Offline / Maintenance</span>
+                </div>
+                <div class="legend-item" id="legend-range-item">
+                  <span class="legend-range-circle"></span>
+                  <span id="legend-range-label">20km RTK Core Range</span>
+                </div>
+              </div>
+
+              <!-- Map Viewport Station Count Badge -->
+              <div class="map-floating-viewport-info">
+                <span id="map-viewport-count">Showing 0 stations</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Map Sidebar Information & Interactive Tools -->
+          <div class="map-sidebar">
+            <!-- Selected Station Inspector -->
+            <div class="card" id="station-inspector-card">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">
+                <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--primary);"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                  Station Inspector
+                </h3>
+                <span class="badge" id="inspector-status-badge" style="background: rgba(0, 242, 254, 0.1); color: var(--primary); border: 1px solid rgba(0, 242, 254, 0.2);">Select Point</span>
+              </div>
+
+              <div id="inspector-empty-state" style="text-align: center; padding: 24px 12px; color: var(--text-muted); font-size: 0.85rem;">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom: 8px; opacity: 0.5;"><circle cx="12" cy="12" r="10"></circle><path d="m4.93 4.93 4.24 4.24M14.83 14.83l4.24 4.24M14.83 9.17l4.24-4.24M4.93 19.07l4.24-4.24"></path></svg>
+                <p>Click on any base station marker on the map to inspect its real-time telemetry, geodetic coordinates, and NTRIP routing.</p>
+              </div>
+
+              <div id="inspector-content" style="display: none;">
+                <div class="info-item">
+                  <div class="info-item-title">Station Identifier</div>
+                  <div class="info-item-value" id="inspector-name" style="font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; color: var(--primary); font-weight: 700;">--</div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
+                  <div>
+                    <div class="info-item-title">Latitude</div>
+                    <code class="info-item-code" id="inspector-lat" style="margin: 0; font-size: 0.85rem;">--</code>
+                  </div>
+                  <div>
+                    <div class="info-item-title">Longitude</div>
+                    <code class="info-item-code" id="inspector-lng" style="margin: 0; font-size: 0.85rem;">--</code>
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <div class="info-item-title">Recommended Caster & Port</div>
+                  <div id="inspector-caster" style="font-size: 0.85rem; color: var(--text-primary);">--</div>
+                </div>
+
+                <div class="info-item">
+                  <div class="info-item-title">Supported RTK Mountpoint</div>
+                  <code class="info-item-code" id="inspector-mountpoint" style="margin: 0; color: var(--secondary);">AUTO (VRS / Single-Base)</code>
+                </div>
+
+                <div style="display: flex; gap: 8px; margin-top: 14px;">
+                  <button id="inspector-copy-coords-btn" class="btn btn-secondary" style="flex: 1; padding: 8px 10px; font-size: 0.78rem;">Copy Coords</button>
+                  <button id="inspector-zoom-btn" class="btn btn-primary" style="flex: 1; padding: 8px 10px; font-size: 0.78rem;">Zoom In</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- RTK Baseline Proximity Analyzer -->
+            <div class="card" style="border-color: rgba(0, 242, 254, 0.15);">
+              <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--secondary);"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                RTK Baseline Analyzer
+              </h3>
+              <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-bottom: 12px;">
+                Calculate rover baseline distance to the nearest GEODNET CORS station to assess positioning precision.
+              </p>
+
+              <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                  <input type="number" step="any" id="rover-lat-input" class="input-ctrl" placeholder="Rover Lat" style="font-size: 0.85rem; padding: 8px 10px;">
+                  <input type="number" step="any" id="rover-lng-input" class="input-ctrl" placeholder="Rover Lng" style="font-size: 0.85rem; padding: 8px 10px;">
+                </div>
+                <div style="display: flex; gap: 8px;">
+                  <button id="rover-analyze-btn" class="btn btn-primary" style="flex: 2; padding: 8px 12px; font-size: 0.82rem;">Calculate Baseline</button>
+                  <button id="rover-click-map-btn" class="btn btn-secondary" style="flex: 1; padding: 8px 8px; font-size: 0.82rem;" title="Pick point on map">Pick Map</button>
+                </div>
+              </div>
+
+              <!-- Baseline Result Output -->
+              <div id="baseline-result-card" style="display: none; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.3); border: 1px solid var(--border-color); font-size: 0.85rem;">
+                <!-- Filled dynamically by app.js -->
+              </div>
+            </div>
+
+            <!-- Regional Datum & Caster Selector Tool -->
+            <div class="card">
+              <h4 style="font-size: 1rem; font-weight: 600; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--primary);"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                Regional Datum Reference
               </h4>
-              <div style="width: 100%; display: flex; gap: 12px; flex-wrap: wrap;">
-                <select id="coverage-checker-select" class="input-ctrl" style="flex-grow: 1; min-width: 200px; padding: 10px 14px; background-color: rgba(0,0,0,0.3); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary);">
-                  <option value="" disabled selected>Select your region / country...</option>
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <select id="coverage-checker-select" class="input-ctrl" style="width: 100%; padding: 8px 12px; font-size: 0.85rem;">
+                  <option value="" disabled selected>Select country / region...</option>
                   <option value="usa">United States & North America</option>
                   <option value="can">Canada</option>
                   <option value="eur">Europe (Germany, France, UK, Italy, etc.)</option>
@@ -269,41 +486,8 @@
                   <option value="sam">South America (Brazil, Argentina, etc.)</option>
                   <option value="aus">Australia & New Zealand</option>
                 </select>
-                <button class="btn btn-secondary" id="check-coverage-btn" style="padding: 10px 20px; white-space: nowrap;">Check Status</button>
+                <div id="coverage-checker-result" style="display: none; padding: 12px; border-radius: 8px; border: 1px solid transparent; line-height: 1.4; font-size: 0.82rem; transition: var(--transition);"></div>
               </div>
-              <div id="coverage-checker-result" style="margin-top: 16px; display: none; padding: 16px; border-radius: 8px; border: 1px solid transparent; line-height: 1.5; font-size: 0.9rem; transition: var(--transition);">
-                <!-- Result displayed by app.js -->
-              </div>
-            </div>
-          </div>
-          
-          <!-- Map Sidebar Information -->
-          <div class="map-sidebar">
-            <div class="card">
-              <h3 class="section-header" style="font-size: 1.15rem; margin-bottom: 16px;">How Coverage Works</h3>
-              <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 16px;">
-                Our RTK caster serves rovers within 20km to 50km of any active base station. Yellow and blue regions on the map represent areas with high station density where multi-station VRS correction is optimized.
-              </p>
-              
-              <div class="info-item">
-                <div class="info-item-title">Regional NTRIP Casters</div>
-                <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 6px;">
-                  <div><span style="font-size: 0.75rem; color: var(--text-muted);">USA / Global</span><br><code class="info-item-code" style="margin: 0;">rtk.geodnet.com</code> <span style="font-size: 0.75rem; color: var(--text-muted);">(IP: 13.56.117.10)</span></div>
-                  <div><span style="font-size: 0.75rem; color: var(--text-muted);">Europe</span><br><code class="info-item-code" style="margin: 0;">eu.geodnet.com</code> <span style="font-size: 0.75rem; color: var(--text-muted);">(IP: 3.73.41.96)</span></div>
-                  <div><span style="font-size: 0.75rem; color: var(--text-muted);">South America</span><br><code class="info-item-code" style="margin: 0;">sa.geodnet.com</code> <span style="font-size: 0.75rem; color: var(--text-muted);">(IP: 18.230.73.64)</span></div>
-                  <div><span style="font-size: 0.75rem; color: var(--text-muted);">Australia</span><br><code class="info-item-code" style="margin: 0;">aus.geodnet.com</code> <span style="font-size: 0.75rem; color: var(--text-muted);">(IP: 54.206.56.130)</span></div>
-                </div>
-              </div>
-            </div>
-            
-            <div class="card" style="border-color: rgba(16, 185, 129, 0.2);">
-              <h4 style="color: var(--success); display: flex; align-items: center; gap: 8px; font-size: 1rem; margin-bottom: 8px;">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                Station Compliance
-              </h4>
-              <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4;">
-                Every GEODNET station is vetted through space-weather criteria and calibrated antennas (NGS) ensuring survey-grade output.
-              </p>
             </div>
           </div>
         </div>
@@ -804,6 +988,9 @@
   
   <!-- Overlay for mobile navigation drawer -->
   <div class="overlay" id="nav-overlay"></div>
+  
+  <!-- Leaflet JavaScript library -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   
   <!-- App JavaScript logic -->
   <script src="app.js"></script>

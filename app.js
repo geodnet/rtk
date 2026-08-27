@@ -645,6 +645,9 @@ const hardwareCatalog = [
 ];
 
 
+// Global coverage map reference
+let rtkCoverageMap = null;
+
 // ==========================================
 // 5. Global State & App Setup
 // ==========================================
@@ -657,6 +660,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initKnowledgeBase();
   initHardwareCatalog();
   initCoverageChecker();
+  initCoverageMap();
 });
 
 // ==========================================
@@ -688,6 +692,13 @@ function initRouting() {
     if (matchingLink) {
       matchingLink.classList.add("active");
       pageTitle.textContent = matchingLink.querySelector("span").textContent;
+    }
+
+    // Invalidate Leaflet map size when coverage tab is shown
+    if (hash === "#coverage" && rtkCoverageMap) {
+      setTimeout(() => {
+        rtkCoverageMap.invalidateSize();
+      }, 150);
     }
     
     // Scroll content panel to top
@@ -1253,10 +1264,9 @@ function initHardwareCatalog() {
 // ==========================================
 function initCoverageChecker() {
   const select = document.getElementById("coverage-checker-select");
-  const btn = document.getElementById("check-coverage-btn");
   const resultDiv = document.getElementById("coverage-checker-result");
   
-  if (!btn || !select || !resultDiv) return;
+  if (!select || !resultDiv) return;
   
   const coverageData = {
     usa: {
@@ -1452,26 +1462,700 @@ function initCoverageChecker() {
     resultDiv.style.color = "var(--text-primary)";
     
     resultDiv.innerHTML = `
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
-        <span style="font-weight: 700; font-size: 1rem; color: ${info.color};">${info.status}</span>
-        <span class="badge" style="background-color: ${info.bgColor}; border-color: ${info.borderColor}; color: ${info.color};">${val.toUpperCase()} Region</span>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 6px;">
+        <span style="font-weight: 700; font-size: 0.95rem; color: ${info.color};">${info.status}</span>
+        <span class="badge" style="background-color: ${info.bgColor}; border-color: ${info.borderColor}; color: ${info.color}; font-size: 0.72rem;">${val.toUpperCase()}</span>
       </div>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 0.85rem; margin-bottom: 8px;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.8rem; margin-bottom: 6px;">
         <div>
-          <span style="color: var(--text-muted);">Regional Datum:</span><br>
+          <span style="color: var(--text-muted); font-size: 0.72rem;">Datum:</span><br>
           <strong style="color: var(--primary);">${info.datum}</strong>
         </div>
         <div>
-          <span style="color: var(--text-muted);">Recommended Caster:</span><br>
+          <span style="color: var(--text-muted); font-size: 0.72rem;">Caster:</span><br>
           <strong>${info.caster}</strong>
         </div>
       </div>
-      <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; border-top: 1px solid var(--border-color); padding-top: 8px; margin-top: 8px;">
+      <p style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.35; border-top: 1px solid var(--border-color); padding-top: 6px; margin: 0;">
         ${info.notes}
       </p>
     `;
   }
   
-  btn.addEventListener("click", check);
   select.addEventListener("change", check);
 }
+
+// ==========================================
+// 13. Interactive RTK Coverage Map System
+// ==========================================
+function initCoverageMap() {
+  const mapContainer = document.getElementById("rtk-leaflet-map");
+  if (!mapContainer || typeof L === "undefined") return;
+
+  // State
+  let allStations = [];
+  let stationMarkers = [];
+  let rangeCircles = [];
+  let selectedStation = null;
+  let roverMarker = null;
+  let baselineLine = null;
+  let isPickingRoverLocation = false;
+
+  // Elements
+  const loader = document.getElementById("map-loader");
+  const loaderText = document.getElementById("loader-status-text");
+  const refreshBtn = document.getElementById("refresh-coverage-btn");
+  const refreshIcon = document.getElementById("refresh-spinner-icon");
+  const apiStatusBadge = document.getElementById("api-status-badge");
+  const statusFilterSelect = document.getElementById("map-status-filter");
+  const rangeToggleSelect = document.getElementById("map-range-toggle");
+  const tileSelect = document.getElementById("map-tile-select");
+  const searchInput = document.getElementById("map-search-input");
+  const searchBtn = document.getElementById("map-search-btn");
+  const locateBtn = document.getElementById("map-locate-btn");
+  const regionBtns = document.querySelectorAll(".region-jump-btn");
+  const viewportCountEl = document.getElementById("map-viewport-count");
+  const legendRangeItem = document.getElementById("legend-range-item");
+  const legendRangeLabel = document.getElementById("legend-range-label");
+
+  // Metrics Elements
+  const statTotalEl = document.getElementById("stat-total-stations");
+  const statActiveEl = document.getElementById("stat-active-stations");
+  const statOnlineEl = document.getElementById("stat-online-stations");
+  const statOfflineEl = document.getElementById("stat-offline-stations");
+  const dashboardStatTotal = document.querySelector("#dashboard .stat-card:first-child .stat-val");
+
+  // Inspector Elements
+  const inspectorCard = document.getElementById("station-inspector-card");
+  const inspectorBadge = document.getElementById("inspector-status-badge");
+  const inspectorEmpty = document.getElementById("inspector-empty-state");
+  const inspectorContent = document.getElementById("inspector-content");
+  const inspectorName = document.getElementById("inspector-name");
+  const inspectorLat = document.getElementById("inspector-lat");
+  const inspectorLng = document.getElementById("inspector-lng");
+  const inspectorCaster = document.getElementById("inspector-caster");
+  const inspectorMountpoint = document.getElementById("inspector-mountpoint");
+  const inspectorCopyBtn = document.getElementById("inspector-copy-coords-btn");
+  const inspectorZoomBtn = document.getElementById("inspector-zoom-btn");
+
+  // Baseline Analyzer Elements
+  const roverLatInput = document.getElementById("rover-lat-input");
+  const roverLngInput = document.getElementById("rover-lng-input");
+  const roverAnalyzeBtn = document.getElementById("rover-analyze-btn");
+  const roverPickBtn = document.getElementById("rover-click-map-btn");
+  const baselineResultCard = document.getElementById("baseline-result-card");
+
+  // 1. Initialize Leaflet Map
+  const map = L.map("rtk-leaflet-map", {
+    center: [25, 10],
+    zoom: 2,
+    minZoom: 2,
+    maxZoom: 18,
+    worldCopyJump: true,
+    zoomControl: true,
+    attributionControl: true
+  });
+  rtkCoverageMap = map;
+
+  // Custom Canvas Renderer for high-performance rendering of ~20k points
+  const canvasRenderer = L.canvas({ padding: 0.5, tolerance: 5 });
+
+  // 2. Basemap Tile Layers
+  const tileLayers = {
+    dark: L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      subdomains: "abcd",
+      maxZoom: 19
+    }),
+    satellite: L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
+      attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
+      maxZoom: 18
+    }),
+    streets: L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      maxZoom: 19
+    })
+  };
+
+  let currentTileLayer = tileLayers.dark.addTo(map);
+
+  tileSelect.addEventListener("change", (e) => {
+    const selected = e.target.value;
+    if (tileLayers[selected]) {
+      map.removeLayer(currentTileLayer);
+      currentTileLayer = tileLayers[selected].addTo(map);
+    }
+  });
+
+  // Layer groups for markers & range circles
+  const markersLayer = L.layerGroup().addTo(map);
+  const rangeLayer = L.layerGroup().addTo(map);
+  const roverLayer = L.layerGroup().addTo(map);
+
+  // Helper: Haversine distance in km
+  function calculateDistanceKm(lat1, lon1, lat2, lon2) {
+    const R = 6371; // Earth's radius in km
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+              Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+  }
+
+  // Helper: Get Regional Caster info
+  function getCasterInfo(lat, lng) {
+    if (lat < 0 && lng > 110 && lng < 180) {
+      return {
+        region: "Australia & New Zealand",
+        host: "aus.geodnet.com:2101",
+        ip: "54.206.56.130"
+      };
+    }
+    if (lat < 15 && lng > -120 && lng < -30) {
+      return {
+        region: "South America",
+        host: "sa.geodnet.com:2101",
+        ip: "18.230.73.64"
+      };
+    }
+    if (lng >= -30 && lng <= 60) {
+      return {
+        region: "Europe & Middle East / Africa",
+        host: "eu.geodnet.com:2101",
+        ip: "3.73.41.96"
+      };
+    }
+    return {
+      region: "USA / Global / Asia",
+      host: "rtk.geodnet.com:2101",
+      ip: "13.56.117.10"
+    };
+  }
+
+  // 3. Fetch Data from API
+  async function fetchStationData() {
+    if (loader) {
+      loader.classList.remove("hidden");
+      loaderText.textContent = "Connecting to GEODNET live API...";
+    }
+    if (refreshIcon) refreshIcon.style.animation = "mapSpin 1s linear infinite";
+
+    try {
+      const response = await fetch("https://rtk.geodnet.com/api/v2/coverage_stations");
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      
+      const json = await response.json();
+      if (!json || !Array.isArray(json.data)) throw new Error("Invalid API response format");
+
+      allStations = json.data;
+
+      // Update API Status badge
+      if (apiStatusBadge) {
+        apiStatusBadge.innerHTML = `<span class="pulse-dot" style="width: 6px; height: 6px; background: var(--primary); border-radius: 50%; display: inline-block; box-shadow: 0 0 8px var(--primary);"></span> Live API (${allStations.length.toLocaleString()})`;
+      }
+
+      // Compute statistics
+      updateMetrics(allStations);
+
+      // Render Stations on Map
+      renderStations();
+
+      if (loader) {
+        loaderText.textContent = `Rendered ${allStations.length.toLocaleString()} stations`;
+        setTimeout(() => loader.classList.add("hidden"), 300);
+      }
+    } catch (err) {
+      console.error("Error fetching coverage stations API:", err);
+      if (loaderText) loaderText.textContent = "Error loading live API. Retrying connection...";
+      if (apiStatusBadge) {
+        apiStatusBadge.innerHTML = `<span class="pulse-dot" style="width: 6px; height: 6px; background: var(--danger); border-radius: 50%; display: inline-block;"></span> API Offline`;
+      }
+      setTimeout(() => {
+        if (loader) loader.classList.add("hidden");
+      }, 1000);
+    } finally {
+      if (refreshIcon) refreshIcon.style.animation = "";
+    }
+  }
+
+  // 4. Update Header Metrics
+  function updateMetrics(stations) {
+    let activeCount = 0;
+    let onlineCount = 0;
+    let offlineCount = 0;
+
+    stations.forEach(s => {
+      const st = (s.status || "").toUpperCase();
+      if (st === "ACTIVE") activeCount++;
+      else if (st === "ONLINE") onlineCount++;
+      else offlineCount++;
+    });
+
+    const total = stations.length;
+    const activePct = total ? ((activeCount / total) * 100).toFixed(1) : 0;
+    const onlinePct = total ? ((onlineCount / total) * 100).toFixed(1) : 0;
+    const offlinePct = total ? ((offlineCount / total) * 100).toFixed(1) : 0;
+
+    if (statTotalEl) statTotalEl.textContent = total.toLocaleString();
+    if (statActiveEl) statActiveEl.innerHTML = `${activeCount.toLocaleString()} <span style="font-size: 0.8rem; font-weight: 500; opacity: 0.85;">(${activePct}%)</span>`;
+    if (statOnlineEl) statOnlineEl.innerHTML = `${onlineCount.toLocaleString()} <span style="font-size: 0.8rem; font-weight: 500; opacity: 0.85;">(${onlinePct}%)</span>`;
+    if (statOfflineEl) statOfflineEl.innerHTML = `${offlineCount.toLocaleString()} <span style="font-size: 0.8rem; font-weight: 500; opacity: 0.85;">(${offlinePct}%)</span>`;
+
+    if (dashboardStatTotal) {
+      dashboardStatTotal.textContent = `${total.toLocaleString()}+`;
+    }
+  }
+
+  // 5. Render Stations and Range Buffers
+  function renderStations() {
+    markersLayer.clearLayers();
+    rangeLayer.clearLayers();
+    stationMarkers = [];
+    rangeCircles = [];
+
+    const statusFilter = statusFilterSelect ? statusFilterSelect.value : "ALL";
+    const rangeVal = rangeToggleSelect ? rangeToggleSelect.value : "20";
+
+    // Update legend range item visibility
+    if (legendRangeItem && legendRangeLabel) {
+      if (rangeVal === "none") {
+        legendRangeItem.style.display = "none";
+      } else {
+        legendRangeItem.style.display = "flex";
+        legendRangeLabel.textContent = `${rangeVal}km RTK Range`;
+      }
+    }
+
+    const rangeMeters = (rangeVal === "20" || rangeVal === "40") ? parseInt(rangeVal) * 1000 : 0;
+
+    allStations.forEach(station => {
+      const st = (station.status || "OFFLINE").toUpperCase();
+      if (statusFilter !== "ALL" && st !== statusFilter) return;
+
+      let color = "#00F2FE";
+      let fillColor = "#00F2FE";
+      let fillOpacity = 0.75;
+      let radius = 3.5;
+
+      if (st === "ONLINE") {
+        color = "#F59E0B";
+        fillColor = "#F59E0B";
+        fillOpacity = 0.75;
+      } else if (st === "OFFLINE") {
+        color = "#EF4444";
+        fillColor = "#EF4444";
+        fillOpacity = 0.45;
+        radius = 2.8;
+      }
+
+      // Add station circle marker using high performance Canvas renderer
+      const marker = L.circleMarker([station.lat, station.lng], {
+        renderer: canvasRenderer,
+        radius: radius,
+        color: color,
+        weight: 1,
+        fillColor: fillColor,
+        fillOpacity: fillOpacity
+      });
+
+      marker.stationData = station;
+
+      // Popup Content
+      const caster = getCasterInfo(station.lat, station.lng);
+      const popupHtml = `
+        <div style="min-width: 220px; font-family: 'Inter', sans-serif;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 6px;">
+            <span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #00F2FE; font-size: 1rem;">${station.name}</span>
+            <span style="font-size: 0.72rem; padding: 2px 6px; border-radius: 4px; background: rgba(${st === 'ACTIVE' ? '0, 242, 254' : (st === 'ONLINE' ? '245, 158, 11' : '239, 68, 68')}, 0.15); color: ${color}; font-weight: 600;">
+              ${st}
+            </span>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 0.78rem; margin-bottom: 8px;">
+            <div>
+              <span style="color: #9ca3af; font-size: 0.7rem;">Latitude:</span><br>
+              <strong style="color: #f3f4f6; font-family: 'JetBrains Mono', monospace;">${station.lat.toFixed(4)}°</strong>
+            </div>
+            <div>
+              <span style="color: #9ca3af; font-size: 0.7rem;">Longitude:</span><br>
+              <strong style="color: #f3f4f6; font-family: 'JetBrains Mono', monospace;">${station.lng.toFixed(4)}°</strong>
+            </div>
+          </div>
+          <div style="font-size: 0.75rem; color: #9ca3af; margin-bottom: 4px;">
+            Caster: <strong style="color: #f3f4f6;">${caster.host}</strong>
+          </div>
+          <div style="font-size: 0.75rem; color: #9ca3af; margin-bottom: 10px;">
+            Mountpoint: <span style="color: #9d4edd; font-weight: 600;">AUTO</span> (VRS / RTCM 3.2)
+          </div>
+          <div style="display: flex; gap: 6px;">
+            <button class="btn btn-primary" onclick="window.inspectStationByName('${station.name}')" style="flex: 1; padding: 4px 8px; font-size: 0.75rem;">
+              Inspect
+            </button>
+            <button class="btn btn-secondary" onclick="window.setRoverBaselineTarget(${station.lat}, ${station.lng})" style="flex: 1; padding: 4px 8px; font-size: 0.75rem;">
+              Baseline
+            </button>
+          </div>
+        </div>
+      `;
+
+      marker.bindPopup(popupHtml, { maxWidth: 280, closeButton: true });
+
+      marker.on("click", () => {
+        inspectStation(station);
+      });
+
+      markersLayer.addLayer(marker);
+      stationMarkers.push(marker);
+
+      // Add range circle for active stations if enabled
+      if (rangeMeters > 0 && st === "ACTIVE") {
+        const circle = L.circle([station.lat, station.lng], {
+          renderer: canvasRenderer,
+          radius: rangeMeters,
+          color: "rgba(0, 242, 254, 0.25)",
+          weight: 0.8,
+          fillColor: "#00F2FE",
+          fillOpacity: 0.04,
+          interactive: false
+        });
+        rangeLayer.addLayer(circle);
+        rangeCircles.push(circle);
+      }
+    });
+
+    updateViewportCount();
+  }
+
+  // 6. Update Visible Viewport Station Count
+  function updateViewportCount() {
+    if (!viewportCountEl) return;
+    const bounds = map.getBounds();
+    let count = 0;
+
+    stationMarkers.forEach(m => {
+      if (bounds.contains(m.getLatLng())) count++;
+    });
+
+    viewportCountEl.textContent = `Showing ${count.toLocaleString()} in view (${allStations.length.toLocaleString()} total)`;
+  }
+
+  map.on("moveend", updateViewportCount);
+
+  // 7. Inspect Selected Station in Sidebar
+  function inspectStation(station) {
+    selectedStation = station;
+    if (!inspectorCard) return;
+
+    if (inspectorEmpty) inspectorEmpty.style.display = "none";
+    if (inspectorContent) inspectorContent.style.display = "block";
+
+    const st = (station.status || "OFFLINE").toUpperCase();
+    const isAct = st === "ACTIVE";
+    const isOnline = st === "ONLINE";
+    const statusColor = isAct ? "var(--primary)" : (isOnline ? "var(--warning)" : "var(--danger)");
+    const statusBg = isAct ? "rgba(0, 242, 254, 0.12)" : (isOnline ? "rgba(245, 158, 11, 0.12)" : "rgba(239, 68, 68, 0.12)");
+
+    if (inspectorBadge) {
+      inspectorBadge.textContent = st;
+      inspectorBadge.style.color = statusColor;
+      inspectorBadge.style.background = statusBg;
+      inspectorBadge.style.borderColor = statusColor;
+    }
+
+    if (inspectorName) inspectorName.textContent = station.name;
+    if (inspectorLat) inspectorLat.textContent = `${station.lat.toFixed(5)}°`;
+    if (inspectorLng) inspectorLng.textContent = `${station.lng.toFixed(5)}°`;
+
+    const caster = getCasterInfo(station.lat, station.lng);
+    if (inspectorCaster) {
+      inspectorCaster.innerHTML = `<strong>${caster.host}</strong> <span style="font-size: 0.75rem; color: var(--text-muted);">(IP: ${caster.ip})</span>`;
+    }
+
+    if (inspectorMountpoint) {
+      inspectorMountpoint.textContent = "AUTO / AUTO_WGS84 / AUTO_ITRF2020";
+    }
+
+    // Baseline rover helper sync
+    if (roverLatInput && !roverLatInput.value) roverLatInput.value = station.lat.toFixed(4);
+    if (roverLngInput && !roverLngInput.value) roverLngInput.value = station.lng.toFixed(4);
+  }
+
+  // Global helper for popup buttons
+  window.inspectStationByName = (name) => {
+    const found = allStations.find(s => s.name === name);
+    if (found) inspectStation(found);
+  };
+
+  window.setRoverBaselineTarget = (lat, lng) => {
+    if (roverLatInput) roverLatInput.value = lat.toFixed(5);
+    if (roverLngInput) roverLngInput.value = lng.toFixed(5);
+    calculateBaselineForCoords(lat, lng);
+  };
+
+  // 8. Inspector Action Buttons
+  if (inspectorCopyBtn) {
+    inspectorCopyBtn.addEventListener("click", () => {
+      if (!selectedStation) return;
+      const text = `${selectedStation.lat.toFixed(6)}, ${selectedStation.lng.toFixed(6)}`;
+      navigator.clipboard.writeText(text).then(() => {
+        const orig = inspectorCopyBtn.textContent;
+        inspectorCopyBtn.textContent = "Copied!";
+        setTimeout(() => inspectorCopyBtn.textContent = orig, 1500);
+      });
+    });
+  }
+
+  if (inspectorZoomBtn) {
+    inspectorZoomBtn.addEventListener("click", () => {
+      if (!selectedStation) return;
+      map.flyTo([selectedStation.lat, selectedStation.lng], 13, { duration: 1.2 });
+    });
+  }
+
+  // 9. Baseline Analyzer Calculation
+  function calculateBaselineForCoords(roverLat, roverLng) {
+    if (isNaN(roverLat) || isNaN(roverLng)) return;
+
+    // Find closest ACTIVE station
+    let closestStation = null;
+    let minDistance = Infinity;
+
+    allStations.forEach(st => {
+      if ((st.status || "").toUpperCase() !== "ACTIVE") return;
+      const dist = calculateDistanceKm(roverLat, roverLng, st.lat, st.lng);
+      if (dist < minDistance) {
+        minDistance = dist;
+        closestStation = st;
+      }
+    });
+
+    if (!closestStation) return;
+
+    // Draw Rover Pin & Baseline Vector
+    roverLayer.clearLayers();
+
+    const roverIcon = L.divIcon({
+      className: "rover-pin-custom",
+      html: `<div style="width: 14px; height: 14px; background: #9D4EDD; border: 2px solid #fff; border-radius: 50%; box-shadow: 0 0 12px #9D4EDD;"></div>`,
+      iconSize: [14, 14],
+      iconAnchor: [7, 7]
+    });
+
+    roverMarker = L.marker([roverLat, roverLng], { icon: roverIcon }).addTo(roverLayer);
+    roverMarker.bindPopup(`<strong>Rover Position</strong><br>Lat: ${roverLat.toFixed(5)}°<br>Lng: ${roverLng.toFixed(5)}°`).openPopup();
+
+    baselineLine = L.polyline([[roverLat, roverLng], [closestStation.lat, closestStation.lng]], {
+      color: "#9D4EDD",
+      weight: 2,
+      dashArray: "6, 6",
+      opacity: 0.9
+    }).addTo(roverLayer);
+
+    // Zoom to fit rover and nearest base station
+    map.fitBounds(L.latLngBounds([
+      [roverLat, roverLng],
+      [closestStation.lat, closestStation.lng]
+    ]), { padding: [50, 50], maxZoom: 14 });
+
+    // Output Result Card
+    if (baselineResultCard) {
+      baselineResultCard.style.display = "block";
+
+      let fixQuality = "";
+      let fixColor = "";
+      let fixDesc = "";
+
+      if (minDistance <= 15) {
+        fixQuality = "Optimal Centimeter RTK Fix (< 1.0 cm)";
+        fixColor = "var(--success)";
+        fixDesc = "Ultra-short baseline allows near-instant integer ambiguity resolution with survey-grade 1cm accuracy.";
+      } else if (minDistance <= 30) {
+        fixQuality = "Standard Survey-Grade RTK Fix (1-2 cm)";
+        fixColor = "var(--primary)";
+        fixDesc = "Excellent multi-frequency RTK baseline. Ideal for GNSS drones, land survey, and precision ag.";
+      } else if (minDistance <= 50) {
+        fixQuality = "Extended Single-Base / VRS Fix (2-4 cm)";
+        fixColor = "var(--warning)";
+        fixDesc = "Moderate baseline. RTK convergence may take 30-60s. High precision maintained via triple-frequency receivers.";
+      } else {
+        fixQuality = "Long Baseline (> 50 km)";
+        fixColor = "var(--danger)";
+        fixDesc = "Rover is >50km from active CORS base. Recommended to use PPP mode or verify nearby base expansion.";
+      }
+
+      baselineResultCard.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <span style="font-weight: 700; color: ${fixColor}; font-size: 0.9rem;">${fixQuality}</span>
+          <span class="badge badge-live" style="font-size: 0.72rem; padding: 2px 6px;">${minDistance.toFixed(2)} km</span>
+        </div>
+        <div style="font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 6px;">
+          Nearest Base: <strong style="color: var(--primary); font-family: 'JetBrains Mono', monospace;">${closestStation.name}</strong> (${closestStation.lat.toFixed(4)}°, ${closestStation.lng.toFixed(4)}°)
+        </div>
+        <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.35; margin: 0;">
+          ${fixDesc}
+        </p>
+      `;
+    }
+  }
+
+  if (roverAnalyzeBtn) {
+    roverAnalyzeBtn.addEventListener("click", () => {
+      const lat = parseFloat(roverLatInput.value);
+      const lng = parseFloat(roverLngInput.value);
+      if (!isNaN(lat) && !isNaN(lng)) {
+        calculateBaselineForCoords(lat, lng);
+      }
+    });
+  }
+
+  if (roverPickBtn) {
+    roverPickBtn.addEventListener("click", () => {
+      isPickingRoverLocation = true;
+      roverPickBtn.textContent = "Click Map...";
+      roverPickBtn.style.borderColor = "var(--primary)";
+      mapContainer.style.cursor = "crosshair";
+    });
+  }
+
+  // Click on map to pick rover location or inspect nearest
+  map.on("click", (e) => {
+    if (isPickingRoverLocation) {
+      isPickingRoverLocation = false;
+      roverPickBtn.textContent = "Pick Map";
+      roverPickBtn.style.borderColor = "";
+      mapContainer.style.cursor = "";
+
+      const lat = e.latlng.lat;
+      const lng = e.latlng.lng;
+      if (roverLatInput) roverLatInput.value = lat.toFixed(5);
+      if (roverLngInput) roverLngInput.value = lng.toFixed(5);
+
+      calculateBaselineForCoords(lat, lng);
+    }
+  });
+
+  // 10. Search Functionality
+  async function handleSearch() {
+    const query = (searchInput ? searchInput.value : "").trim();
+    if (!query) return;
+
+    // 1. Check if query is coordinates "lat, lng"
+    const coordParts = query.split(/[\s,]+/);
+    if (coordParts.length === 2 && !isNaN(coordParts[0]) && !isNaN(coordParts[1])) {
+      const lat = parseFloat(coordParts[0]);
+      const lng = parseFloat(coordParts[1]);
+      if (lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180) {
+        map.flyTo([lat, lng], 10, { duration: 1.2 });
+        if (roverLatInput) roverLatInput.value = lat.toFixed(5);
+        if (roverLngInput) roverLngInput.value = lng.toFixed(5);
+        calculateBaselineForCoords(lat, lng);
+        return;
+      }
+    }
+
+    // 2. Check if query is a station name (e.g. "CA599" or "****CA599")
+    const cleanQuery = query.replace(/\*/g, "").toUpperCase();
+    const matchingStation = allStations.find(s => s.name.toUpperCase().includes(cleanQuery));
+
+    if (matchingStation) {
+      map.flyTo([matchingStation.lat, matchingStation.lng], 13, { duration: 1.2 });
+      inspectStation(matchingStation);
+      return;
+    }
+
+    // 3. Geocode city / country name via Nominatim
+    try {
+      if (searchBtn) searchBtn.textContent = "...";
+      const geoUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`;
+      const res = await fetch(geoUrl);
+      const data = await res.json();
+
+      if (data && data.length > 0) {
+        const lat = parseFloat(data[0].lat);
+        const lon = parseFloat(data[0].lon);
+        map.flyTo([lat, lon], 9, { duration: 1.2 });
+
+        if (roverLatInput) roverLatInput.value = lat.toFixed(5);
+        if (roverLngInput) roverLngInput.value = lon.toFixed(5);
+        calculateBaselineForCoords(lat, lon);
+      } else {
+        alert(`No location or station found for "${query}"`);
+      }
+    } catch (e) {
+      console.warn("Geocoding failed:", e);
+    } finally {
+      if (searchBtn) searchBtn.textContent = "Find";
+    }
+  }
+
+  if (searchBtn) searchBtn.addEventListener("click", handleSearch);
+  if (searchInput) {
+    searchInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") handleSearch();
+    });
+  }
+
+  // 11. Locate My Position
+  if (locateBtn) {
+    locateBtn.addEventListener("click", () => {
+      if (!navigator.geolocation) {
+        alert("Geolocation is not supported by your browser");
+        return;
+      }
+
+      locateBtn.innerHTML = "...";
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          locateBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/><circle cx="12" cy="12" r="3"/></svg>`;
+          const lat = pos.coords.latitude;
+          const lng = pos.coords.longitude;
+          map.flyTo([lat, lng], 10, { duration: 1.2 });
+          if (roverLatInput) roverLatInput.value = lat.toFixed(5);
+          if (roverLngInput) roverLngInput.value = lng.toFixed(5);
+          calculateBaselineForCoords(lat, lng);
+        },
+        (err) => {
+          locateBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/><circle cx="12" cy="12" r="3"/></svg>`;
+          alert("Unable to retrieve your location: " + err.message);
+        }
+      );
+    });
+  }
+
+  // 12. Region Jump Presets
+  const regionPresets = {
+    "global": { center: [25, 10], zoom: 2 },
+    "north-america": { center: [39.8, -98.5], zoom: 4 },
+    "europe": { center: [50.0, 10.0], zoom: 4 },
+    "asia": { center: [25.0, 105.0], zoom: 4 },
+    "south-america": { center: [-15.0, -60.0], zoom: 4 },
+    "australia": { center: [-26.0, 134.0], zoom: 4 },
+    "middle-east": { center: [26.0, 48.0], zoom: 5 },
+    "africa": { center: [2.0, 22.0], zoom: 4 }
+  };
+
+  regionBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      regionBtns.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      const regionKey = btn.getAttribute("data-region");
+      if (regionPresets[regionKey]) {
+        const { center, zoom } = regionPresets[regionKey];
+        map.flyTo(center, zoom, { duration: 1.2 });
+      }
+    });
+  });
+
+  // 13. Filter Listeners
+  if (statusFilterSelect) statusFilterSelect.addEventListener("change", renderStations);
+  if (rangeToggleSelect) rangeToggleSelect.addEventListener("change", renderStations);
+
+  // 14. Refresh Button
+  if (refreshBtn) refreshBtn.addEventListener("click", fetchStationData);
+
+  // Initial Fetch
+  fetchStationData();
+}
+
