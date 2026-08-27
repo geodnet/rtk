@@ -106,7 +106,7 @@ The portal integrates directly with GEODNET's public RTK Coverage API endpoint:
 - **Dynamic Edge Lengths in KM (Detailed Zoom View)**:
   - When zoomed into a detailed view (**Zoom ≥ 9**), automatically displays distance badges in kilometers along visible Delaunay baseline edges.
   - Hides distance text when zoomed out to maintain a clean, uncluttered global map.
-- **Status Filter**: Toggle between `All Stations`, `Active Only (VRS/RTK Ready)`, `Online (Connecting)`, and `Offline (Maintenance)`.
+- **Status Filter**: Toggle between `All Stations`, `Active Only (RTK Ready)`, `Online (Connecting)`, and `Offline (Maintenance)`.
 - **RTK Baseline Range Buffers**: Visualizes standard 20 km (Core RTK Fix) and 40 km (Extended RTK Fix) coverage radius circles around active reference stations.
 - **Co-located Multi-Station Clustering**:
   - Automatically aggregates stations sharing the exact same physical coordinates (e.g. multi-antenna or redundant receiver sites) into a single visual site with a distinct cluster badge.
