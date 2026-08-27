@@ -1573,6 +1573,9 @@ function initCoverageMap() {
   const inspectorLng = document.getElementById("inspector-lng");
   const inspectorCaster = document.getElementById("inspector-caster");
   const inspectorMountpoint = document.getElementById("inspector-mountpoint");
+  const inspectorColocatedSection = document.getElementById("inspector-colocated-section");
+  const inspectorColocatedTitle = document.getElementById("inspector-colocated-title");
+  const inspectorColocatedChips = document.getElementById("inspector-colocated-chips");
   const inspectorCopyBtn = document.getElementById("inspector-copy-coords-btn");
   const inspectorZoomBtn = document.getElementById("inspector-zoom-btn");
 
@@ -1759,7 +1762,18 @@ function initCoverageMap() {
     if (!stations || stations.length < 3) return;
 
     try {
-      const coords = stations.map(s => [s.lng, s.lat]);
+      // Deduplicate active stations by site coordinate (~10m precision) to avoid degenerate 0km triangles
+      const uniqueSitesMap = new Map();
+      stations.forEach(s => {
+        const key = `${s.lat.toFixed(4)},${s.lng.toFixed(4)}`;
+        if (!uniqueSitesMap.has(key)) {
+          uniqueSitesMap.set(key, s);
+        }
+      });
+      const uniqueStations = Array.from(uniqueSitesMap.values());
+      if (uniqueStations.length < 3) return;
+
+      const coords = uniqueStations.map(s => [s.lng, s.lat]);
       let delaunay = (typeof Delaunator !== "undefined") ? Delaunator.from(coords) : FastDelaunay.from(coords);
       if (!delaunay || !delaunay.triangles || delaunay.triangles.length === 0) return;
 
@@ -1770,13 +1784,13 @@ function initCoverageMap() {
         if (i > halfedges[i]) {
           const p1Index = triangles[i];
           const p2Index = triangles[i % 3 === 2 ? i - 2 : i + 1];
-          const s1 = stations[p1Index];
-          const s2 = stations[p2Index];
+          const s1 = uniqueStations[p1Index];
+          const s2 = uniqueStations[p2Index];
           if (!s1 || !s2) continue;
 
           const dist = calculateDistanceKm(s1.lat, s1.lng, s2.lat, s2.lng);
-          // Filter out large cross-ocean triangles (> 250km) to keep realistic RTK baseline networks
-          if (dist <= 250) {
+          // Filter out large cross-ocean triangles (> 250km) and zero-length edges
+          if (dist > 0.01 && dist <= 250) {
             delaunayEdges.push({
               s1,
               s2,
@@ -1933,92 +1947,155 @@ function initCoverageMap() {
       }
     });
 
-    // Compute Delaunay triangulation on active stations
+    // Compute Delaunay triangulation on active unique station sites
     buildDelaunayNetwork(activeStationsForMesh);
     renderDelaunayMesh();
 
-    // Render station nodes
+    // Group filtered stations by physical coordinates (~10m precision) to handle co-located sites
+    const locationGroups = new Map();
     filteredStations.forEach(station => {
-      const st = (station.status || "OFFLINE").toUpperCase();
+      const key = `${station.lat.toFixed(4)},${station.lng.toFixed(4)}`;
+      if (!locationGroups.has(key)) {
+        locationGroups.set(key, {
+          lat: station.lat,
+          lng: station.lng,
+          stations: []
+        });
+      }
+      locationGroups.get(key).stations.push(station);
+    });
+
+    // Render station markers
+    locationGroups.forEach(group => {
+      const stations = group.stations;
+      const hasActive = stations.some(s => (s.status || "").toUpperCase() === "ACTIVE");
+      const hasOnline = stations.some(s => (s.status || "").toUpperCase() === "ONLINE");
+      const aggStatus = hasActive ? "ACTIVE" : (hasOnline ? "ONLINE" : "OFFLINE");
 
       let color = "#00F2FE";
       let fillColor = "#00F2FE";
       let fillOpacity = 0.75;
-      let radius = 3.5;
+      let radius = stations.length > 1 ? 5 : 3.5;
+      let weight = stations.length > 1 ? 2 : 1;
 
-      if (st === "ONLINE") {
+      if (aggStatus === "ONLINE") {
         color = "#F59E0B";
         fillColor = "#F59E0B";
         fillOpacity = 0.75;
-      } else if (st === "OFFLINE") {
+      } else if (aggStatus === "OFFLINE") {
         color = "#EF4444";
         fillColor = "#EF4444";
         fillOpacity = 0.45;
-        radius = 2.8;
+        radius = stations.length > 1 ? 4.5 : 2.8;
       }
 
-      // Add station circle marker using high performance Canvas renderer
-      const marker = L.circleMarker([station.lat, station.lng], {
+      // Add station circle marker using high-performance Canvas renderer
+      const marker = L.circleMarker([group.lat, group.lng], {
         renderer: canvasRenderer,
         radius: radius,
-        color: color,
-        weight: 1,
+        color: stations.length > 1 ? "#FFFFFF" : color,
+        weight: weight,
         fillColor: fillColor,
         fillOpacity: fillOpacity
       });
 
-      marker.stationData = station;
+      marker.stationGroup = group;
+      marker.stationData = stations[0];
 
-      // Popup Content
-      const caster = getCasterInfo(station.lat, station.lng);
-      const popupHtml = `
-        <div style="min-width: 220px; font-family: 'Inter', sans-serif;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-            <span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #00F2FE; font-size: 1rem;">${station.name}</span>
-            <span style="font-size: 0.72rem; padding: 2px 6px; border-radius: 4px; background: rgba(${st === 'ACTIVE' ? '0, 242, 254' : (st === 'ONLINE' ? '245, 158, 11' : '239, 68, 68')}, 0.15); color: ${color}; font-weight: 600;">
-              ${st}
-            </span>
-          </div>
-          ${station.stationId != null ? `<div style="font-size: 0.76rem; color: #9ca3af; margin-bottom: 6px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 4px;">RTCM Station ID: <strong style="color: var(--primary); font-family: 'JetBrains Mono', monospace;">#${station.stationId}</strong></div>` : `<div style="margin-bottom: 6px;"></div>`}
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 0.78rem; margin-bottom: 8px;">
-            <div>
-              <span style="color: #9ca3af; font-size: 0.7rem;">Latitude:</span><br>
-              <strong style="color: #f3f4f6; font-family: 'JetBrains Mono', monospace;">${station.lat.toFixed(4)}°</strong>
-            </div>
-            <div>
-              <span style="color: #9ca3af; font-size: 0.7rem;">Longitude:</span><br>
-              <strong style="color: #f3f4f6; font-family: 'JetBrains Mono', monospace;">${station.lng.toFixed(4)}°</strong>
-            </div>
-          </div>
-          <div style="font-size: 0.75rem; color: #9ca3af; margin-bottom: 4px;">
-            Caster: <strong style="color: #f3f4f6;">${caster.host}</strong>
-          </div>
-          <div style="font-size: 0.75rem; color: #9ca3af; margin-bottom: 10px;">
-            Mountpoint: <span style="color: #9d4edd; font-weight: 600;">AUTO</span> (VRS / RTCM 3.2)
-          </div>
-          <div style="display: flex; gap: 6px;">
-            <button class="btn btn-primary" onclick="window.inspectStationByName('${station.name}')" style="flex: 1; padding: 4px 8px; font-size: 0.75rem;">
-              Inspect
-            </button>
-            <button class="btn btn-secondary" onclick="window.setRoverBaselineTarget(${station.lat}, ${station.lng})" style="flex: 1; padding: 4px 8px; font-size: 0.75rem;">
-              Baseline
-            </button>
-          </div>
-        </div>
-      `;
+      // Build Popup Content based on single vs co-located multiple stations
+      const caster = getCasterInfo(group.lat, group.lng);
+      let popupHtml = "";
 
-      marker.bindPopup(popupHtml, { maxWidth: 280, closeButton: true });
+      if (stations.length === 1) {
+        const station = stations[0];
+        const stationSt = (station.status || "OFFLINE").toUpperCase();
+        popupHtml = `
+          <div style="min-width: 220px; font-family: 'Inter', sans-serif;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+              <span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #00F2FE; font-size: 1rem;">${station.name}</span>
+              <span style="font-size: 0.72rem; padding: 2px 6px; border-radius: 4px; background: rgba(${stationSt === 'ACTIVE' ? '0, 242, 254' : (stationSt === 'ONLINE' ? '245, 158, 11' : '239, 68, 68')}, 0.15); color: ${color}; font-weight: 600;">
+                ${stationSt}
+              </span>
+            </div>
+            ${station.stationId != null ? `<div style="font-size: 0.76rem; color: #9ca3af; margin-bottom: 6px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 4px;">RTCM Station ID: <strong style="color: var(--primary); font-family: 'JetBrains Mono', monospace;">#${station.stationId}</strong></div>` : `<div style="margin-bottom: 6px;"></div>`}
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 0.78rem; margin-bottom: 8px;">
+              <div>
+                <span style="color: #9ca3af; font-size: 0.7rem;">Latitude:</span><br>
+                <strong style="color: #f3f4f6; font-family: 'JetBrains Mono', monospace;">${station.lat.toFixed(4)}°</strong>
+              </div>
+              <div>
+                <span style="color: #9ca3af; font-size: 0.7rem;">Longitude:</span><br>
+                <strong style="color: #f3f4f6; font-family: 'JetBrains Mono', monospace;">${station.lng.toFixed(4)}°</strong>
+              </div>
+            </div>
+            <div style="font-size: 0.75rem; color: #9ca3af; margin-bottom: 4px;">
+              Caster: <strong style="color: #f3f4f6;">${caster.host}</strong>
+            </div>
+            <div style="font-size: 0.75rem; color: #9ca3af; margin-bottom: 10px;">
+              Mountpoint: <span style="color: #9d4edd; font-weight: 600;">AUTO</span> (VRS / RTCM 3.2)
+            </div>
+            <div style="display: flex; gap: 6px;">
+              <button class="btn btn-primary" onclick="window.inspectStationByName('${station.name}')" style="flex: 1; padding: 4px 8px; font-size: 0.75rem;">
+                Inspect
+              </button>
+              <button class="btn btn-secondary" onclick="window.setRoverBaselineTarget(${station.lat}, ${station.lng})" style="flex: 1; padding: 4px 8px; font-size: 0.75rem;">
+                Baseline
+              </button>
+            </div>
+          </div>
+        `;
+      } else {
+        // Multi-Station Co-located Site Popup
+        popupHtml = `
+          <div class="colocated-popup-wrap">
+            <div class="colocated-header">
+              <span style="font-weight: 700; color: #00F2FE; font-size: 0.92rem;">Co-located CORS Site</span>
+              <span class="colocated-badge">${stations.length} Receivers</span>
+            </div>
+            <div style="font-size: 0.72rem; color: #9ca3af; margin-bottom: 6px;">
+              Coords: <strong style="color: #f3f4f6; font-family: 'JetBrains Mono', monospace;">${group.lat.toFixed(4)}°, ${group.lng.toFixed(4)}°</strong>
+            </div>
+            <div class="colocated-list">
+              ${stations.map(s => {
+                const sStatus = (s.status || "OFFLINE").toUpperCase();
+                const sColor = sStatus === "ACTIVE" ? "#00F2FE" : (sStatus === "ONLINE" ? "#F59E0B" : "#EF4444");
+                return `
+                  <div class="colocated-station-item">
+                    <div style="flex: 1; min-width: 0;">
+                      <div style="font-family: 'JetBrains Mono', monospace; font-weight: 700; color: ${sColor}; font-size: 0.82rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                        ${s.name}
+                      </div>
+                      <div style="font-size: 0.7rem; color: #9ca3af;">
+                        RTCM ID: <strong style="color: #e5e7eb;">#${s.stationId != null ? s.stationId : '--'}</strong> &bull; <span style="font-weight: 600; color: ${sColor};">${sStatus}</span>
+                      </div>
+                    </div>
+                    <div style="display: flex; gap: 4px; flex-shrink: 0; margin-left: 6px;">
+                      <button class="btn btn-primary" onclick="window.inspectStationByName('${s.name}')" style="padding: 2px 6px; font-size: 0.7rem;">Inspect</button>
+                      <button class="btn btn-secondary" onclick="window.setRoverBaselineTarget(${s.lat}, ${s.lng})" style="padding: 2px 6px; font-size: 0.7rem;">Base</button>
+                    </div>
+                  </div>
+                `;
+              }).join("")}
+            </div>
+            <div style="font-size: 0.7rem; color: #9ca3af; border-top: 1px dashed rgba(255,255,255,0.12); padding-top: 4px;">
+              Regional Caster: <strong style="color: #f3f4f6;">${caster.host}</strong>
+            </div>
+          </div>
+        `;
+      }
+
+      marker.bindPopup(popupHtml, { maxWidth: 320, closeButton: true });
 
       marker.on("click", () => {
-        inspectStation(station);
+        inspectStation(stations[0]);
       });
 
       markersLayer.addLayer(marker);
       stationMarkers.push(marker);
 
       // Add range circle for active stations if enabled
-      if (rangeMeters > 0 && st === "ACTIVE") {
-        const circle = L.circle([station.lat, station.lng], {
+      if (rangeMeters > 0 && hasActive) {
+        const circle = L.circle([group.lat, group.lng], {
           renderer: canvasRenderer,
           radius: rangeMeters,
           color: "rgba(0, 242, 254, 0.25)",
@@ -2042,7 +2119,9 @@ function initCoverageMap() {
     let count = 0;
 
     stationMarkers.forEach(m => {
-      if (bounds.contains(m.getLatLng())) count++;
+      if (bounds.contains(m.getLatLng())) {
+        count += m.stationGroup ? m.stationGroup.stations.length : 1;
+      }
     });
 
     viewportCountEl.textContent = `Showing ${count.toLocaleString()} in view (${allStations.length.toLocaleString()} total)`;
@@ -2092,6 +2171,29 @@ function initCoverageMap() {
 
     if (inspectorMountpoint) {
       inspectorMountpoint.textContent = "AUTO / AUTO_WGS84 / AUTO_ITRF2020";
+    }
+
+    // Co-located Stations Navigation Chips in Sidebar
+    const siteKey = `${station.lat.toFixed(4)},${station.lng.toFixed(4)}`;
+    const coLocated = allStations.filter(s => `${s.lat.toFixed(4)},${s.lng.toFixed(4)}` === siteKey);
+
+    if (coLocated.length > 1 && inspectorColocatedSection && inspectorColocatedChips) {
+      inspectorColocatedSection.style.display = "block";
+      if (inspectorColocatedTitle) {
+        inspectorColocatedTitle.textContent = `Co-located Receivers at Site (${coLocated.length})`;
+      }
+      inspectorColocatedChips.innerHTML = coLocated.map(s => {
+        const sStatus = (s.status || "offline").toLowerCase();
+        const isActive = s.name === station.name;
+        return `
+          <div class="colocated-chip ${isActive ? 'active' : ''}" onclick="window.inspectStationByName('${s.name}')" title="RTCM ID #${s.stationId != null ? s.stationId : '?'}, Status: ${s.status}">
+            <span class="legend-dot ${sStatus}" style="width:6px;height:6px;"></span>
+            <span>${s.name} ${s.stationId != null ? '(#' + s.stationId + ')' : ''}</span>
+          </div>
+        `;
+      }).join("");
+    } else if (inspectorColocatedSection) {
+      inspectorColocatedSection.style.display = "none";
     }
 
     // Baseline rover helper sync

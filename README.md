@@ -108,6 +108,11 @@ The portal integrates directly with GEODNET's public RTK Coverage API endpoint:
   - Hides distance text when zoomed out to maintain a clean, uncluttered global map.
 - **Status Filter**: Toggle between `All Stations`, `Active Only (VRS/RTK Ready)`, `Online (Connecting)`, and `Offline (Maintenance)`.
 - **RTK Baseline Range Buffers**: Visualizes standard 20 km (Core RTK Fix) and 40 km (Extended RTK Fix) coverage radius circles around active reference stations.
+- **Co-located Multi-Station Clustering**:
+  - Automatically aggregates stations sharing the exact same physical coordinates (e.g. multi-antenna or redundant receiver sites) into a single visual site with a distinct cluster badge.
+  - Interactive multi-station popup lets users inspect and analyze every receiver at the site without overlapping marker occlusion.
+  - Station Inspector sidebar provides 1-click navigation chips to switch between co-located receivers at the site.
+  - Deduplicates physical sites during Delaunay triangulation to eliminate 0-distance degenerate edges.
 - **Interactive Inspector**: Click or hover any base station to view exact geodetic coordinates, station status, NTRIP mountpoints, and recommended regional caster routing.
 - **Rover Baseline Proximity Analyzer**: Enter jobsite coordinates or click on the map to calculate the exact Haversine distance to the nearest base station with positioning precision ratings:
   - `< 15 km`: Optimal Centimeter RTK Fix (< 1.0 cm)
