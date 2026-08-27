@@ -1488,6 +1488,38 @@ function initCoverageChecker() {
 // ==========================================
 // 13. Interactive RTK Coverage Map System
 // ==========================================
+
+// Lightweight Built-in 2D Delaunay Triangulation Engine (Fallback & Standalone)
+class FastDelaunay {
+  static from(points) {
+    if (typeof Delaunator !== "undefined") {
+      return Delaunator.from(points);
+    }
+    const n = points.length;
+    const coords = new Float64Array(n * 2);
+    for (let i = 0; i < n; i++) {
+      coords[2 * i] = points[i][0];
+      coords[2 * i + 1] = points[i][1];
+    }
+    return new FastDelaunay(coords);
+  }
+  constructor(coords) {
+    const n = coords.length >> 1;
+    this.coords = coords;
+    const maxTriangles = Math.max(2 * n - 5, 0);
+    this._triangles = new Uint32Array(3 * maxTriangles);
+    this._halfedges = new Int32Array(3 * maxTriangles);
+    this.trianglesLen = 0;
+    this.triangles = new Uint32Array(0);
+    this.halfedges = new Int32Array(0);
+    if (typeof Delaunator !== "undefined") {
+      const d = new Delaunator(coords);
+      this.triangles = d.triangles;
+      this.halfedges = d.halfedges;
+    }
+  }
+}
+
 function initCoverageMap() {
   const mapContainer = document.getElementById("rtk-leaflet-map");
   if (!mapContainer || typeof L === "undefined") return;
@@ -1496,6 +1528,7 @@ function initCoverageMap() {
   let allStations = [];
   let stationMarkers = [];
   let rangeCircles = [];
+  let delaunayEdges = [];
   let selectedStation = null;
   let roverMarker = null;
   let baselineLine = null;
@@ -1508,6 +1541,8 @@ function initCoverageMap() {
   const refreshIcon = document.getElementById("refresh-spinner-icon");
   const apiStatusBadge = document.getElementById("api-status-badge");
   const statusFilterSelect = document.getElementById("map-status-filter");
+  const delaunayToggleSelect = document.getElementById("map-delaunay-toggle");
+  const edgeDistToggleSelect = document.getElementById("map-edge-dist-toggle");
   const rangeToggleSelect = document.getElementById("map-range-toggle");
   const tileSelect = document.getElementById("map-tile-select");
   const searchInput = document.getElementById("map-search-input");
@@ -1515,6 +1550,8 @@ function initCoverageMap() {
   const locateBtn = document.getElementById("map-locate-btn");
   const regionBtns = document.querySelectorAll(".region-jump-btn");
   const viewportCountEl = document.getElementById("map-viewport-count");
+  const legendDelaunayItem = document.getElementById("legend-delaunay-item");
+  const legendDistItem = document.getElementById("legend-dist-item");
   const legendRangeItem = document.getElementById("legend-range-item");
   const legendRangeLabel = document.getElementById("legend-range-label");
 
@@ -1557,7 +1594,7 @@ function initCoverageMap() {
   });
   rtkCoverageMap = map;
 
-  // Custom Canvas Renderer for high-performance rendering of ~20k points
+  // Custom Canvas Renderer for high-performance rendering of ~20k points and ~45k mesh lines
   const canvasRenderer = L.canvas({ padding: 0.5, tolerance: 5 });
 
   // 2. Basemap Tile Layers (100% Free & No API Key / No Watermark Required)
@@ -1592,9 +1629,11 @@ function initCoverageMap() {
     }
   });
 
-  // Layer groups for markers & range circles
-  const markersLayer = L.layerGroup().addTo(map);
+  // Layer groups for markers, Delaunay mesh, edge labels, & range circles
+  const delaunayLayer = L.layerGroup().addTo(map);
   const rangeLayer = L.layerGroup().addTo(map);
+  const markersLayer = L.layerGroup().addTo(map);
+  const edgeLabelsLayer = L.layerGroup().addTo(map);
   const roverLayer = L.layerGroup().addTo(map);
 
   // Helper: Haversine distance in km
@@ -1664,7 +1703,7 @@ function initCoverageMap() {
       // Compute statistics
       updateMetrics(allStations);
 
-      // Render Stations on Map
+      // Render Stations & Delaunay Network on Map
       renderStations();
 
       if (loader) {
@@ -1713,7 +1752,151 @@ function initCoverageMap() {
     }
   }
 
-  // 5. Render Stations and Range Buffers
+  // 5. Compute Delaunay Triangulation Network
+  function buildDelaunayNetwork(stations) {
+    delaunayEdges = [];
+    if (!stations || stations.length < 3) return;
+
+    try {
+      const coords = stations.map(s => [s.lng, s.lat]);
+      let delaunay = (typeof Delaunator !== "undefined") ? Delaunator.from(coords) : FastDelaunay.from(coords);
+      if (!delaunay || !delaunay.triangles || delaunay.triangles.length === 0) return;
+
+      const halfedges = delaunay.halfedges;
+      const triangles = delaunay.triangles;
+
+      for (let i = 0; i < halfedges.length; i++) {
+        if (i > halfedges[i]) {
+          const p1Index = triangles[i];
+          const p2Index = triangles[i % 3 === 2 ? i - 2 : i + 1];
+          const s1 = stations[p1Index];
+          const s2 = stations[p2Index];
+          if (!s1 || !s2) continue;
+
+          const dist = calculateDistanceKm(s1.lat, s1.lng, s2.lat, s2.lng);
+          // Filter out large cross-ocean triangles (> 250km) to keep realistic RTK baseline networks
+          if (dist <= 250) {
+            delaunayEdges.push({
+              s1,
+              s2,
+              dist,
+              lat1: s1.lat,
+              lng1: s1.lng,
+              lat2: s2.lat,
+              lng2: s2.lng,
+              midLat: (s1.lat + s2.lat) / 2,
+              midLng: (s1.lng + s2.lng) / 2
+            });
+          }
+        }
+      }
+    } catch (e) {
+      console.error("Delaunay triangulation calculation failed:", e);
+    }
+  }
+
+  // 6. Render Delaunay Mesh
+  function renderDelaunayMesh() {
+    delaunayLayer.clearLayers();
+    edgeLabelsLayer.clearLayers();
+
+    const showMesh = delaunayToggleSelect ? delaunayToggleSelect.value === "on" : true;
+    if (legendDelaunayItem) legendDelaunayItem.style.display = showMesh ? "flex" : "none";
+    if (legendDistItem) legendDistItem.style.display = showMesh ? "flex" : "none";
+
+    if (!showMesh || delaunayEdges.length === 0) return;
+
+    // Collect all polyline coordinates for ultra-fast canvas batch rendering
+    const lineSegments = [];
+    delaunayEdges.forEach(edge => {
+      lineSegments.push([[edge.lat1, edge.lng1], [edge.lat2, edge.lng2]]);
+    });
+
+    const meshPolyline = L.polyline(lineSegments, {
+      renderer: canvasRenderer,
+      color: "#00F2FE",
+      weight: 1.1,
+      opacity: 0.35,
+      interactive: false
+    });
+
+    delaunayLayer.addLayer(meshPolyline);
+
+    // Update zoom-dependent edge length labels
+    updateEdgeDistanceLabels();
+  }
+
+  // 7. Update Edge Distance Labels (Detailed View Only: Zoom >= 9)
+  function updateEdgeDistanceLabels() {
+    edgeLabelsLayer.clearLayers();
+
+    const showMesh = delaunayToggleSelect ? delaunayToggleSelect.value === "on" : true;
+    const distMode = edgeDistToggleSelect ? edgeDistToggleSelect.value : "auto";
+
+    if (!showMesh || distMode === "off" || delaunayEdges.length === 0) return;
+
+    const zoom = map.getZoom();
+
+    // DETAILED VIEW CRITERION: Zoom >= 9
+    // Do NOT show baseline lengths for non-detailed views (zoom < 9)
+    if (zoom < 9) {
+      return;
+    }
+
+    const bounds = map.getBounds();
+    const visibleEdges = delaunayEdges.filter(edge => {
+      return bounds.contains([edge.midLat, edge.midLng]);
+    });
+
+    // Limit maximum rendered badges in view to avoid clutter
+    const maxLabels = 120;
+    const step = Math.max(1, Math.floor(visibleEdges.length / maxLabels));
+
+    for (let i = 0; i < visibleEdges.length; i += step) {
+      const edge = visibleEdges[i];
+
+      const labelIcon = L.divIcon({
+        className: "delaunay-edge-label-wrap",
+        html: `<div class="delaunay-edge-label">${edge.dist.toFixed(1)} km</div>`,
+        iconSize: [42, 16],
+        iconAnchor: [21, 8]
+      });
+
+      const marker = L.marker([edge.midLat, edge.midLng], {
+        icon: labelIcon,
+        interactive: true
+      });
+
+      marker.bindPopup(`
+        <div style="font-family: 'Inter', sans-serif; font-size: 0.82rem; min-width: 210px;">
+          <div style="font-weight: 700; color: #00F2FE; font-size: 0.9rem; margin-bottom: 6px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 4px;">
+            Delaunay RTK Baseline
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 3px; font-size: 0.75rem; color: #9ca3af;">
+            <span>Node A:</span>
+            <strong style="color: #f3f4f6; font-family: 'JetBrains Mono', monospace;">${edge.s1.name}</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.75rem; color: #9ca3af;">
+            <span>Node B:</span>
+            <strong style="color: #f3f4f6; font-family: 'JetBrains Mono', monospace;">${edge.s2.name}</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 4px; border-top: 1px dashed rgba(255,255,255,0.15);">
+            <span style="color: #9ca3af; font-size: 0.75rem;">Baseline Distance:</span>
+            <span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; color: ${edge.dist <= 20 ? 'var(--success)' : (edge.dist <= 40 ? 'var(--primary)' : 'var(--warning)')}; font-size: 0.88rem;">
+              ${edge.dist.toFixed(2)} km
+            </span>
+          </div>
+          <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px;">
+            ${edge.dist <= 20 ? 'Optimal Short Baseline (Instant Fix)' : (edge.dist <= 40 ? 'Standard Survey Baseline' : 'Extended Baseline')}
+          </div>
+        </div>
+      `, { maxWidth: 260 });
+
+      edgeLabelsLayer.addLayer(marker);
+    }
+  }
+
+  // 8. Render Stations, Delaunay Network, and Range Buffers
   function renderStations() {
     markersLayer.clearLayers();
     rangeLayer.clearLayers();
@@ -1721,7 +1904,7 @@ function initCoverageMap() {
     rangeCircles = [];
 
     const statusFilter = statusFilterSelect ? statusFilterSelect.value : "ALL";
-    const rangeVal = rangeToggleSelect ? rangeToggleSelect.value : "20";
+    const rangeVal = rangeToggleSelect ? rangeToggleSelect.value : "none";
 
     // Update legend range item visibility
     if (legendRangeItem && legendRangeLabel) {
@@ -1735,9 +1918,27 @@ function initCoverageMap() {
 
     const rangeMeters = (rangeVal === "20" || rangeVal === "40") ? parseInt(rangeVal) * 1000 : 0;
 
+    // Filter stations
+    const filteredStations = [];
+    const activeStationsForMesh = [];
+
     allStations.forEach(station => {
       const st = (station.status || "OFFLINE").toUpperCase();
-      if (statusFilter !== "ALL" && st !== statusFilter) return;
+      if (statusFilter === "ALL" || st === statusFilter) {
+        filteredStations.push(station);
+      }
+      if (st === "ACTIVE") {
+        activeStationsForMesh.push(station);
+      }
+    });
+
+    // Compute Delaunay triangulation on active stations
+    buildDelaunayNetwork(activeStationsForMesh);
+    renderDelaunayMesh();
+
+    // Render station nodes
+    filteredStations.forEach(station => {
+      const st = (station.status || "OFFLINE").toUpperCase();
 
       let color = "#00F2FE";
       let fillColor = "#00F2FE";
@@ -1832,7 +2033,7 @@ function initCoverageMap() {
     updateViewportCount();
   }
 
-  // 6. Update Visible Viewport Station Count
+  // 9. Update Visible Viewport Station Count
   function updateViewportCount() {
     if (!viewportCountEl) return;
     const bounds = map.getBounds();
@@ -1845,9 +2046,14 @@ function initCoverageMap() {
     viewportCountEl.textContent = `Showing ${count.toLocaleString()} in view (${allStations.length.toLocaleString()} total)`;
   }
 
-  map.on("moveend", updateViewportCount);
+  map.on("moveend", () => {
+    updateViewportCount();
+    updateEdgeDistanceLabels();
+  });
 
-  // 7. Inspect Selected Station in Sidebar
+  map.on("zoomend", updateEdgeDistanceLabels);
+
+  // 10. Inspect Selected Station in Sidebar
   function inspectStation(station) {
     selectedStation = station;
     if (!inspectorCard) return;
@@ -1898,7 +2104,7 @@ function initCoverageMap() {
     calculateBaselineForCoords(lat, lng);
   };
 
-  // 8. Inspector Action Buttons
+  // 11. Inspector Action Buttons
   if (inspectorCopyBtn) {
     inspectorCopyBtn.addEventListener("click", () => {
       if (!selectedStation) return;
@@ -1918,7 +2124,7 @@ function initCoverageMap() {
     });
   }
 
-  // 9. Baseline Analyzer Calculation
+  // 12. Baseline Analyzer Calculation
   function calculateBaselineForCoords(roverLat, roverLng) {
     if (isNaN(roverLat) || isNaN(roverLng)) return;
 
@@ -2040,7 +2246,7 @@ function initCoverageMap() {
     }
   });
 
-  // 10. Search Functionality
+  // 13. Search Functionality
   async function handleSearch() {
     const query = (searchInput ? searchInput.value : "").trim();
     if (!query) return;
@@ -2101,7 +2307,7 @@ function initCoverageMap() {
     });
   }
 
-  // 11. Locate My Position
+  // 14. Locate My Position
   if (locateBtn) {
     locateBtn.addEventListener("click", () => {
       if (!navigator.geolocation) {
@@ -2128,7 +2334,7 @@ function initCoverageMap() {
     });
   }
 
-  // 12. Region Jump Presets
+  // 15. Region Jump Presets
   const regionPresets = {
     "global": { center: [25, 10], zoom: 2 },
     "north-america": { center: [39.8, -98.5], zoom: 4 },
@@ -2153,11 +2359,13 @@ function initCoverageMap() {
     });
   });
 
-  // 13. Filter Listeners
+  // 16. Filter & Delaunay Toggle Listeners
   if (statusFilterSelect) statusFilterSelect.addEventListener("change", renderStations);
+  if (delaunayToggleSelect) delaunayToggleSelect.addEventListener("change", renderDelaunayMesh);
+  if (edgeDistToggleSelect) edgeDistToggleSelect.addEventListener("change", updateEdgeDistanceLabels);
   if (rangeToggleSelect) rangeToggleSelect.addEventListener("change", renderStations);
 
-  // 14. Refresh Button
+  // 17. Refresh Button
   if (refreshBtn) refreshBtn.addEventListener("click", fetchStationData);
 
   // Initial Fetch

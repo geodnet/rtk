@@ -96,6 +96,10 @@ The portal integrates directly with GEODNET's public RTK Coverage API endpoint:
 
 ### Key Map Features
 - **High-Performance Canvas Rendering**: Uses Leaflet.js with HTML5 Canvas (`L.canvas({ padding: 0.5 })`) to smoothly render ~20,000 global reference stations at 60 FPS without DOM overhead.
+- **Delaunay Triangulation Network Mesh**: Computes 2D Delaunay network across active CORS stations to visualize Network RTK / VRS baseline interconnections.
+- **Dynamic Edge Lengths in KM (Detailed Zoom View)**:
+  - When zoomed into a detailed view (**Zoom ≥ 9**), automatically displays distance badges in kilometers along visible Delaunay baseline edges.
+  - Hides distance text when zoomed out to maintain a clean, uncluttered global map.
 - **Status Filter**: Toggle between `All Stations`, `Active Only (VRS/RTK Ready)`, `Online (Connecting)`, and `Offline (Maintenance)`.
 - **RTK Baseline Range Buffers**: Visualizes standard 20 km (Core RTK Fix) and 40 km (Extended RTK Fix) coverage radius circles around active reference stations.
 - **Interactive Inspector**: Click or hover any base station to view exact geodetic coordinates, station status, NTRIP mountpoints, and recommended regional caster routing.

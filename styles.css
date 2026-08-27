@@ -734,6 +734,28 @@ header {
   background-color: #EF4444;
 }
 
+.legend-delaunay-line {
+  width: 14px;
+  height: 2px;
+  background-color: #00F2FE;
+  box-shadow: 0 0 6px rgba(0, 242, 254, 0.8);
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.legend-edge-badge-sample {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #00F2FE;
+  background: rgba(0, 242, 254, 0.12);
+  border: 1px solid rgba(0, 242, 254, 0.4);
+  padding: 1px 4px;
+  border-radius: 3px;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
 .legend-range-circle {
   width: 12px;
   height: 12px;
@@ -742,6 +764,30 @@ header {
   background-color: rgba(0, 242, 254, 0.15);
   display: inline-block;
   flex-shrink: 0;
+}
+
+/* Detailed Zoom Delaunay Edge Labels */
+.delaunay-edge-label-wrap {
+  background: none !important;
+  border: none !important;
+}
+
+.delaunay-edge-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #00F2FE;
+  background-color: rgba(10, 14, 23, 0.88);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(0, 242, 254, 0.45);
+  padding: 1px 5px;
+  border-radius: 4px;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+  transform: translate(-50%, -50%);
+  display: inline-block;
+  line-height: 1.2;
 }
 
 .map-floating-viewport-info {

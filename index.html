@@ -302,12 +302,30 @@
                     </select>
                   </div>
 
+                  <!-- Delaunay Mesh Toggle -->
+                  <div class="control-select-wrap">
+                    <label for="map-delaunay-toggle">Delaunay Mesh:</label>
+                    <select id="map-delaunay-toggle" class="input-ctrl">
+                      <option value="on" selected>Mesh On</option>
+                      <option value="off">Mesh Off</option>
+                    </select>
+                  </div>
+
+                  <!-- Edge Distance Labels Toggle -->
+                  <div class="control-select-wrap" id="edge-dist-wrap">
+                    <label for="map-edge-dist-toggle">Edge Lengths (km):</label>
+                    <select id="map-edge-dist-toggle" class="input-ctrl">
+                      <option value="auto" selected>Auto (Zoom ≥ 9)</option>
+                      <option value="off">Off</option>
+                    </select>
+                  </div>
+
                   <!-- Range Buffer Selector -->
                   <div class="control-select-wrap">
                     <label for="map-range-toggle">RTK Range:</label>
                     <select id="map-range-toggle" class="input-ctrl">
-                      <option value="none">Points Only</option>
-                      <option value="20" selected>20 km (Core RTK)</option>
+                      <option value="none" selected>Points Only</option>
+                      <option value="20">20 km (Core RTK)</option>
                       <option value="40">40 km (Extended RTK)</option>
                     </select>
                   </div>
@@ -316,7 +334,7 @@
                   <div class="control-select-wrap">
                     <label for="map-tile-select">Basemap:</label>
                     <select id="map-tile-select" class="input-ctrl">
-                      <option value="dark" selected>Dark Matter</option>
+                      <option value="dark" selected>Dark Gray Canvas</option>
                       <option value="satellite">Satellite Imagery</option>
                       <option value="streets">Street Map</option>
                     </select>
@@ -365,7 +383,15 @@
                   <span class="legend-dot offline"></span>
                   <span>Offline / Maintenance</span>
                 </div>
-                <div class="legend-item" id="legend-range-item">
+                <div class="legend-item" id="legend-delaunay-item">
+                  <span class="legend-delaunay-line"></span>
+                  <span>Delaunay Baseline Network</span>
+                </div>
+                <div class="legend-item" id="legend-dist-item">
+                  <span class="legend-edge-badge-sample">18.4 km</span>
+                  <span>Edge Length (Zoom ≥ 9)</span>
+                </div>
+                <div class="legend-item" id="legend-range-item" style="display: none;">
                   <span class="legend-range-circle"></span>
                   <span id="legend-range-label">20km RTK Core Range</span>
                 </div>
@@ -991,6 +1017,9 @@
   
   <!-- Leaflet JavaScript library -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  
+  <!-- Delaunator Triangulation library -->
+  <script src="https://unpkg.com/delaunator@5.0.1/delaunator.min.js"></script>
   
   <!-- App JavaScript logic -->
   <script src="app.js"></script>
