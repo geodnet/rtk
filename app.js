@@ -1554,6 +1554,7 @@ function initCoverageMap() {
   const legendDistItem = document.getElementById("legend-dist-item");
   const legendRangeItem = document.getElementById("legend-range-item");
   const legendRangeLabel = document.getElementById("legend-range-label");
+  const legendPppItem = document.getElementById("legend-ppp-item");
 
   // Metrics Elements
   const statTotalEl = document.getElementById("stat-total-stations");
@@ -1565,6 +1566,7 @@ function initCoverageMap() {
   // Inspector Elements
   const inspectorCard = document.getElementById("station-inspector-card");
   const inspectorBadge = document.getElementById("inspector-status-badge");
+  const inspectorPppBadge = document.getElementById("inspector-ppp-badge");
   const inspectorEmpty = document.getElementById("inspector-empty-state");
   const inspectorContent = document.getElementById("inspector-content");
   const inspectorId = document.getElementById("inspector-id");
@@ -1633,12 +1635,22 @@ function initCoverageMap() {
     }
   });
 
-  // Layer groups for markers, Delaunay mesh, edge labels, & range circles
+  // Layer groups for markers, Delaunay mesh, edge labels, range circles, & selection highlight
   const delaunayLayer = L.layerGroup().addTo(map);
   const rangeLayer = L.layerGroup().addTo(map);
   const markersLayer = L.layerGroup().addTo(map);
   const edgeLabelsLayer = L.layerGroup().addTo(map);
   const roverLayer = L.layerGroup().addTo(map);
+  const highlightLayer = L.layerGroup().addTo(map);
+
+  // Helper: Check if station is an official Global PPP tracking station (G001 - G120)
+  function isPPPStation(station) {
+    if (!station || !station.name) return false;
+    const match = station.name.match(/^G(\d{1,3})$/i);
+    if (!match) return false;
+    const num = parseInt(match[1], 10);
+    return num >= 1 && num <= 120;
+  }
 
   // Helper: Haversine distance in km
   function calculateDistanceKm(lat1, lon1, lat2, lon2) {
@@ -1939,13 +1951,24 @@ function initCoverageMap() {
 
     allStations.forEach(station => {
       const st = (station.status || "OFFLINE").toUpperCase();
-      if (statusFilter === "ALL" || st === statusFilter) {
+      const ppp = isPPPStation(station);
+
+      if (statusFilter === "ALL") {
+        filteredStations.push(station);
+      } else if (statusFilter === "PPP") {
+        if (ppp) filteredStations.push(station);
+      } else if (st === statusFilter) {
         filteredStations.push(station);
       }
-      if (st === "ACTIVE") {
+
+      if (st === "ACTIVE" && (statusFilter !== "PPP" || ppp)) {
         activeStationsForMesh.push(station);
       }
     });
+
+    if (legendPppItem) {
+      legendPppItem.style.display = (statusFilter === "PPP" || statusFilter === "ALL") ? "flex" : "none";
+    }
 
     // Compute Delaunay triangulation on active unique station sites
     buildDelaunayNetwork(activeStationsForMesh);
@@ -1970,15 +1993,20 @@ function initCoverageMap() {
       const stations = group.stations;
       const hasActive = stations.some(s => (s.status || "").toUpperCase() === "ACTIVE");
       const hasOnline = stations.some(s => (s.status || "").toUpperCase() === "ONLINE");
+      const hasPPP = stations.some(isPPPStation);
       const aggStatus = hasActive ? "ACTIVE" : (hasOnline ? "ONLINE" : "OFFLINE");
 
       let color = "#00F2FE";
       let fillColor = "#00F2FE";
       let fillOpacity = 0.75;
-      let radius = stations.length > 1 ? 5 : 3.5;
-      let weight = stations.length > 1 ? 2 : 1;
+      let radius = hasPPP ? (stations.length > 1 ? 6.5 : 5.5) : (stations.length > 1 ? 5 : 3.5);
+      let weight = (hasPPP || stations.length > 1) ? 2 : 1;
 
-      if (aggStatus === "ONLINE") {
+      if (statusFilter === "PPP" || hasPPP) {
+        color = "#D946EF";
+        fillColor = aggStatus === "ACTIVE" ? "#D946EF" : (aggStatus === "ONLINE" ? "#F59E0B" : "#EF4444");
+        fillOpacity = 0.85;
+      } else if (aggStatus === "ONLINE") {
         color = "#F59E0B";
         fillColor = "#F59E0B";
         fillOpacity = 0.75;
@@ -1986,14 +2014,14 @@ function initCoverageMap() {
         color = "#EF4444";
         fillColor = "#EF4444";
         fillOpacity = 0.45;
-        radius = stations.length > 1 ? 4.5 : 2.8;
+        radius = hasPPP ? 5 : (stations.length > 1 ? 4.5 : 2.8);
       }
 
       // Add station circle marker using high-performance Canvas renderer
       const marker = L.circleMarker([group.lat, group.lng], {
         renderer: canvasRenderer,
         radius: radius,
-        color: stations.length > 1 ? "#FFFFFF" : color,
+        color: (hasPPP || statusFilter === "PPP") ? "#D946EF" : (stations.length > 1 ? "#FFFFFF" : color),
         weight: weight,
         fillColor: fillColor,
         fillOpacity: fillOpacity
@@ -2009,14 +2037,16 @@ function initCoverageMap() {
       if (stations.length === 1) {
         const station = stations[0];
         const stationSt = (station.status || "OFFLINE").toUpperCase();
+        const isStationPpp = isPPPStation(station);
         popupHtml = `
           <div style="min-width: 220px; font-family: 'Inter', sans-serif;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-              <span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #00F2FE; font-size: 1rem;">${station.name}</span>
+              <span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; color: ${isStationPpp ? '#E879F9' : '#00F2FE'}; font-size: 1rem;">${station.name}</span>
               <span style="font-size: 0.72rem; padding: 2px 6px; border-radius: 4px; background: rgba(${stationSt === 'ACTIVE' ? '0, 242, 254' : (stationSt === 'ONLINE' ? '245, 158, 11' : '239, 68, 68')}, 0.15); color: ${color}; font-weight: 600;">
                 ${stationSt}
               </span>
             </div>
+            ${isStationPpp ? `<div style="margin-bottom: 6px;"><span class="badge" style="background: rgba(217, 70, 239, 0.2); color: #E879F9; border: 1px solid #D946EF; font-size: 0.7rem; padding: 2px 6px; font-weight: 600;">Global PPP Station (G001–G120)</span></div>` : ''}
             ${station.stationId != null ? `<div style="font-size: 0.76rem; color: #9ca3af; margin-bottom: 6px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 4px;">RTCM Station ID: <strong style="color: var(--primary); font-family: 'JetBrains Mono', monospace;">#${station.stationId}</strong></div>` : `<div style="margin-bottom: 6px;"></div>`}
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 0.78rem; margin-bottom: 8px;">
               <div>
@@ -2032,7 +2062,7 @@ function initCoverageMap() {
               Caster: <strong style="color: #f3f4f6;">${caster.host}</strong>
             </div>
             <div style="font-size: 0.75rem; color: #9ca3af; margin-bottom: 10px;">
-              Mountpoint: <span style="color: #9d4edd; font-weight: 600;">AUTO</span> (VRS / RTCM 3.2)
+              Mountpoint: <span style="color: #9d4edd; font-weight: 600;">AUTO</span> (RTK / RTCM 3.2)
             </div>
             <div style="display: flex; gap: 6px;">
               <button class="btn btn-primary" onclick="window.inspectStationByName('${station.name}')" style="flex: 1; padding: 4px 8px; font-size: 0.75rem;">
@@ -2058,12 +2088,14 @@ function initCoverageMap() {
             <div class="colocated-list">
               ${stations.map(s => {
                 const sStatus = (s.status || "OFFLINE").toUpperCase();
-                const sColor = sStatus === "ACTIVE" ? "#00F2FE" : (sStatus === "ONLINE" ? "#F59E0B" : "#EF4444");
+                const sPpp = isPPPStation(s);
+                const sColor = sPpp ? "#E879F9" : (sStatus === "ACTIVE" ? "#00F2FE" : (sStatus === "ONLINE" ? "#F59E0B" : "#EF4444"));
                 return `
                   <div class="colocated-station-item">
                     <div style="flex: 1; min-width: 0;">
-                      <div style="font-family: 'JetBrains Mono', monospace; font-weight: 700; color: ${sColor}; font-size: 0.82rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                        ${s.name}
+                      <div style="font-family: 'JetBrains Mono', monospace; font-weight: 700; color: ${sColor}; font-size: 0.82rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center; gap: 4px;">
+                        <span>${s.name}</span>
+                        ${sPpp ? `<span style="font-size: 0.62rem; background: rgba(217, 70, 239, 0.2); color: #E879F9; border: 1px solid #D946EF; padding: 0 4px; border-radius: 2px;">PPP</span>` : ''}
                       </div>
                       <div style="font-size: 0.7rem; color: #9ca3af;">
                         RTCM ID: <strong style="color: #e5e7eb;">#${s.stationId != null ? s.stationId : '--'}</strong> &bull; <span style="font-weight: 600; color: ${sColor};">${sStatus}</span>
@@ -2134,7 +2166,7 @@ function initCoverageMap() {
 
   map.on("zoomend", updateEdgeDistanceLabels);
 
-  // 10. Inspect Selected Station in Sidebar
+  // 10. Inspect Selected Station in Sidebar & Highlight on Map
   function inspectStation(station) {
     selectedStation = station;
     if (!inspectorCard) return;
@@ -2142,14 +2174,38 @@ function initCoverageMap() {
     if (inspectorEmpty) inspectorEmpty.style.display = "none";
     if (inspectorContent) inspectorContent.style.display = "block";
 
+    const isPpp = isPPPStation(station);
     const st = (station.status || "OFFLINE").toUpperCase();
     const isAct = st === "ACTIVE";
     const isOnline = st === "ONLINE";
-    const statusColor = isAct ? "var(--primary)" : (isOnline ? "var(--warning)" : "var(--danger)");
-    const statusBg = isAct ? "rgba(0, 242, 254, 0.12)" : (isOnline ? "rgba(245, 158, 11, 0.12)" : "rgba(239, 68, 68, 0.12)");
+    const statusColor = isPpp ? "#E879F9" : (isAct ? "var(--primary)" : (isOnline ? "var(--warning)" : "var(--danger)"));
+    const statusBg = isPpp ? "rgba(217, 70, 239, 0.15)" : (isAct ? "rgba(0, 242, 254, 0.12)" : (isOnline ? "rgba(245, 158, 11, 0.12)" : "rgba(239, 68, 68, 0.12)"));
+
+    // Animated Highlighting on Map
+    highlightLayer.clearLayers();
+    const highlightColor = isPpp ? "#D946EF" : (isAct ? "#00F2FE" : (isOnline ? "#F59E0B" : "#EF4444"));
+
+    const highlightIcon = L.divIcon({
+      className: "station-selected-pulse-wrap",
+      html: `<div class="station-selected-pulse" style="--pulse-color: ${highlightColor};"><div class="pulse-ring"></div><div class="pulse-core"></div></div>`,
+      iconSize: [36, 36],
+      iconAnchor: [18, 18]
+    });
+
+    const highlightMarker = L.marker([station.lat, station.lng], {
+      icon: highlightIcon,
+      interactive: false,
+      zIndexOffset: 1000
+    });
+    highlightLayer.addLayer(highlightMarker);
+
+    // Global PPP Badge in Inspector
+    if (inspectorPppBadge) {
+      inspectorPppBadge.style.display = isPpp ? "block" : "none";
+    }
 
     if (inspectorBadge) {
-      inspectorBadge.textContent = st;
+      inspectorBadge.textContent = isPpp ? `${st} (PPP)` : st;
       inspectorBadge.style.color = statusColor;
       inspectorBadge.style.background = statusBg;
       inspectorBadge.style.borderColor = statusColor;
@@ -2170,7 +2226,7 @@ function initCoverageMap() {
     }
 
     if (inspectorMountpoint) {
-      inspectorMountpoint.textContent = "AUTO / AUTO_WGS84 / AUTO_ITRF2020";
+      inspectorMountpoint.textContent = isPpp ? "AUTO / BRDC / AUTO_ITRF2020 (PPP)" : "AUTO / AUTO_WGS84 / AUTO_ITRF2020";
     }
 
     // Co-located Stations Navigation Chips in Sidebar
@@ -2184,10 +2240,11 @@ function initCoverageMap() {
       }
       inspectorColocatedChips.innerHTML = coLocated.map(s => {
         const sStatus = (s.status || "offline").toLowerCase();
+        const sPpp = isPPPStation(s);
         const isActive = s.name === station.name;
         return `
           <div class="colocated-chip ${isActive ? 'active' : ''}" onclick="window.inspectStationByName('${s.name}')" title="RTCM ID #${s.stationId != null ? s.stationId : '?'}, Status: ${s.status}">
-            <span class="legend-dot ${sStatus}" style="width:6px;height:6px;"></span>
+            <span class="legend-dot ${sPpp ? 'ppp' : sStatus}" style="width:6px;height:6px;"></span>
             <span>${s.name} ${s.stationId != null ? '(#' + s.stationId + ')' : ''}</span>
           </div>
         `;
@@ -2360,7 +2417,19 @@ function initCoverageMap() {
     const query = (searchInput ? searchInput.value : "").trim();
     if (!query) return;
 
-    // 1. Check if query is coordinates "lat, lng"
+    // 1. Check if query is PPP filter command
+    const cleanQuery = query.trim().replace(/^0x/i, "").replace(/[\*#\s\-:_]/g, "").toUpperCase();
+
+    if (cleanQuery === "PPP" || cleanQuery === "GLOBALPPP" || cleanQuery === "PPPSTATIONS") {
+      if (statusFilterSelect) {
+        statusFilterSelect.value = "PPP";
+        renderStations();
+      }
+      map.flyTo([25, 10], 3, { duration: 1.2 });
+      return;
+    }
+
+    // 2. Check if query is coordinates "lat, lng"
     const coordParts = query.split(/[\s,]+/);
     if (coordParts.length === 2 && !isNaN(coordParts[0]) && !isNaN(coordParts[1])) {
       const lat = parseFloat(coordParts[0]);
@@ -2374,10 +2443,7 @@ function initCoverageMap() {
       }
     }
 
-    // 2. Check if query is an RTCM stationId, full unmasked MAC/serial/station name, or masked station name
-    // Strip colons, dashes, spaces, *, #, and leading 0x (e.g. "38:18:2B:F7:5F:39", "38182BF75F39", "0x24D04CA59", "****CA599")
-    const cleanQuery = query.trim().replace(/^0x/i, "").replace(/[\*#\s\-:_]/g, "").toUpperCase();
-    
+    // 3. Check if query is an RTCM stationId, full unmasked MAC/serial/station name, or masked station name
     // Check if query is an RTCM Station ID (12-bit integer: 0 - 4095, max 4 digits)
     const isRtcmNumericId = /^\d{1,4}$/.test(cleanQuery) && parseInt(cleanQuery, 10) <= 4095;
     let matchingStations = [];
@@ -2419,11 +2485,16 @@ function initCoverageMap() {
         });
       }
 
-      // If the found station's status is currently filtered out (e.g. searching for an ONLINE/OFFLINE station when filter is ACTIVE),
+      // If the found station's status is currently filtered out (e.g. searching for an ONLINE/OFFLINE station when filter is ACTIVE or PPP),
       // auto-switch the filter to ALL so the marker appears on screen
       const currentFilter = statusFilterSelect ? statusFilterSelect.value : "ALL";
       const targetStatus = (target.status || "OFFLINE").toUpperCase();
-      if (currentFilter !== "ALL" && currentFilter !== targetStatus) {
+      const targetIsPpp = isPPPStation(target);
+
+      if (currentFilter === "PPP" && !targetIsPpp) {
+        if (statusFilterSelect) statusFilterSelect.value = "ALL";
+        renderStations();
+      } else if (currentFilter !== "ALL" && currentFilter !== "PPP" && currentFilter !== targetStatus) {
         if (statusFilterSelect) statusFilterSelect.value = "ALL";
         renderStations();
       }

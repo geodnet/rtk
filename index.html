@@ -333,6 +333,7 @@
                       <option value="ACTIVE" selected>Active (RTK Ready)</option>
                       <option value="ONLINE">Online Only</option>
                       <option value="OFFLINE">Offline Only</option>
+                      <option value="PPP">Global PPP Station (G001–G120)</option>
                     </select>
                   </div>
 
@@ -417,6 +418,10 @@
                   <span class="legend-dot offline"></span>
                   <span>Offline / Maintenance</span>
                 </div>
+                <div class="legend-item" id="legend-ppp-item">
+                  <span class="legend-dot ppp"></span>
+                  <span>Global PPP Station (G001–G120)</span>
+                </div>
                 <div class="legend-item" id="legend-delaunay-item">
                   <span class="legend-delaunay-line"></span>
                   <span>Delaunay Baseline Network</span>
@@ -456,6 +461,13 @@
               </div>
 
               <div id="inspector-content" style="display: none;">
+                <div id="inspector-ppp-badge" style="display: none; margin-bottom: 12px;">
+                  <span class="badge" style="background: rgba(217, 70, 239, 0.15); color: #E879F9; border: 1px solid rgba(217, 70, 239, 0.4); font-size: 0.75rem; padding: 4px 8px; display: inline-flex; align-items: center; gap: 5px; font-weight: 600;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+                    Global PPP Station (G001–G120)
+                  </span>
+                </div>
+
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
                   <div>
                     <div class="info-item-title" title="12-bit RTCM standard station identifier (0-4095), regionally reused by GNSS reference networks.">

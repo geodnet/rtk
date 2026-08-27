@@ -734,6 +734,11 @@ header {
   background-color: #EF4444;
 }
 
+.legend-dot.ppp {
+  background-color: #D946EF;
+  box-shadow: 0 0 6px #D946EF;
+}
+
 .legend-delaunay-line {
   width: 14px;
   height: 2px;
@@ -764,6 +769,68 @@ header {
   background-color: rgba(0, 242, 254, 0.15);
   display: inline-block;
   flex-shrink: 0;
+}
+
+/* Animated Station Selection Highlight Pulse */
+.station-selected-pulse-wrap {
+  background: transparent !important;
+  border: none !important;
+}
+
+.station-selected-pulse {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.station-selected-pulse .pulse-ring {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--pulse-color, #00F2FE);
+  box-shadow: 0 0 12px var(--pulse-color, #00F2FE);
+  animation: stationPulseAnim 1.6s infinite ease-out;
+}
+
+.station-selected-pulse .pulse-core {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--pulse-color, #00F2FE);
+  border: 2px solid #FFFFFF;
+  box-shadow: 0 0 10px var(--pulse-color, #00F2FE);
+  animation: stationCoreGlow 1.6s infinite ease-in-out alternate;
+}
+
+@keyframes stationPulseAnim {
+  0% {
+    transform: scale(0.4);
+    opacity: 1;
+  }
+  60% {
+    transform: scale(1.3);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+@keyframes stationCoreGlow {
+  0% {
+    transform: scale(0.9);
+    box-shadow: 0 0 6px var(--pulse-color, #00F2FE);
+  }
+  100% {
+    transform: scale(1.2);
+    box-shadow: 0 0 16px var(--pulse-color, #00F2FE);
+  }
 }
 
 /* Detailed Zoom Delaunay Edge Labels */
