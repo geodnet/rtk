@@ -117,6 +117,11 @@ The portal integrates directly with GEODNET's public RTK Coverage API endpoint:
     - 🟠 **Active &rarr; Online / Offline** (Degraded or RTK disabled)
     - 🔵 **Offline / Online &rarr; Active** (Recovered / promoted to RTK ready)
   - Interactive, searchable transition events feed with 1-click **"View"** navigation to jump directly to and highlight transitioning stations on the map.
+- **Population Coverage & RTK Gap Analytics Dashboard**:
+  - Quantifies real-time centimeter RTK coverage accessibility relative to global and regional urban populations across major global metropolitan centers.
+  - **Global & Regional Coverage Rates**: Live percentage progress bars for North America, Europe, Asia & Pacific, South America, Oceania, Middle East, and Sub-Saharan Africa.
+  - **Top Underserved Metros Bounty Leaderboard**: Ranked table of high-population metropolitan areas with baseline distances $> 40\text{ km}$, identifying high-ROI deployment bounties.
+  - **Interactive Map Gap Overlay**: Toggle on the coverage map showing colored population bubbles (Green = Covered $< 20\text{ km}$, Amber = Extended $20–40\text{ km}$, Red = High-Priority Gap Void $> 40\text{ km}$).
 - **Status & PPP Layer Filter**: Toggle between `All Stations`, `Active Only (RTK Ready)`, `Online Only`, `Offline Only`, and **`Global PPP Station`** to isolate GEODNET's intercontinental PPP tracker backbone.
 - **Dynamic Station Selection Highlighting**: Whenever a station is searched, clicked, or inspected, a glowing pulsating target ring highlights the exact station position on the map canvas.
 - **RTK Baseline Range Buffers**: Visualizes standard 20 km (Core RTK Fix) and 40 km (Extended RTK Fix) coverage radius circles around active reference stations.

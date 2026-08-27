@@ -1544,6 +1544,7 @@ function initCoverageMap() {
   const delaunayToggleSelect = document.getElementById("map-delaunay-toggle");
   const edgeDistToggleSelect = document.getElementById("map-edge-dist-toggle");
   const rangeToggleSelect = document.getElementById("map-range-toggle");
+  const gapToggleSelect = document.getElementById("map-gap-toggle");
   const tileSelect = document.getElementById("map-tile-select");
   const searchInput = document.getElementById("map-search-input");
   const searchBtn = document.getElementById("map-search-btn");
@@ -1642,6 +1643,7 @@ function initCoverageMap() {
   const edgeLabelsLayer = L.layerGroup().addTo(map);
   const roverLayer = L.layerGroup().addTo(map);
   const highlightLayer = L.layerGroup().addTo(map);
+  const gapOverlayLayer = L.layerGroup();
 
   // Helper: Check if station is an official Global PPP tracking station (G001 - G120)
   function isPPPStation(station) {
@@ -1724,6 +1726,9 @@ function initCoverageMap() {
 
       // Process Station Network Dynamics & State Transition Diffing
       processStationDynamics(allStations);
+
+      // Calculate Population-Weighted RTK Coverage Gaps
+      calculatePopulationGaps();
 
       if (loader) {
         loaderText.textContent = `Rendered ${allStations.length.toLocaleString()} stations`;
@@ -3042,9 +3047,369 @@ function initCoverageMap() {
     if (searchFilterEl) searchFilterEl.addEventListener("input", updateDynamicsDashboardUI);
   }
 
-  // Load historical transitions from GitHub repository
-  loadRepoHistory().then(() => {
+  // ==========================================
+  // POPULATION COVERAGE & RTK GAP ANALYTICS
+  // ==========================================
+
+  let worldCities = [];
+  let analyzedCities = [];
+
+  async function loadWorldCities() {
+    try {
+      const res = await fetch("data/world_cities.json?v=" + Date.now());
+      if (res.ok) {
+        worldCities = await res.json();
+      }
+    } catch (err) {
+      console.warn("Could not load world cities dataset:", err);
+    }
+  }
+
+  function calculatePopulationGaps() {
+    if (!worldCities || worldCities.length === 0 || !allStations || allStations.length === 0) return;
+
+    const activeStations = allStations.filter(s => (s.status || "").toUpperCase() === "ACTIVE");
+    if (activeStations.length === 0) return;
+
+    analyzedCities = worldCities.map(city => {
+      let minDist = Infinity;
+      let nearest = null;
+
+      activeStations.forEach(st => {
+        const d = calculateDistanceKm(city.lat, city.lng, st.lat, st.lng);
+        if (d < minDist) {
+          minDist = d;
+          nearest = st;
+        }
+      });
+
+      let status = "VOID";
+      if (minDist < 20) status = "OPTIMAL";
+      else if (minDist <= 40) status = "EXTENDED";
+
+      const priorityScore = (city.pop || 100000) * Math.min(minDist, 100);
+
+      return {
+        ...city,
+        nearestStation: nearest,
+        distanceKm: minDist,
+        status: status,
+        priorityScore: priorityScore
+      };
+    });
+
+    // Sort by priority score descending for gaps
+    analyzedCities.sort((a, b) => b.priorityScore - a.priorityScore);
+
+    updatePopulationGapUI();
+    renderGapOverlayLayer();
+  }
+
+  function updatePopulationGapUI() {
+    if (!analyzedCities || analyzedCities.length === 0) return;
+
+    const analyzedCountEl = document.getElementById("gaps-analyzed-count");
+    const globalPctEl = document.getElementById("gap-global-pct");
+    const optimalCountEl = document.getElementById("gap-optimal-count");
+    const extendedCountEl = document.getElementById("gap-extended-count");
+    const voidCountEl = document.getElementById("gap-void-count");
+    const regionalBarsEl = document.getElementById("regional-coverage-bars");
+    const gapsTableBody = document.getElementById("gaps-table-body");
+    const searchInput = document.getElementById("gap-search-input");
+    const regionFilter = document.getElementById("gap-region-filter");
+    const statusFilter = document.getElementById("gap-status-filter");
+
+    if (analyzedCountEl) {
+      analyzedCountEl.textContent = `Analyzed ${analyzedCities.length} Global Metros`;
+    }
+
+    // Global Metrics Calculation
+    let totalUrbanPop = 0;
+    let coveredUrbanPop = 0; // <= 30 km
+    let optimalCount = 0;
+    let extendedCount = 0;
+    let voidCount = 0;
+
+    analyzedCities.forEach(c => {
+      const pop = c.pop || 0;
+      totalUrbanPop += pop;
+      if (c.distanceKm <= 30) {
+        coveredUrbanPop += pop;
+      }
+      if (c.status === "OPTIMAL") optimalCount++;
+      else if (c.status === "EXTENDED") extendedCount++;
+      else voidCount++;
+    });
+
+    const globalPct = totalUrbanPop > 0 ? ((coveredUrbanPop / totalUrbanPop) * 100).toFixed(1) : "0.0";
+    const coveredBillions = (coveredUrbanPop / 1000000000).toFixed(2);
+    const totalBillions = (totalUrbanPop / 1000000000).toFixed(2);
+
+    if (globalPctEl) {
+      globalPctEl.innerHTML = `${globalPct}% <span style="font-size: 0.82rem; font-weight: normal; color: var(--text-muted);">(${coveredBillions}B / ${totalBillions}B Pop)</span>`;
+    }
+    if (optimalCountEl) {
+      const optPct = ((optimalCount / analyzedCities.length) * 100).toFixed(1);
+      optimalCountEl.innerHTML = `${optimalCount} <span style="font-size: 0.8rem; font-weight: normal; color: var(--text-muted);">(${optPct}%)</span>`;
+    }
+    if (extendedCountEl) {
+      const extPct = ((extendedCount / analyzedCities.length) * 100).toFixed(1);
+      extendedCountEl.innerHTML = `${extendedCount} <span style="font-size: 0.8rem; font-weight: normal; color: var(--text-muted);">(${extPct}%)</span>`;
+    }
+    if (voidCountEl) {
+      const voidPct = ((voidCount / analyzedCities.length) * 100).toFixed(1);
+      voidCountEl.innerHTML = `${voidCount} <span style="font-size: 0.8rem; font-weight: normal; color: var(--text-muted);">(${voidPct}%)</span>`;
+    }
+
+    // Regional Metrics Breakdown
+    const regionNames = {
+      "north-america": "North America (USA, CAN, MEX)",
+      "europe": "Europe (EU & UK)",
+      "asia": "Asia & Pacific (East, SE & South Asia)",
+      "south-america": "South America (LATAM)",
+      "oceania": "Oceania (Australia & New Zealand)",
+      "middle-east": "Middle East & North Africa (MENA)",
+      "africa": "Sub-Saharan Africa"
+    };
+
+    const regionalStats = {};
+    Object.keys(regionNames).forEach(reg => {
+      regionalStats[reg] = { totalPop: 0, coveredPop: 0, totalCities: 0, coveredCities: 0 };
+    });
+
+    analyzedCities.forEach(c => {
+      const reg = c.region || "other";
+      if (regionalStats[reg]) {
+        regionalStats[reg].totalPop += (c.pop || 0);
+        regionalStats[reg].totalCities++;
+        if (c.distanceKm <= 30) {
+          regionalStats[reg].coveredPop += (c.pop || 0);
+          regionalStats[reg].coveredCities++;
+        }
+      }
+    });
+
+    if (regionalBarsEl) {
+      regionalBarsEl.innerHTML = Object.entries(regionNames).map(([regKey, regTitle]) => {
+        const data = regionalStats[regKey];
+        if (!data || data.totalCities === 0) return "";
+        const pct = data.totalPop > 0 ? (data.coveredPop / data.totalPop) * 100 : 0;
+        const pctFormatted = pct.toFixed(1);
+
+        let barColor = "var(--primary)";
+        if (pct >= 85) barColor = "linear-gradient(90deg, #00F2FE 0%, #10B981 100%)";
+        else if (pct >= 60) barColor = "linear-gradient(90deg, #F59E0B 0%, #00F2FE 100%)";
+        else barColor = "linear-gradient(90deg, #EF4444 0%, #F59E0B 100%)";
+
+        const coveredMillions = (data.coveredPop / 1000000).toFixed(0);
+        const totalMillions = (data.totalPop / 1000000).toFixed(0);
+
+        return `
+          <div class="regional-bar-card">
+            <div class="regional-bar-header">
+              <span class="regional-bar-title">${regTitle}</span>
+              <span class="regional-bar-pct" style="color: ${pct >= 80 ? 'var(--success)' : (pct >= 50 ? 'var(--warning)' : 'var(--danger)')};">${pctFormatted}%</span>
+            </div>
+            <div class="regional-progress-track">
+              <div class="regional-progress-fill" style="width: ${pctFormatted}%; background: ${barColor};"></div>
+            </div>
+            <div class="regional-bar-footer">
+              <span>${data.coveredCities} / ${data.totalCities} Metros in Range (&le;30km)</span>
+              <span><strong>${Number(coveredMillions).toLocaleString()}M</strong> / ${Number(totalMillions).toLocaleString()}M Pop</span>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    // Top Underserved Metros Leaderboard Table
+    if (!gapsTableBody) return;
+
+    const query = (searchInput ? searchInput.value : "").trim().toUpperCase();
+    const selRegion = regionFilter ? regionFilter.value : "all";
+    const selStatus = statusFilter ? statusFilter.value : "void-only";
+
+    const filtered = analyzedCities.filter(c => {
+      if (selRegion !== "all" && c.region !== selRegion) return false;
+      if (selStatus === "void-only" && c.status !== "VOID") return false;
+      if (selStatus === "covered" && c.status !== "OPTIMAL") return false;
+      if (selStatus === "extended" && c.status !== "EXTENDED") return false;
+
+      if (query) {
+        const matchesName = (c.name || "").toUpperCase().includes(query);
+        const matchesCountry = (c.country || "").toUpperCase().includes(query);
+        if (!matchesName && !matchesCountry) return false;
+      }
+      return true;
+    });
+
+    if (filtered.length === 0) {
+      gapsTableBody.innerHTML = `
+        <tr>
+          <td colspan="8" style="text-align: center; color: var(--text-muted); padding: 24px;">
+            No metropolitan areas match the current filter selection.
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    gapsTableBody.innerHTML = filtered.slice(0, 100).map((c, idx) => {
+      let statusBadge = "";
+      if (c.status === "OPTIMAL") {
+        statusBadge = `<span class="badge badge-live" style="font-size: 0.72rem; padding: 2px 8px;">Covered (&lt;20km)</span>`;
+      } else if (c.status === "EXTENDED") {
+        statusBadge = `<span class="badge" style="background: rgba(245, 158, 11, 0.15); color: var(--warning); border: 1px solid rgba(245, 158, 11, 0.3); font-size: 0.72rem; padding: 2px 8px;">Extended (20–40km)</span>`;
+      } else {
+        const isCritical = c.distanceKm > 100;
+        statusBadge = `<span class="badge" style="background: rgba(239, 68, 68, ${isCritical ? '0.2' : '0.12'}); color: #F87171; border: 1px solid rgba(239, 68, 68, 0.4); font-size: 0.72rem; padding: 2px 8px; font-weight: 600;">${isCritical ? 'Critical Void (&gt;100km)' : 'Coverage Gap (&gt;40km)'}</span>`;
+      }
+
+      const popFormatted = (c.pop || 0) >= 1000000 
+        ? `${((c.pop || 0) / 1000000).toFixed(1)}M` 
+        : `${Math.round((c.pop || 0) / 1000)}k`;
+
+      const distColor = c.distanceKm <= 20 ? "var(--success)" : (c.distanceKm <= 40 ? "var(--warning)" : "var(--danger)");
+      const nearestName = c.nearestStation ? c.nearestStation.name : "--";
+
+      return `
+        <tr>
+          <td style="font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--text-muted);">${idx + 1}</td>
+          <td><strong style="color: var(--text-primary); font-size: 0.9rem;">${c.name}</strong></td>
+          <td style="color: var(--text-secondary);">${c.country}</td>
+          <td style="font-family: 'JetBrains Mono', monospace; font-weight: 600; color: #f3f4f6;">${popFormatted}</td>
+          <td style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--primary);">${nearestName}</td>
+          <td style="font-family: 'JetBrains Mono', monospace; font-weight: 700; color: ${distColor};">${c.distanceKm.toFixed(1)} km</td>
+          <td>${statusBadge}</td>
+          <td style="text-align: center;">
+            <button class="btn btn-secondary" onclick="window.inspectGapCity(${c.lat}, ${c.lng}, '${c.name.replace(/'/g, "\\'")}', ${c.distanceKm.toFixed(1)}, '${nearestName}', ${c.pop || 0})" style="padding: 3px 8px; font-size: 0.72rem;">
+              Inspect Void
+            </button>
+          </td>
+        </tr>
+      `;
+    }).join("");
+  }
+
+  // Render Population Gap Overlay on Leaflet Map
+  function renderGapOverlayLayer() {
+    gapOverlayLayer.clearLayers();
+    if (!gapToggleSelect || gapToggleSelect.value !== "on" || !analyzedCities || analyzedCities.length === 0) {
+      if (map.hasLayer(gapOverlayLayer)) map.removeLayer(gapOverlayLayer);
+      return;
+    }
+
+    if (!map.hasLayer(gapOverlayLayer)) {
+      gapOverlayLayer.addTo(map);
+    }
+
+    analyzedCities.forEach(c => {
+      const isOptimal = c.status === "OPTIMAL";
+      const isExtended = c.status === "EXTENDED";
+      const color = isOptimal ? "#10B981" : (isExtended ? "#F59E0B" : "#EF4444");
+      const radius = Math.max(5, Math.min(15, Math.log10(c.pop || 100000) * 2.2));
+
+      const marker = L.circleMarker([c.lat, c.lng], {
+        renderer: canvasRenderer,
+        radius: radius,
+        color: "#FFFFFF",
+        weight: 1.2,
+        fillColor: color,
+        fillOpacity: 0.85
+      });
+
+      const popFormatted = (c.pop || 0) >= 1000000 ? `${((c.pop || 0) / 1000000).toFixed(1)}M` : `${Math.round((c.pop || 0) / 1000)}k`;
+
+      const popupHtml = `
+        <div style="min-width: 220px; font-family: 'Inter', sans-serif;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+            <span style="font-weight: 700; color: #f3f4f6; font-size: 1rem;">${c.name}</span>
+            <span class="badge" style="font-size: 0.68rem; padding: 2px 6px; background: rgba(${isOptimal ? '16, 185, 129' : (isExtended ? '245, 158, 11' : '239, 68, 68')}, 0.2); color: ${color};">
+              ${c.status}
+            </span>
+          </div>
+          <div style="font-size: 0.75rem; color: #9ca3af; margin-bottom: 6px;">
+            ${c.country} &bull; Metro Pop: <strong style="color: #f3f4f6;">${popFormatted}</strong>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 0.78rem; margin-bottom: 8px;">
+            <div>
+              <span style="color: #9ca3af; font-size: 0.7rem;">Nearest Base:</span><br>
+              <strong style="color: var(--primary); font-family: 'JetBrains Mono', monospace;">${c.nearestStation ? c.nearestStation.name : '--'}</strong>
+            </div>
+            <div>
+              <span style="color: #9ca3af; font-size: 0.7rem;">Distance:</span><br>
+              <strong style="color: ${color}; font-family: 'JetBrains Mono', monospace;">${c.distanceKm.toFixed(1)} km</strong>
+            </div>
+          </div>
+          <div style="display: flex; gap: 6px;">
+            <button class="btn btn-primary" onclick="window.setRoverBaselineTarget(${c.lat}, ${c.lng})" style="flex: 1; padding: 4px 8px; font-size: 0.75rem;">
+              Rover Baseline
+            </button>
+            ${c.nearestStation ? `<button class="btn btn-secondary" onclick="window.inspectStationByName('${c.nearestStation.name}')" style="flex: 1; padding: 4px 8px; font-size: 0.75rem;">Nearest Base</button>` : ''}
+          </div>
+        </div>
+      `;
+
+      marker.bindPopup(popupHtml, { maxWidth: 280 });
+      gapOverlayLayer.addLayer(marker);
+    });
+  }
+
+  // Global helper for leaderboard "Inspect Void" button
+  window.inspectGapCity = (lat, lng, cityName, distKm, nearestStationName, pop) => {
+    // Switch to coverage map section
+    const navLinks = document.querySelectorAll(".nav-link");
+    const sections = document.querySelectorAll(".page-section");
+    navLinks.forEach(l => l.classList.remove("active"));
+    sections.forEach(s => s.classList.remove("active"));
+
+    const covLink = document.querySelector('.nav-link[data-section="coverage"]');
+    const covSection = document.getElementById("coverage");
+    if (covLink) covLink.classList.add("active");
+    if (covSection) covSection.classList.add("active");
+
+    // Ensure gap bubbles overlay is visible on map
+    if (gapToggleSelect) {
+      gapToggleSelect.value = "on";
+      renderGapOverlayLayer();
+    }
+
+    map.flyTo([lat, lng], 9, { duration: 1.2 });
+
+    // Pulsing highlight at the city void coordinate
+    highlightLayer.clearLayers();
+    const highlightIcon = L.divIcon({
+      className: "station-selected-pulse-wrap",
+      html: `<div class="station-selected-pulse" style="--pulse-color: #EF4444;"><div class="pulse-ring"></div><div class="pulse-core"></div></div>`,
+      iconSize: [42, 42],
+      iconAnchor: [21, 21]
+    });
+    const highlightMarker = L.marker([lat, lng], {
+      icon: highlightIcon,
+      interactive: false,
+      zIndexOffset: 1000
+    });
+    highlightLayer.addLayer(highlightMarker);
+
+    // Rover baseline tool auto-fill
+    if (roverLatInput) roverLatInput.value = lat.toFixed(5);
+    if (roverLngInput) roverLngInput.value = lng.toFixed(5);
+    calculateBaselineForCoords(lat, lng);
+  };
+
+  // Gap listeners
+  if (gapToggleSelect) gapToggleSelect.addEventListener("change", renderGapOverlayLayer);
+  const gapSearchInput = document.getElementById("gap-search-input");
+  const gapRegionFilter = document.getElementById("gap-region-filter");
+  const gapStatusFilter = document.getElementById("gap-status-filter");
+  if (gapSearchInput) gapSearchInput.addEventListener("input", updatePopulationGapUI);
+  if (gapRegionFilter) gapRegionFilter.addEventListener("change", updatePopulationGapUI);
+  if (gapStatusFilter) gapStatusFilter.addEventListener("change", updatePopulationGapUI);
+
+  // Load world cities dataset and repo history
+  Promise.allSettled([loadWorldCities(), loadRepoHistory()]).then(() => {
     updateDynamicsDashboardUI();
+    calculatePopulationGaps();
   });
 
   // Initialize auto-sync timer
