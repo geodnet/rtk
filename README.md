@@ -84,10 +84,11 @@ The portal integrates directly with GEODNET's public RTK Coverage API endpoint:
     "msg": "",
     "data": [
       {
-        "name": "****CA599",
-        "status": "ACTIVE",
-        "lat": 41.905,
-        "lng": -3.661
+        "name": "****E3E19",
+        "status": "OFFLINE",
+        "stationId": 3320,
+        "lat": 43.419,
+        "lng": 6.394
       },
       ...
     ]

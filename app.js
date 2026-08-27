@@ -1567,6 +1567,7 @@ function initCoverageMap() {
   const inspectorBadge = document.getElementById("inspector-status-badge");
   const inspectorEmpty = document.getElementById("inspector-empty-state");
   const inspectorContent = document.getElementById("inspector-content");
+  const inspectorId = document.getElementById("inspector-id");
   const inspectorName = document.getElementById("inspector-name");
   const inspectorLat = document.getElementById("inspector-lat");
   const inspectorLng = document.getElementById("inspector-lng");
@@ -1874,11 +1875,11 @@ function initCoverageMap() {
           </div>
           <div style="display: flex; justify-content: space-between; margin-bottom: 3px; font-size: 0.75rem; color: #9ca3af;">
             <span>Node A:</span>
-            <strong style="color: #f3f4f6; font-family: 'JetBrains Mono', monospace;">${edge.s1.name}</strong>
+            <strong style="color: #f3f4f6; font-family: 'JetBrains Mono', monospace;">${edge.s1.stationId != null ? '#' + edge.s1.stationId + ' ' : ''}${edge.s1.name}</strong>
           </div>
           <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.75rem; color: #9ca3af;">
             <span>Node B:</span>
-            <strong style="color: #f3f4f6; font-family: 'JetBrains Mono', monospace;">${edge.s2.name}</strong>
+            <strong style="color: #f3f4f6; font-family: 'JetBrains Mono', monospace;">${edge.s2.stationId != null ? '#' + edge.s2.stationId + ' ' : ''}${edge.s2.name}</strong>
           </div>
           <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 4px; border-top: 1px dashed rgba(255,255,255,0.15);">
             <span style="color: #9ca3af; font-size: 0.75rem;">Baseline Distance:</span>
@@ -1972,12 +1973,13 @@ function initCoverageMap() {
       const caster = getCasterInfo(station.lat, station.lng);
       const popupHtml = `
         <div style="min-width: 220px; font-family: 'Inter', sans-serif;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 6px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
             <span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #00F2FE; font-size: 1rem;">${station.name}</span>
             <span style="font-size: 0.72rem; padding: 2px 6px; border-radius: 4px; background: rgba(${st === 'ACTIVE' ? '0, 242, 254' : (st === 'ONLINE' ? '245, 158, 11' : '239, 68, 68')}, 0.15); color: ${color}; font-weight: 600;">
               ${st}
             </span>
           </div>
+          ${station.stationId != null ? `<div style="font-size: 0.76rem; color: #9ca3af; margin-bottom: 6px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 4px;">Station ID: <strong style="color: var(--primary); font-family: 'JetBrains Mono', monospace;">#${station.stationId}</strong></div>` : `<div style="margin-bottom: 6px;"></div>`}
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 0.78rem; margin-bottom: 8px;">
             <div>
               <span style="color: #9ca3af; font-size: 0.7rem;">Latitude:</span><br>
@@ -2074,7 +2076,12 @@ function initCoverageMap() {
       inspectorBadge.style.borderColor = statusColor;
     }
 
-    if (inspectorName) inspectorName.textContent = station.name;
+    if (inspectorId) {
+      inspectorId.textContent = station.stationId != null ? `#${station.stationId}` : "--";
+    }
+    if (inspectorName) {
+      inspectorName.textContent = station.name || "--";
+    }
     if (inspectorLat) inspectorLat.textContent = `${station.lat.toFixed(5)}°`;
     if (inspectorLng) inspectorLng.textContent = `${station.lng.toFixed(5)}°`;
 
@@ -2201,7 +2208,7 @@ function initCoverageMap() {
           <span class="badge badge-live" style="font-size: 0.72rem; padding: 2px 6px;">${minDistance.toFixed(2)} km</span>
         </div>
         <div style="font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 6px;">
-          Nearest Base: <strong style="color: var(--primary); font-family: 'JetBrains Mono', monospace;">${closestStation.name}</strong> (${closestStation.lat.toFixed(4)}°, ${closestStation.lng.toFixed(4)}°)
+          Nearest Base: <strong style="color: var(--primary); font-family: 'JetBrains Mono', monospace;">${closestStation.stationId != null ? '#' + closestStation.stationId + ' ' : ''}(${closestStation.name})</strong> (${closestStation.lat.toFixed(4)}°, ${closestStation.lng.toFixed(4)}°)
         </div>
         <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.35; margin: 0;">
           ${fixDesc}
@@ -2265,9 +2272,12 @@ function initCoverageMap() {
       }
     }
 
-    // 2. Check if query is a station name (e.g. "CA599" or "****CA599")
-    const cleanQuery = query.replace(/\*/g, "").toUpperCase();
-    const matchingStation = allStations.find(s => s.name.toUpperCase().includes(cleanQuery));
+    // 2. Check if query is a stationId (e.g. "3320" or "#3320") or station name (e.g. "CA599" or "****CA599")
+    const cleanQuery = query.replace(/[\*#\s]/g, "").toUpperCase();
+    const matchingStation = allStations.find(s => {
+      if (s.stationId != null && String(s.stationId) === cleanQuery) return true;
+      return s.name && s.name.replace(/\*/g, "").toUpperCase().includes(cleanQuery);
+    });
 
     if (matchingStation) {
       map.flyTo([matchingStation.lat, matchingStation.lng], 13, { duration: 1.2 });
