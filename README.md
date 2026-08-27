@@ -94,6 +94,11 @@ The portal integrates directly with GEODNET's public RTK Coverage API endpoint:
     ]
   }
   ```
+- **Field Definitions**:
+  - `name` *(string)*: Masked globally unique hardware identifier (UID) / miner hash.
+  - `stationId` *(integer)*: Standard 12-bit RTCM Station ID (`0–4095`) broadcast in RTCM 3.x MSM/1005/1006 messages. *(Note: RTCM Station IDs are non-unique globally and reused across regional networks).*
+  - `status` *(string)*: Real-time station operational state (`ACTIVE`, `ONLINE`, or `OFFLINE`).
+  - `lat`, `lng` *(float)*: Geodetic decimal coordinates on WGS84 / ITRF2020 reference frame.
 
 ### Key Map Features
 - **High-Performance Canvas Rendering**: Uses Leaflet.js with HTML5 Canvas (`L.canvas({ padding: 0.5 })`) to smoothly render ~20,000 global reference stations at 60 FPS without DOM overhead.

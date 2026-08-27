@@ -2272,16 +2272,42 @@ function initCoverageMap() {
       }
     }
 
-    // 2. Check if query is a stationId (e.g. "3320" or "#3320") or station name (e.g. "CA599" or "****CA599")
+    // 2. Check if query is an RTCM stationId (e.g. "3320" or "#3320") or station name (e.g. "CA599" or "****CA599")
     const cleanQuery = query.replace(/[\*#\s]/g, "").toUpperCase();
-    const matchingStation = allStations.find(s => {
-      if (s.stationId != null && String(s.stationId) === cleanQuery) return true;
-      return s.name && s.name.replace(/\*/g, "").toUpperCase().includes(cleanQuery);
-    });
+    
+    // Check if query is numeric (RTCM Station ID, non-unique 12-bit integer)
+    const isNumericId = !isNaN(cleanQuery) && cleanQuery !== "";
+    let matchingStations = [];
 
-    if (matchingStation) {
-      map.flyTo([matchingStation.lat, matchingStation.lng], 13, { duration: 1.2 });
-      inspectStation(matchingStation);
+    if (isNumericId) {
+      matchingStations = allStations.filter(s => s.stationId != null && String(s.stationId) === cleanQuery);
+    } else {
+      const byName = allStations.find(s => s.name && s.name.replace(/\*/g, "").toUpperCase().includes(cleanQuery));
+      if (byName) matchingStations = [byName];
+    }
+
+    if (matchingStations.length > 0) {
+      if (matchingStations.length === 1) {
+        const target = matchingStations[0];
+        map.flyTo([target.lat, target.lng], 13, { duration: 1.2 });
+        inspectStation(target);
+      } else {
+        // Multiple stations share this RTCM Station ID (12-bit broadcast ID reused globally)
+        // Find match closest to current map center
+        const center = map.getCenter();
+        let closest = matchingStations[0];
+        let minDist = Infinity;
+        matchingStations.forEach(st => {
+          const dist = calculateDistanceKm(center.lat, center.lng, st.lat, st.lng);
+          if (dist < minDist) {
+            minDist = dist;
+            closest = st;
+          }
+        });
+
+        map.flyTo([closest.lat, closest.lng], 12, { duration: 1.2 });
+        inspectStation(closest);
+      }
       return;
     }
 

@@ -424,11 +424,13 @@
               <div id="inspector-content" style="display: none;">
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
                   <div>
-                    <div class="info-item-title">RTCM Station ID</div>
+                    <div class="info-item-title" title="12-bit RTCM standard station identifier (0-4095), regionally reused by GNSS reference networks.">
+                      RTCM Station ID <span style="font-size: 0.65rem; color: var(--text-muted); font-weight: normal;">(12-bit)</span>
+                    </div>
                     <div class="info-item-value" id="inspector-id" style="font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; color: var(--primary); font-weight: 700;">--</div>
                   </div>
                   <div>
-                    <div class="info-item-title">Masked Name</div>
+                    <div class="info-item-title" title="Globally unique hardware identifier">Masked Name (UID)</div>
                     <div class="info-item-value" id="inspector-name" style="font-family: 'JetBrains Mono', monospace; font-size: 1.05rem; color: var(--text-primary); font-weight: 600;">--</div>
                   </div>
                 </div>
