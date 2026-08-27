@@ -182,22 +182,56 @@
           <div class="grid-stack">
             <div class="card">
               <h3 class="section-header" style="font-size: 1.15rem;">NTRIP Connection Settings</h3>
-              <div class="info-item" style="margin-top: 16px;">
-                <div class="info-item-title">Standard NTRIP Host</div>
-                <div class="info-item-code">rtk.geodnet.com</div>
-                <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">IP Address: 13.56.117.10</div>
+              
+              <div class="info-item" style="margin-top: 14px;">
+                <div class="info-item-title">Standard Port</div>
+                <div class="info-item-value"><code class="info-item-code">2101</code> (NTRIP 2.0 / RTCM 3.2 MSM)</div>
               </div>
-              <div class="info-item">
-                <div class="info-item-title">Standard Ports</div>
-                <div class="info-item-value"><code class="info-item-code">2101</code> (RTCM 3.2 MSM)</div>
-                <div class="info-item-value" style="margin-top: 8px;"><code class="info-item-code">3101</code> (Legacy/Alternative)</div>
-              </div>
+
               <div class="info-item">
                 <div class="info-item-title">NTRIP Mountpoint</div>
-                <div class="info-item-value"><code class="info-item-code">AUTO</code> (Recommended)</div>
+                <div class="info-item-value"><code class="info-item-code">AUTO</code> (Recommended VRS / Local Datum)</div>
               </div>
-              <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; border-top: 1px solid var(--border-color); padding-top: 12px; margin-top: 12px;">
-                <strong>Note:</strong> Rovers MUST transmit their position via NMEA GGA sentences to the caster to receive RTK differential streams.
+
+              <div class="info-item">
+                <div class="info-item-title">Primary & Regional Server Casters (Port 2101)</div>
+                <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 6px; font-size: 0.8rem;">
+                  <div style="background: rgba(255,255,255,0.03); padding: 6px 8px; border-radius: 4px; border: 1px solid var(--border-color);">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                      <strong style="color: var(--primary);">rtk.geodnet.com</strong>
+                      <span class="badge badge-live" style="font-size: 0.65rem; padding: 1px 5px;">Global / US</span>
+                    </div>
+                    <div style="color: var(--text-muted); font-size: 0.72rem; margin-top: 2px;">IP: 13.56.117.10 &bull; USA, Asia, Global</div>
+                  </div>
+
+                  <div style="background: rgba(255,255,255,0.03); padding: 6px 8px; border-radius: 4px; border: 1px solid var(--border-color);">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                      <strong style="color: var(--primary);">eu.geodnet.com</strong>
+                      <span class="badge" style="font-size: 0.65rem; padding: 1px 5px; background: rgba(0,242,254,0.1); color: var(--primary);">Europe</span>
+                    </div>
+                    <div style="color: var(--text-muted); font-size: 0.72rem; margin-top: 2px;">IP: 3.73.41.96 &bull; Europe, Middle East, Africa</div>
+                  </div>
+
+                  <div style="background: rgba(255,255,255,0.03); padding: 6px 8px; border-radius: 4px; border: 1px solid var(--border-color);">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                      <strong style="color: var(--primary);">aus.geodnet.com</strong>
+                      <span class="badge" style="font-size: 0.65rem; padding: 1px 5px; background: rgba(0,242,254,0.1); color: var(--primary);">Oceania</span>
+                    </div>
+                    <div style="color: var(--text-muted); font-size: 0.72rem; margin-top: 2px;">IP: 54.206.56.130 &bull; Australia, New Zealand</div>
+                  </div>
+
+                  <div style="background: rgba(255,255,255,0.03); padding: 6px 8px; border-radius: 4px; border: 1px solid var(--border-color);">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                      <strong style="color: var(--primary);">sa.geodnet.com</strong>
+                      <span class="badge" style="font-size: 0.65rem; padding: 1px 5px; background: rgba(0,242,254,0.1); color: var(--primary);">S. America</span>
+                    </div>
+                    <div style="color: var(--text-muted); font-size: 0.72rem; margin-top: 2px;">IP: 18.230.73.64 &bull; South & Latin America</div>
+                  </div>
+                </div>
+              </div>
+
+              <p style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; border-top: 1px solid var(--border-color); padding-top: 10px; margin-top: 10px;">
+                <strong>Requirement:</strong> GNSS Rovers MUST transmit position via NMEA GGA strings to receive tailored RTK differential corrections.
               </p>
             </div>
             
@@ -536,9 +570,57 @@
       <!-- Section: Mountpoints & Datums -->
       <section id="coordinates" class="page-section">
         <div class="section-header">
-          <p class="section-desc">Explore NTRIP mountpoints and regional datums supported by the GEODNET RTK network. Search by coordinate system name or country code.</p>
+          <p class="section-desc">Explore regional NTRIP caster endpoints, mountpoints, and regional datums supported by the GEODNET RTK network. Search by coordinate system name or country code.</p>
         </div>
         
+        <!-- Regional NTRIP Server Casters Table -->
+        <div class="card" style="margin-bottom: 24px;">
+          <h3 class="section-header" style="font-size: 1.25rem;">NTRIP Server Casters & Regional Endpoints</h3>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Region / Target Area</th>
+                  <th>NTRIP Caster Domain</th>
+                  <th>Resolved IPv4</th>
+                  <th>Port</th>
+                  <th>Primary Use Case</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong style="color: var(--text-primary);">USA / North America / Global / Asia</strong></td>
+                  <td class="td-code" style="color: var(--primary); font-weight: 700;">rtk.geodnet.com</td>
+                  <td><code class="td-code">13.56.117.10</code></td>
+                  <td><code class="td-code">2101</code></td>
+                  <td>Primary global caster router (RTCM 3.2 MSM / NTRIP 2.0)</td>
+                </tr>
+                <tr>
+                  <td><strong style="color: var(--text-primary);">Europe & Middle East / Africa</strong></td>
+                  <td class="td-code" style="color: var(--primary); font-weight: 700;">eu.geodnet.com</td>
+                  <td><code class="td-code">3.73.41.96</code></td>
+                  <td><code class="td-code">2101</code></td>
+                  <td>Low-latency European, Middle Eastern & African caster router</td>
+                </tr>
+                <tr>
+                  <td><strong style="color: var(--text-primary);">Australia & New Zealand (Oceania)</strong></td>
+                  <td class="td-code" style="color: var(--primary); font-weight: 700;">aus.geodnet.com</td>
+                  <td><code class="td-code">54.206.56.130</code></td>
+                  <td><code class="td-code">2101</code></td>
+                  <td>Dedicated Oceania low-latency caster router</td>
+                </tr>
+                <tr>
+                  <td><strong style="color: var(--text-primary);">South America (Latin America)</strong></td>
+                  <td class="td-code" style="color: var(--primary); font-weight: 700;">sa.geodnet.com</td>
+                  <td><code class="td-code">18.230.73.64</code></td>
+                  <td><code class="td-code">2101</code></td>
+                  <td>Dedicated South & Latin American regional caster router</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
         <div class="card" style="margin-bottom: 32px;">
           <h3 class="section-header" style="font-size: 1.25rem;">NTRIP Mountpoints (Table 1)</h3>
           <div class="table-wrapper">
