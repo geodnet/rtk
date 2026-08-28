@@ -139,8 +139,9 @@ The portal integrates directly with GEODNET's public RTK Coverage API endpoint:
 - **RTK End User Session & Connection Logs**:
   - Personal RTK subscriber session engine authenticated against GEODNET's Personal User Login API (`/api/v3/user/login`).
   - **Zero-Persistence Privacy Guarantee**: All credentials, tokens, and logs are held strictly in volatile browser memory for the active session and are never saved to localStorage, IndexedDB, or server logs.
+  - **Interactive Recent Usage & Rover-to-Base Baseline Map**: Dedicated Leaflet map visualizing every recent rover session fix position (🔵), the connected GEODNET base station (🟢), and geodesic baseline vector with real-time distance labels (e.g. `8.3 km Baseline`).
   - **Live Account Status & Telemetry**: Displays subscription expiration date, recommended mountpoint, maximum concurrent rovers, and active caster router.
-  - **NTRIP Connection Logs**: Searchable and filterable log feed with connection duration, transferred bytes, solution fix quality (RTK FIX / FLOAT), and 1-click **"Map View"** navigation to center the coverage map directly over rover coordinates.
+  - **NTRIP Connection Logs**: Searchable and filterable log feed with connection duration, transferred bytes, solution fix quality (RTK FIX / FLOAT), base station name, baseline distance in km, and 1-click **"Focus Map"** navigation to center over the session's baseline vector.
 
 ---
 

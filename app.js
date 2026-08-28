@@ -694,10 +694,15 @@ function initRouting() {
       pageTitle.textContent = matchingLink.querySelector("span").textContent;
     }
 
-    // Invalidate Leaflet map size when coverage tab is shown
+    // Invalidate Leaflet map size when coverage or user-session tab is shown
     if (hash === "#coverage" && rtkCoverageMap) {
       setTimeout(() => {
         rtkCoverageMap.invalidateSize();
+      }, 150);
+    }
+    if (hash === "#user-session" && window.userSessionMap) {
+      setTimeout(() => {
+        window.userSessionMap.invalidateSize();
       }, 150);
     }
     
@@ -3425,6 +3430,8 @@ function initCoverageMap() {
   // ==========================================
 
   let activeUserSession = null;
+  let userSessionMap = null;
+  const sessionMarkersLayer = L.layerGroup();
 
   function initUserSessionUI() {
     const loginContainer = document.getElementById("user-login-container");
@@ -3536,6 +3543,7 @@ function initCoverageMap() {
         if (loginContainer) loginContainer.style.display = "block";
         if (dashboardContainer) dashboardContainer.style.display = "none";
         if (errorEl) errorEl.style.display = "none";
+        sessionMarkersLayer.clearLayers();
       });
     }
 
@@ -3581,6 +3589,27 @@ function initCoverageMap() {
       if (concurrencyVal) concurrencyVal.textContent = `${activeUserSession.connections} Concurrent Rover${activeUserSession.connections > 1 ? 's' : ''}`;
       if (totalSessionsVal) totalSessionsVal.textContent = `${activeUserSession.logs.length} Sessions`;
 
+      // Initialize dedicated User Session Map if not already created
+      if (!userSessionMap && document.getElementById("user-session-map")) {
+        userSessionMap = L.map("user-session-map", {
+          center: [37.5, -96],
+          zoom: 4,
+          minZoom: 2,
+          maxZoom: 18,
+          zoomControl: true,
+          attributionControl: false
+        });
+        L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}", {
+          maxZoom: 16
+        }).addTo(userSessionMap);
+        sessionMarkersLayer.addTo(userSessionMap);
+        window.userSessionMap = userSessionMap;
+      }
+
+      if (userSessionMap) {
+        setTimeout(() => userSessionMap.invalidateSize(), 150);
+      }
+
       renderUserLogsTable();
     }
 
@@ -3595,21 +3624,126 @@ function initCoverageMap() {
       const now = Date.now();
       const maxAgeMs = range === "24h" ? 86400000 : (range === "7d" ? 86400000 * 7 : 86400000 * 30);
 
+      // Compute nearest base station and baseline distance for each log against live allStations
+      const activeSts = (allStations || []).filter(s => (s.status || "").toUpperCase() === "ACTIVE");
+
+      activeUserSession.logs.forEach(log => {
+        if (!log.nearestStation && activeSts.length > 0) {
+          let minDist = Infinity;
+          let nearest = null;
+          activeSts.forEach(st => {
+            const d = calculateDistanceKm(log.lat, log.lng, st.lat, st.lng);
+            if (d < minDist) {
+              minDist = d;
+              nearest = st;
+            }
+          });
+          log.nearestStation = nearest;
+          log.baselineKm = minDist;
+        }
+      });
+
       const filtered = activeUserSession.logs.filter(log => {
         if (now - log.startTime > maxAgeMs) return false;
         if (q) {
           const matchIp = (log.ip || "").toUpperCase().includes(q);
           const matchMount = (log.mountpoint || "").toUpperCase().includes(q);
           const matchFix = (log.fixStatus || "").toUpperCase().includes(q);
-          if (!matchIp && !matchMount && !matchFix) return false;
+          const matchBase = log.nearestStation && (log.nearestStation.name || "").toUpperCase().includes(q);
+          if (!matchIp && !matchMount && !matchFix && !matchBase) return false;
         }
         return true;
       });
 
+      // Clear & Re-render session markers & baseline lines on userSessionMap
+      sessionMarkersLayer.clearLayers();
+      const mapBounds = [];
+
+      filtered.forEach((log, idx) => {
+        const roverLat = log.lat;
+        const roverLng = log.lng;
+        const base = log.nearestStation;
+        const baselineKm = log.baselineKm || 0;
+        const distColor = baselineKm <= 15 ? "#10B981" : (baselineKm <= 30 ? "#F59E0B" : "#EF4444");
+
+        // Rover marker
+        const roverMarker = L.circleMarker([roverLat, roverLng], {
+          radius: 7,
+          color: "#FFFFFF",
+          weight: 1.5,
+          fillColor: "#00F2FE",
+          fillOpacity: 0.95
+        });
+
+        const startStr = new Date(log.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' ' + new Date(log.startTime).toLocaleDateString();
+
+        roverMarker.bindPopup(`
+          <div style="min-width: 220px; font-family: 'Inter', sans-serif;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+              <span style="font-weight: 700; color: #00F2FE; font-size: 0.95rem;">🔵 Rover Session #${idx + 1}</span>
+              <span class="badge" style="font-size: 0.68rem; padding: 2px 6px; background: rgba(16, 185, 129, 0.2); color: #10B981;">${log.fixStatus}</span>
+            </div>
+            <div style="font-size: 0.75rem; color: #9ca3af; margin-bottom: 6px;">${startStr} &bull; Mount: <strong>${log.mountpoint}</strong></div>
+            <div style="background: rgba(255,255,255,0.04); border-radius: 6px; padding: 6px 8px; margin-bottom: 6px; font-size: 0.78rem;">
+              <div>Connected Base: <strong style="color: var(--primary); font-family: monospace;">${base ? base.name : '--'}</strong></div>
+              <div>Baseline Length: <strong style="color: ${distColor}; font-family: monospace;">${baselineKm.toFixed(2)} km</strong></div>
+            </div>
+            <div style="font-size: 0.72rem; color: #9ca3af;">Rover Coords: <code class="td-code">${roverLat.toFixed(5)}, ${roverLng.toFixed(5)}</code></div>
+          </div>
+        `, { maxWidth: 280 });
+
+        sessionMarkersLayer.addLayer(roverMarker);
+        mapBounds.push([roverLat, roverLng]);
+
+        // Base station marker and baseline line
+        if (base) {
+          const baseMarker = L.circleMarker([base.lat, base.lng], {
+            radius: 6,
+            color: "#FFFFFF",
+            weight: 1.5,
+            fillColor: "#10B981",
+            fillOpacity: 0.95
+          });
+
+          baseMarker.bindPopup(`
+            <div style="min-width: 200px; font-family: 'Inter', sans-serif;">
+              <div style="font-weight: 700; color: #10B981; font-size: 0.9rem; margin-bottom: 4px;">🟢 GEODNET Base Station</div>
+              <div style="font-size: 0.85rem; font-weight: 700; color: var(--primary); font-family: 'JetBrains Mono', monospace;">${base.name}</div>
+              <div style="font-size: 0.75rem; color: #9ca3af; margin-top: 4px;">Status: <span class="badge badge-live" style="font-size: 0.68rem; padding: 2px 6px;">ACTIVE</span></div>
+              <div style="font-size: 0.75rem; color: #9ca3af; margin-top: 2px;">Coords: ${base.lat.toFixed(5)}, ${base.lng.toFixed(5)}</div>
+            </div>
+          `, { maxWidth: 260 });
+
+          sessionMarkersLayer.addLayer(baseMarker);
+          mapBounds.push([base.lat, base.lng]);
+
+          // Geodesic Baseline line
+          const baselineLine = L.polyline([[roverLat, roverLng], [base.lat, base.lng]], {
+            color: "#00F2FE",
+            weight: 2,
+            dashArray: "5, 5",
+            opacity: 0.85
+          });
+
+          baselineLine.bindTooltip(`${baselineKm.toFixed(1)} km Baseline`, {
+            permanent: false,
+            direction: "center",
+            className: "baseline-dist-tooltip"
+          });
+
+          sessionMarkersLayer.addLayer(baselineLine);
+        }
+      });
+
+      // Fit map to visible session bounds
+      if (mapBounds.length > 0 && userSessionMap) {
+        userSessionMap.fitBounds(mapBounds, { padding: [40, 40], maxZoom: 12 });
+      }
+
       if (filtered.length === 0) {
         tbody.innerHTML = `
           <tr>
-            <td colspan="8" style="text-align: center; color: var(--text-muted); padding: 24px;">
+            <td colspan="10" style="text-align: center; color: var(--text-muted); padding: 24px;">
               No RTK connection logs match the selected timeframe or filter.
             </td>
           </tr>
@@ -3621,24 +3755,32 @@ function initCoverageMap() {
         const startStr = new Date(log.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' ' + new Date(log.startTime).toLocaleDateString();
         const durationMin = Math.round((log.endTime - log.startTime) / 60000);
         const durationStr = durationMin >= 60 ? `${(durationMin / 60).toFixed(1)} hrs` : `${durationMin} mins`;
+        const baseName = log.nearestStation ? log.nearestStation.name : "--";
+        const baselineKm = log.baselineKm || 0;
+        const distColor = baselineKm <= 15 ? "var(--success)" : (baselineKm <= 30 ? "var(--warning)" : "var(--danger)");
 
         let fixBadge = `<span class="badge" style="background: rgba(16, 185, 129, 0.15); color: var(--success); font-size: 0.72rem; padding: 2px 8px;">RTK FIX (&le;1cm)</span>`;
         if (log.fixStatus === "FLOAT") {
           fixBadge = `<span class="badge" style="background: rgba(245, 158, 11, 0.15); color: var(--warning); font-size: 0.72rem; padding: 2px 8px;">RTK FLOAT (2–5cm)</span>`;
         }
 
+        const baseLat = log.nearestStation ? log.nearestStation.lat : log.lat;
+        const baseLng = log.nearestStation ? log.nearestStation.lng : log.lng;
+
         return `
           <tr>
             <td style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--text-secondary);">${startStr}</td>
             <td style="font-family: 'JetBrains Mono', monospace; font-weight: 600; color: #f3f4f6;">${durationStr}</td>
             <td><code class="td-code" style="color: var(--primary); font-weight: 700;">${log.mountpoint}</code></td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--primary); font-size: 0.85rem;">${baseName}</td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-weight: 700; color: ${distColor};">${baselineKm.toFixed(1)} km</td>
             <td style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--text-muted);">${log.ip}</td>
             <td style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;">${log.bytesTransferred}</td>
             <td>${fixBadge}</td>
             <td style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--text-secondary);">${log.lat.toFixed(5)}, ${log.lng.toFixed(5)}</td>
             <td style="text-align: center;">
-              <button class="btn btn-secondary" onclick="window.showRoverOnMap(${log.lat}, ${log.lng})" style="padding: 3px 8px; font-size: 0.72rem;">
-                Map View
+              <button class="btn btn-secondary" onclick="window.focusSessionBaseline(${log.lat}, ${log.lng}, ${baseLat}, ${baseLng}, '${baseName}', ${baselineKm.toFixed(1)})" style="padding: 3px 8px; font-size: 0.72rem;">
+                Focus Map
               </button>
             </td>
           </tr>
@@ -3651,24 +3793,26 @@ function initCoverageMap() {
       const logs = [];
       const now = Date.now();
       const sampleCoords = [
-        { lat: 37.7749, lng: -122.4194 },
-        { lat: 34.0522, lng: -118.2437 },
-        { lat: 51.5074, lng: -0.1278 },
-        { lat: 48.8566, lng: 2.3522 },
-        { lat: 25.0330, lng: 121.5654 },
-        { lat: -33.8688, lng: 151.2093 }
+        { lat: 37.7749, lng: -122.4194 }, // San Francisco
+        { lat: 34.0522, lng: -118.2437 }, // Los Angeles
+        { lat: 41.8781, lng: -87.6298 },  // Chicago
+        { lat: 30.2672, lng: -97.7431 },  // Austin
+        { lat: 51.5074, lng: -0.1278 },   // London
+        { lat: 48.8566, lng: 2.3522 },    // Paris
+        { lat: 25.0330, lng: 121.5654 },  // Taipei
+        { lat: -33.8688, lng: 151.2093 }  // Sydney
       ];
 
       const sampleIps = [
         "172.56.21.84", "198.51.100.42", "73.189.14.202", "142.250.190.46", "104.28.19.11"
       ];
 
-      for (let i = 0; i < 8; i++) {
-        const offsetMs = i * (1000 * 60 * 60 * (3 + i * 2));
+      for (let i = 0; i < sampleCoords.length; i++) {
+        const offsetMs = i * (1000 * 60 * 60 * (2 + i * 3));
         const startTime = now - offsetMs;
-        const durMs = (15 + (i * 12)) * 60000;
+        const durMs = (18 + (i * 14)) * 60000;
         const endTime = startTime + durMs;
-        const coord = sampleCoords[i % sampleCoords.length];
+        const coord = sampleCoords[i];
         const bytes = ((durMs / 1000) * 1.8).toFixed(1) + " KB";
 
         logs.push({
@@ -3677,48 +3821,26 @@ function initCoverageMap() {
           mountpoint: i % 4 === 0 ? "AUTO" : (i % 3 === 0 ? "RTCM32-MSM4" : "AUTO-ITRF2020"),
           ip: sampleIps[i % sampleIps.length],
           bytesTransferred: bytes,
-          fixStatus: i === 3 ? "FLOAT" : "FIX",
-          lat: coord.lat + (Math.sin(i) * 0.05),
-          lng: coord.lng + (Math.cos(i) * 0.05)
+          fixStatus: i === 4 ? "FLOAT" : "FIX",
+          lat: coord.lat + (Math.sin(i * 1.5) * 0.03),
+          lng: coord.lng + (Math.cos(i * 1.5) * 0.03),
+          nearestStation: null,
+          baselineKm: null
         });
       }
       return logs;
     }
   }
 
-  // Global helper: Jump from rover log coordinate to coverage map
-  window.showRoverOnMap = (lat, lng) => {
-    const navLinks = document.querySelectorAll(".nav-link");
-    const sections = document.querySelectorAll(".page-section");
-    navLinks.forEach(l => l.classList.remove("active"));
-    sections.forEach(s => s.classList.remove("active"));
-
-    const covLink = document.querySelector('.nav-link[data-section="coverage"]');
-    const covSection = document.getElementById("coverage");
-    if (covLink) covLink.classList.add("active");
-    if (covSection) covSection.classList.add("active");
-
-    map.flyTo([lat, lng], 11, { duration: 1.2 });
-
-    // Highlight rover position with cyan target marker
-    highlightLayer.clearLayers();
-    const highlightIcon = L.divIcon({
-      className: "station-selected-pulse-wrap",
-      html: `<div class="station-selected-pulse" style="--pulse-color: #00F2FE;"><div class="pulse-ring"></div><div class="pulse-core"></div></div>`,
-      iconSize: [42, 42],
-      iconAnchor: [21, 21]
-    });
-    const highlightMarker = L.marker([lat, lng], {
-      icon: highlightIcon,
-      interactive: false,
-      zIndexOffset: 1000
-    });
-    highlightLayer.addLayer(highlightMarker);
-
-    // Calculate baseline in proximity analyzer
-    if (roverLatInput) roverLatInput.value = lat.toFixed(5);
-    if (roverLngInput) roverLngInput.value = lng.toFixed(5);
-    calculateBaselineForCoords(lat, lng);
+  // Global helper: Focus on specific rover baseline on userSessionMap
+  window.focusSessionBaseline = (roverLat, roverLng, baseLat, baseLng, baseName, distKm) => {
+    if (window.userSessionMap) {
+      window.userSessionMap.flyToBounds([[roverLat, roverLng], [baseLat, baseLng]], {
+        padding: [60, 60],
+        maxZoom: 13,
+        duration: 1.0
+      });
+    }
   };
 
   // Initialize End User Session UI

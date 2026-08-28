@@ -2021,3 +2021,20 @@ footer {
   font-size: 0.72rem;
   color: var(--text-muted);
 }
+
+/* Baseline Distance Tooltip on Session Map */
+.baseline-dist-tooltip {
+  background: rgba(17, 24, 39, 0.88);
+  border: 1px solid var(--primary);
+  color: #00F2FE;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 7px;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.baseline-dist-tooltip::before {
+  border-top-color: var(--primary) !important;
+}
