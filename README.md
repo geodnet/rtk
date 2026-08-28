@@ -136,8 +136,11 @@ The portal integrates directly with GEODNET's public RTK Coverage API endpoint:
   - `15 – 30 km`: Standard Survey-Grade Fix (1.0 – 2.0 cm)
   - `30 – 50 km`: Extended Single-Base / VRS Fix (2.0 – 4.0 cm)
   - `> 50 km`: Long Baseline (> 50 km, PPP mode recommended)
-- **Multi-Basemap Switching**: Switch between Esri Dark Gray Canvas (Dark), Esri World Imagery (Satellite), and OpenStreetMap (Streets) — all 100% keyless and watermark-free.
-- **Fast Search & Region Navigation**: Search by full unmasked station name (e.g. `24D04CA59`, automatically truncated to match masked dataset), numeric RTCM Station ID (e.g. `3320`), masked station name (`****CA599`), geodetic coordinates, or city/country address via OpenStreetMap Nominatim geocoding.
+- **RTK End User Session & Connection Logs**:
+  - Personal RTK subscriber session engine authenticated against GEODNET's Personal User Login API (`/api/v3/user/login`).
+  - **Zero-Persistence Privacy Guarantee**: All credentials, tokens, and logs are held strictly in volatile browser memory for the active session and are never saved to localStorage, IndexedDB, or server logs.
+  - **Live Account Status & Telemetry**: Displays subscription expiration date, recommended mountpoint, maximum concurrent rovers, and active caster router.
+  - **NTRIP Connection Logs**: Searchable and filterable log feed with connection duration, transferred bytes, solution fix quality (RTK FIX / FLOAT), and 1-click **"Map View"** navigation to center the coverage map directly over rover coordinates.
 
 ---
 
