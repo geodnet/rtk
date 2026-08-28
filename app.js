@@ -3054,11 +3054,24 @@ function initCoverageMap() {
   let worldCities = [];
   let analyzedCities = [];
 
+  // Excluded sensitive / restricted countries for Population Gap Analysis
+  const EXCLUDED_GAP_COUNTRIES = new Set([
+    "CHINA",
+    "RUSSIA",
+    "RUSSIAN FEDERATION",
+    "IRAN",
+    "NORTH KOREA",
+    "KOREA, NORTH",
+    "BELARUS",
+    "SYRIA"
+  ]);
+
   async function loadWorldCities() {
     try {
       const res = await fetch("data/world_cities.json?v=" + Date.now());
       if (res.ok) {
-        worldCities = await res.json();
+        const raw = await res.json();
+        worldCities = raw.filter(c => c && c.country && !EXCLUDED_GAP_COUNTRIES.has(c.country.toUpperCase().trim()));
       }
     } catch (err) {
       console.warn("Could not load world cities dataset:", err);

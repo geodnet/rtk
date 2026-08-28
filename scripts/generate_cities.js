@@ -1,10 +1,23 @@
 /**
  * Generate Curated Global World Cities Dataset with population and regions
+ * Excludes sensitive/restricted regions (e.g. China, Russia, Iran, North Korea, Belarus, Syria)
  */
 const fs = require('fs');
 const path = require('path');
 
 const OUTPUT_FILE = path.join(__dirname, '..', 'data', 'world_cities.json');
+
+// Sensitive / restricted regions to strictly exclude
+const EXCLUDED_COUNTRIES = new Set([
+  'China',
+  'Russia',
+  'Russian Federation',
+  'Iran',
+  'North Korea',
+  'Korea, North',
+  'Belarus',
+  'Syria'
+]);
 
 // Curated list of major global metropolitan areas and economic hubs
 const rawCities = [
@@ -127,7 +140,7 @@ const rawCities = [
   { name: "Copenhagen", country: "Denmark", region: "europe", lat: 55.6761, lng: 12.5683, pop: 1350000 },
   { name: "Helsinki", country: "Finland", region: "europe", lat: 60.1699, lng: 24.9384, pop: 1300000 },
 
-  // ASIA - EAST ASIA
+  // ASIA - EAST ASIA (Japan, South Korea, Taiwan)
   { name: "Tokyo", country: "Japan", region: "asia", lat: 35.6762, lng: 139.6503, pop: 37400000 },
   { name: "Osaka", country: "Japan", region: "asia", lat: 34.6937, lng: 135.5023, pop: 19000000 },
   { name: "Nagoya", country: "Japan", region: "asia", lat: 35.1815, lng: 136.9066, pop: 9500000 },
@@ -139,14 +152,6 @@ const rawCities = [
   { name: "Taipei", country: "Taiwan", region: "asia", lat: 25.0330, lng: 121.5654, pop: 7000000 },
   { name: "Kaohsiung", country: "Taiwan", region: "asia", lat: 22.6273, lng: 120.3014, pop: 2750000 },
   { name: "Taichung", country: "Taiwan", region: "asia", lat: 24.1477, lng: 120.6736, pop: 2800000 },
-  { name: "Shanghai", country: "China", region: "asia", lat: 31.2304, lng: 121.4737, pop: 28500000 },
-  { name: "Beijing", country: "China", region: "asia", lat: 39.9042, lng: 116.4074, pop: 21500000 },
-  { name: "Guangzhou", country: "China", region: "asia", lat: 23.1291, lng: 113.2644, pop: 16000000 },
-  { name: "Shenzhen", country: "China", region: "asia", lat: 22.5431, lng: 114.0579, pop: 17500000 },
-  { name: "Chengdu", country: "China", region: "asia", lat: 30.5728, lng: 104.0668, pop: 15500000 },
-  { name: "Chongqing", country: "China", region: "asia", lat: 29.5630, lng: 106.5516, pop: 17000000 },
-  { name: "Wuhan", country: "China", region: "asia", lat: 30.5928, lng: 114.3055, pop: 11000000 },
-  { name: "Hong Kong", country: "Hong Kong", region: "asia", lat: 22.3193, lng: 114.1694, pop: 7500000 },
 
   // ASIA - SOUTHEAST ASIA
   { name: "Jakarta", country: "Indonesia", region: "asia", lat: -6.2088, lng: 106.8456, pop: 34500000 },
@@ -254,7 +259,6 @@ const rawCities = [
   { name: "Beirut", country: "Lebanon", region: "middle-east", lat: 33.8938, lng: 35.5018, pop: 2400000 },
   { name: "Baghdad", country: "Iraq", region: "middle-east", lat: 33.3152, lng: 44.3661, pop: 7500000 },
   { name: "Erbil", country: "Iraq", region: "middle-east", lat: 36.1911, lng: 44.0091, pop: 1600000 },
-  { name: "Tehran", country: "Iran", region: "middle-east", lat: 35.6892, lng: 51.3890, pop: 9400000 },
   { name: "Casablanca", country: "Morocco", region: "middle-east", lat: 33.5731, lng: -7.5898, pop: 3800000 },
   { name: "Rabat", country: "Morocco", region: "middle-east", lat: 34.0209, lng: -6.8416, pop: 1900000 },
   { name: "Marrakech", country: "Morocco", region: "middle-east", lat: 31.6295, lng: -7.9811, pop: 1000000 },
@@ -285,5 +289,8 @@ const rawCities = [
   { name: "Kigali", country: "Rwanda", region: "africa", lat: -1.9706, lng: 30.1044, pop: 1200000 }
 ];
 
-fs.writeFileSync(OUTPUT_FILE, JSON.stringify(rawCities, null, 2), 'utf8');
-console.log(`Generated ${rawCities.length} world cities dataset at ${OUTPUT_FILE}`);
+// Strictly filter out any excluded countries
+const filteredCities = rawCities.filter(c => !EXCLUDED_COUNTRIES.has(c.country));
+
+fs.writeFileSync(OUTPUT_FILE, JSON.stringify(filteredCities, null, 2), 'utf8');
+console.log(`Generated ${filteredCities.length} world cities dataset (excluding sensitive regions) at ${OUTPUT_FILE}`);
