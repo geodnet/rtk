@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GEODNET RTK Portal - Centimeter-Accurate GNSS Positioning</title>
   <meta name="description" content="Access next-generation RTK corrections or manage RTK user accounts with the GEODNET enterprise API. Find compatible hardware and explore coordinates systems.">
-  <link rel="stylesheet" href="styles.css?v=1.7.0">
+  <link rel="stylesheet" href="styles.css?v=1.8.0">
   <!-- Leaflet CSS for RTK Coverage Map -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 </head>
@@ -675,47 +675,123 @@
             </div>
           </div>
 
-          <!-- Transition Events Feed Table -->
-          <div style="margin-top: 20px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
-              <h4 style="font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin: 0;">
-                Recent Transition Events Log
-              </h4>
-              
-              <div style="display: flex; gap: 8px; align-items: center;">
-                <input type="text" id="dynamics-search-filter" class="input-ctrl" placeholder="Filter by station or RTCM ID..." style="font-size: 0.78rem; padding: 4px 10px; width: 220px;">
-                <select id="dynamics-type-filter" class="input-ctrl" style="font-size: 0.78rem; padding: 4px 8px;">
-                  <option value="ALL">All Transition Types</option>
-                  <option value="NEW_ACTIVE">New Active Stations</option>
-                  <option value="NEW_ONLINE">New Online Stations</option>
-                  <option value="ACTIVE_TO_ONLINE">Active &rarr; Online</option>
-                  <option value="ACTIVE_TO_OFFLINE">Active &rarr; Offline</option>
-                  <option value="TO_ACTIVE">To Active (Recovered)</option>
-                </select>
+          <!-- Multi-Timeframe Network Activity Summary Strip -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 16px;">
+            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <span style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase;">Last 24 Hours Changes</span>
+                <div id="stat-summary-24h" style="font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--primary); font-size: 1rem; margin-top: 2px;">--</div>
               </div>
+              <span class="badge" style="background: rgba(0, 242, 254, 0.1); color: var(--primary); font-size: 0.68rem; padding: 2px 6px;">24h Active</span>
             </div>
 
-            <div class="table-wrapper" style="max-height: 320px; overflow-y: auto;">
-              <table id="dynamics-events-table">
-                <thead>
-                  <tr>
-                    <th style="width: 130px;">Time</th>
-                    <th>Station Name</th>
-                    <th style="width: 110px;">RTCM ID</th>
-                    <th>State Transition</th>
-                    <th>Coordinates</th>
-                    <th style="width: 70px; text-align: center;">Action</th>
-                  </tr>
-                </thead>
-                <tbody id="dynamics-events-body">
-                  <tr>
-                    <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 24px;">
-                      Initializing state baseline... Next 10-minute sync will record live state transitions.
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <span style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase;">Last 7 Days Changes</span>
+                <div id="stat-summary-7d" style="font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--warning); font-size: 1rem; margin-top: 2px;">--</div>
+              </div>
+              <span class="badge" style="background: rgba(245, 158, 11, 0.1); color: var(--warning); font-size: 0.68rem; padding: 2px 6px;">7d Aggregate</span>
             </div>
+
+            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <span style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase;">Last 30 Days Changes</span>
+                <div id="stat-summary-30d" style="font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #a855f7; font-size: 1rem; margin-top: 2px;">--</div>
+              </div>
+              <span class="badge" style="background: rgba(168, 85, 247, 0.1); color: #a855f7; font-size: 0.68rem; padding: 2px 6px;">30d Monthly</span>
+            </div>
+
+            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <span style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase;">Network Stability Rate</span>
+                <div id="stat-network-stability" style="font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--success); font-size: 1rem; margin-top: 2px;">99.4%</div>
+              </div>
+              <span class="badge badge-live" style="font-size: 0.68rem; padding: 2px 6px;">Online Uptime</span>
+            </div>
+          </div>
+
+          <!-- View Switcher Tabs (Events Feed vs Station Reliability) -->
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 20px; margin-bottom: 12px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
+            <div class="filter-tabs" id="dynamics-view-tabs">
+              <button class="filter-tab active" data-view="events">
+                <span>Recent Transition Events Feed</span>
+              </button>
+              <button class="filter-tab" data-view="reliability">
+                <span>Station Reliability &amp; Flapping Stats</span>
+              </button>
+            </div>
+
+            <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+              <input type="text" id="dynamics-search-filter" class="input-ctrl" placeholder="Filter by station or RTCM ID..." style="font-size: 0.78rem; padding: 5px 10px; width: 200px;">
+              
+              <!-- Events Filter Dropdown -->
+              <select id="dynamics-type-filter" class="input-ctrl" style="font-size: 0.78rem; padding: 5px 8px;">
+                <option value="ALL">All Transition Types</option>
+                <option value="NEW_ACTIVE">New Active Stations</option>
+                <option value="NEW_ONLINE">New Online Stations</option>
+                <option value="ACTIVE_TO_ONLINE">Active &rarr; Online</option>
+                <option value="ACTIVE_TO_OFFLINE">Active &rarr; Offline</option>
+                <option value="TO_ACTIVE">To Active (Recovered)</option>
+              </select>
+
+              <!-- Reliability Filter Dropdown (visible when reliability tab is selected) -->
+              <select id="dynamics-reliability-filter" class="input-ctrl" style="font-size: 0.78rem; padding: 5px 8px; display: none;">
+                <option value="ALL">All Recorded Stations</option>
+                <option value="UNSTABLE" selected>Unstable / Flapping Only (&ge;2 Flips)</option>
+                <option value="DEGRADED">Degraded Stations (Active &rarr; Offline/Online)</option>
+                <option value="HIGH_FLAPS">Frequent Flappers (&ge;4 Flips)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Container 1: Transition Events Feed Table -->
+          <div id="dynamics-events-container" class="table-wrapper" style="max-height: 340px; overflow-y: auto;">
+            <table id="dynamics-events-table">
+              <thead>
+                <tr>
+                  <th style="width: 140px;">Time</th>
+                  <th>Station Name</th>
+                  <th style="width: 110px;">RTCM ID</th>
+                  <th>State Transition</th>
+                  <th>Coordinates</th>
+                  <th style="width: 75px; text-align: center;">Action</th>
+                </tr>
+              </thead>
+              <tbody id="dynamics-events-body">
+                <tr>
+                  <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 24px;">
+                    Loading transition history...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Container 2: Station Reliability & Flapping Stats Table (Hidden by default) -->
+          <div id="dynamics-reliability-container" class="table-wrapper" style="max-height: 340px; overflow-y: auto; display: none;">
+            <table id="dynamics-reliability-table">
+              <thead>
+                <tr>
+                  <th style="width: 50px;">Rank</th>
+                  <th>Station Name</th>
+                  <th style="width: 100px;">RTCM ID</th>
+                  <th>Current State</th>
+                  <th>Status Flips</th>
+                  <th>Degraded (Act &rarr; Off/On)</th>
+                  <th>Recovered (&rarr; Act)</th>
+                  <th>Reliability Status</th>
+                  <th>Last Transition</th>
+                  <th style="width: 75px; text-align: center;">Action</th>
+                </tr>
+              </thead>
+              <tbody id="dynamics-reliability-body">
+                <tr>
+                  <td colspan="10" style="text-align: center; color: var(--text-muted); padding: 24px;">
+                    Analyzing station transition records...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </section>
@@ -1670,6 +1746,6 @@
   <script src="https://unpkg.com/delaunator@5.0.1/delaunator.min.js"></script>
   
   <!-- App JavaScript logic -->
-  <script src="app.js?v=1.7.0"></script>
+  <script src="app.js?v=1.8.0"></script>
 </body>
 </html>

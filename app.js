@@ -2738,13 +2738,16 @@ function initCoverageMap() {
 
   let repoEvents = [];
   let repoSummary = {};
+  let repoStationStats = {};
+  let currentDynamicsView = "events"; // "events", "reliability"
 
   // Load historical transition data stored in GitHub repository
   async function loadRepoHistory() {
     try {
-      const [eventsRes, summaryRes] = await Promise.allSettled([
+      const [eventsRes, summaryRes, statsRes] = await Promise.allSettled([
         fetch("data/station_events.json?v=" + Date.now()),
-        fetch("data/daily_summary.json?v=" + Date.now())
+        fetch("data/daily_summary.json?v=" + Date.now()),
+        fetch("data/station_stats.json?v=" + Date.now())
       ]);
 
       if (eventsRes.status === "fulfilled" && eventsRes.value.ok) {
@@ -2752,6 +2755,9 @@ function initCoverageMap() {
       }
       if (summaryRes.status === "fulfilled" && summaryRes.value.ok) {
         repoSummary = await summaryRes.value.json();
+      }
+      if (statsRes.status === "fulfilled" && statsRes.value.ok) {
+        repoStationStats = await statsRes.value.json();
       }
     } catch (err) {
       console.warn("Could not load repo history files:", err);
@@ -2789,27 +2795,65 @@ function initCoverageMap() {
       });
     }
 
-    // Merge and deduplicate events by unique key
-    const seen = new Set();
-    const merged = [];
-
+    // Anomaly Sanitization: Count events per exact timestamp.
+    // If a single timestamp has > 200 events, it was an initial baseline load glitch or network disconnect.
+    const timeFrequency = {};
     [...localEvents, ...repoEvents].forEach(e => {
-      if (!e) return;
-      const key = `${e.name}_${e.timestamp}_${e.type}`;
-      if (!seen.has(key)) {
-        seen.add(key);
-        if (minTime === 0 || e.timestamp >= minTime) {
-          merged.push(e);
-        }
+      if (e && e.timestamp) {
+        timeFrequency[e.timestamp] = (timeFrequency[e.timestamp] || 0) + 1;
       }
     });
 
-    merged.sort((a, b) => b.timestamp - a.timestamp);
-    return merged;
+    // Merge and deduplicate events by unique key, dropping mass-spike anomaly blips
+    const seen = new Set();
+    const allValidEvents = [];
+
+    [...localEvents, ...repoEvents].forEach(e => {
+      if (!e) return;
+      if (timeFrequency[e.timestamp] > 200) return; // Discard anomaly spike
+      const key = `${e.name}_${e.timestamp}_${e.type}`;
+      if (!seen.has(key)) {
+        seen.add(key);
+        allValidEvents.push(e);
+      }
+    });
+
+    allValidEvents.sort((a, b) => b.timestamp - a.timestamp);
+
+    // Update Multi-Timeframe Activity Summary Strip
+    const t24h = now - 24 * 60 * 60 * 1000;
+    const t7d = now - 7 * 24 * 60 * 60 * 1000;
+    const t30d = now - 30 * 24 * 60 * 60 * 1000;
+
+    const count24h = allValidEvents.filter(e => e.timestamp >= t24h).length;
+    const count7d = allValidEvents.filter(e => e.timestamp >= t7d).length;
+    const count30d = allValidEvents.filter(e => e.timestamp >= t30d).length;
+
+    const stat24hEl = document.getElementById("stat-summary-24h");
+    const stat7dEl = document.getElementById("stat-summary-7d");
+    const stat30dEl = document.getElementById("stat-summary-30d");
+    const statUptimeEl = document.getElementById("stat-network-stability");
+
+    if (stat24hEl) stat24hEl.textContent = `${count24h.toLocaleString()} transitions`;
+    if (stat7dEl) stat7dEl.textContent = `${count7d.toLocaleString()} transitions`;
+    if (stat30dEl) stat30dEl.textContent = `${count30d.toLocaleString()} transitions`;
+
+    if (statUptimeEl && allStations.length > 0) {
+      const activeCount = allStations.filter(s => (s.status || "").toUpperCase() === "ACTIVE").length;
+      const uptimePct = ((activeCount / allStations.length) * 100).toFixed(1);
+      statUptimeEl.textContent = `${uptimePct}% Active`;
+    }
+
+    if (minTime === 0) return allValidEvents;
+    return allValidEvents.filter(e => e.timestamp >= minTime);
   }
 
   // State Diffing Engine: compare incoming station list against stored baseline
   async function processStationDynamics(currentStationsList) {
+    if (!currentStationsList || currentStationsList.length < 5000) {
+      return; // Sanity guard against partial / empty network responses
+    }
+
     const currentMap = {};
     currentStationsList.forEach(s => {
       if (s && s.name) {
@@ -2825,8 +2869,8 @@ function initCoverageMap() {
     const baseline = await getStoredBaseline();
     const timestamp = Date.now();
 
-    if (!baseline) {
-      // First run: save as initial baseline
+    if (!baseline || Object.keys(baseline).length < 5000) {
+      // First run or empty baseline: save current state as baseline without generating mass events
       await saveStoredBaseline(currentMap);
       updateDynamicsDashboardUI();
       return;
@@ -2890,6 +2934,13 @@ function initCoverageMap() {
       }
     }
 
+    // Protect against false-positive mass disconnect spikes
+    if (detectedEvents.length > 2000) {
+      console.warn(`Spike of ${detectedEvents.length} events detected. Skipping event record to preserve data integrity.`);
+      await saveStoredBaseline(currentMap);
+      return;
+    }
+
     // Save detected events and update baseline
     if (detectedEvents.length > 0) {
       await recordDynamicsEvents(detectedEvents);
@@ -2908,7 +2959,9 @@ function initCoverageMap() {
     const kpiPromotedToActive = document.getElementById("kpi-promoted-to-active");
     const baselineCountEl = document.getElementById("dynamics-baseline-count");
     const eventsTableBody = document.getElementById("dynamics-events-body");
+    const reliabilityTableBody = document.getElementById("dynamics-reliability-body");
     const typeFilterEl = document.getElementById("dynamics-type-filter");
+    const reliabilityFilterEl = document.getElementById("dynamics-reliability-filter");
     const searchFilterEl = document.getElementById("dynamics-search-filter");
 
     if (baselineCountEl) {
@@ -2935,68 +2988,178 @@ function initCoverageMap() {
     if (kpiActiveToDegraded) kpiActiveToDegraded.textContent = degradedCount.toLocaleString();
     if (kpiPromotedToActive) kpiPromotedToActive.textContent = promotedCount.toLocaleString();
 
-    // Filter event table rows
-    if (!eventsTableBody) return;
-
-    const selectedType = typeFilterEl ? typeFilterEl.value : "ALL";
     const searchQuery = (searchFilterEl ? searchFilterEl.value : "").trim().toUpperCase();
 
-    const filteredEvents = events.filter(e => {
-      if (selectedType !== "ALL") {
-        if (selectedType === "TO_ACTIVE" && !(e.type === "TO_ACTIVE" || e.toStatus === "ACTIVE")) return false;
-        if (selectedType !== "TO_ACTIVE" && e.type !== selectedType) return false;
-      }
-      if (searchQuery) {
-        const matchesName = (e.name || "").toUpperCase().includes(searchQuery);
-        const matchesId = e.stationId != null && String(e.stationId).includes(searchQuery);
-        if (!matchesName && !matchesId) return false;
-      }
-      return true;
-    });
+    // 1. Render Transition Events Feed Table
+    if (eventsTableBody) {
+      const selectedType = typeFilterEl ? typeFilterEl.value : "ALL";
 
-    if (filteredEvents.length === 0) {
-      eventsTableBody.innerHTML = `
-        <tr>
-          <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 24px;">
-            ${events.length === 0 ? "No state transitions recorded in this timeframe. Baseline actively monitored." : "No transitions match your search filter."}
-          </td>
-        </tr>
-      `;
-      return;
+      const filteredEvents = events.filter(e => {
+        if (selectedType !== "ALL") {
+          if (selectedType === "TO_ACTIVE" && !(e.type === "TO_ACTIVE" || e.toStatus === "ACTIVE")) return false;
+          if (selectedType !== "TO_ACTIVE" && e.type !== selectedType) return false;
+        }
+        if (searchQuery) {
+          const matchesName = (e.name || "").toUpperCase().includes(searchQuery);
+          const matchesId = e.stationId != null && String(e.stationId).includes(searchQuery);
+          if (!matchesName && !matchesId) return false;
+        }
+        return true;
+      });
+
+      if (filteredEvents.length === 0) {
+        eventsTableBody.innerHTML = `
+          <tr>
+            <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 24px;">
+              ${events.length === 0 ? "No state transitions recorded in this timeframe. Baseline actively monitored." : "No transitions match your search filter."}
+            </td>
+          </tr>
+        `;
+      } else {
+        eventsTableBody.innerHTML = filteredEvents.slice(0, 100).map(evt => {
+          const timeStr = new Date(evt.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + 
+                          ` <span style="font-size: 0.68rem; color: var(--text-muted);">(${new Date(evt.timestamp).toLocaleDateString([], { month: 'short', day: 'numeric' })})</span>`;
+          
+          let badgeHtml = "";
+          if (evt.type === "NEW_ACTIVE") {
+            badgeHtml = `<span class="badge badge-live" style="font-size: 0.7rem; padding: 2px 6px;">New Active (RTK Ready)</span>`;
+          } else if (evt.type === "NEW_ONLINE") {
+            badgeHtml = `<span class="badge" style="background: rgba(245, 158, 11, 0.15); color: var(--warning); font-size: 0.7rem; padding: 2px 6px;">New Online</span>`;
+          } else if (evt.type === "ACTIVE_TO_ONLINE") {
+            badgeHtml = `<span style="font-size: 0.72rem; color: var(--danger); font-weight: 600;">ACTIVE &rarr; <span style="color: var(--warning);">ONLINE</span></span>`;
+          } else if (evt.type === "ACTIVE_TO_OFFLINE") {
+            badgeHtml = `<span style="font-size: 0.72rem; color: var(--danger); font-weight: 600;">ACTIVE &rarr; OFFLINE</span>`;
+          } else if (evt.toStatus === "ACTIVE") {
+            badgeHtml = `<span style="font-size: 0.72rem; color: var(--success); font-weight: 600;">${evt.fromStatus} &rarr; <span style="color: var(--success);">ACTIVE (RTK Ready)</span></span>`;
+          } else {
+            badgeHtml = `<span style="font-size: 0.72rem; color: var(--text-secondary);">${evt.fromStatus} &rarr; ${evt.toStatus}</span>`;
+          }
+
+          return `
+            <tr>
+              <td style="font-size: 0.75rem; white-space: nowrap;">${timeStr}</td>
+              <td><strong style="font-family: 'JetBrains Mono', monospace; color: var(--text-primary);">${evt.name}</strong></td>
+              <td style="font-family: 'JetBrains Mono', monospace; color: var(--primary); font-size: 0.8rem;">${evt.stationId != null ? '#' + evt.stationId : '--'}</td>
+              <td>${badgeHtml}</td>
+              <td style="font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text-muted);">${evt.lat != null ? evt.lat.toFixed(4) + '°, ' + evt.lng.toFixed(4) + '°' : '--'}</td>
+              <td style="text-align: center;">
+                <button class="btn btn-secondary" onclick="window.inspectStationByName('${evt.name}')" style="padding: 2px 6px; font-size: 0.7rem;">View</button>
+              </td>
+            </tr>
+          `;
+        }).join("");
+      }
     }
 
-    eventsTableBody.innerHTML = filteredEvents.slice(0, 100).map(evt => {
-      const timeStr = new Date(evt.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + 
-                      ` <span style="font-size: 0.68rem; color: var(--text-muted);">(${new Date(evt.timestamp).toLocaleDateString([], { month: 'short', day: 'numeric' })})</span>`;
-      
-      let badgeHtml = "";
-      if (evt.type === "NEW_ACTIVE") {
-        badgeHtml = `<span class="badge badge-live" style="font-size: 0.7rem; padding: 2px 6px;">New Active (RTK Ready)</span>`;
-      } else if (evt.type === "NEW_ONLINE") {
-        badgeHtml = `<span class="badge" style="background: rgba(245, 158, 11, 0.15); color: var(--warning); font-size: 0.7rem; padding: 2px 6px;">New Online</span>`;
-      } else if (evt.type === "ACTIVE_TO_ONLINE") {
-        badgeHtml = `<span style="font-size: 0.72rem; color: var(--danger); font-weight: 600;">ACTIVE &rarr; <span style="color: var(--warning);">ONLINE</span></span>`;
-      } else if (evt.type === "ACTIVE_TO_OFFLINE") {
-        badgeHtml = `<span style="font-size: 0.72rem; color: var(--danger); font-weight: 600;">ACTIVE &rarr; OFFLINE</span>`;
-      } else if (evt.toStatus === "ACTIVE") {
-        badgeHtml = `<span style="font-size: 0.72rem; color: var(--success); font-weight: 600;">${evt.fromStatus} &rarr; <span style="color: var(--success);">ACTIVE (RTK Ready)</span></span>`;
-      } else {
-        badgeHtml = `<span style="font-size: 0.72rem; color: var(--text-secondary);">${evt.fromStatus} &rarr; ${evt.toStatus}</span>`;
+    // 2. Render Station Reliability & Flapping Stats Table
+    if (reliabilityTableBody) {
+      const stationMap = new Map();
+      const liveLookup = new Map();
+      allStations.forEach(s => {
+        if (s && s.name) liveLookup.set(s.name, s);
+      });
+
+      // Group events by station
+      events.forEach(e => {
+        if (!e || !e.name) return;
+        let item = stationMap.get(e.name);
+        if (!item) {
+          const live = liveLookup.get(e.name);
+          item = {
+            name: e.name,
+            stationId: e.stationId != null ? e.stationId : (live ? live.stationId : null),
+            lat: e.lat != null ? e.lat : (live ? live.lat : null),
+            lng: e.lng != null ? e.lng : (live ? live.lng : null),
+            status: live ? (live.status || "OFFLINE").toUpperCase() : (e.toStatus || "OFFLINE"),
+            totalFlips: 0,
+            degradedCount: 0,
+            recoveredCount: 0,
+            lastFlip: e.timestamp
+          };
+          stationMap.set(e.name, item);
+        }
+
+        item.totalFlips++;
+        if (e.type === "ACTIVE_TO_ONLINE" || e.type === "ACTIVE_TO_OFFLINE") {
+          item.degradedCount++;
+        } else if (e.type === "TO_ACTIVE" || e.toStatus === "ACTIVE") {
+          item.recoveredCount++;
+        }
+        if (e.timestamp > item.lastFlip) {
+          item.lastFlip = e.timestamp;
+        }
+      });
+
+      let stationStatsList = Array.from(stationMap.values());
+
+      // Sort by total flips descending (most unstable first), then degraded count
+      stationStatsList.sort((a, b) => b.totalFlips - a.totalFlips || b.degradedCount - a.degradedCount);
+
+      // Apply Reliability filter
+      const relFilter = reliabilityFilterEl ? reliabilityFilterEl.value : "UNSTABLE";
+      if (relFilter === "UNSTABLE") {
+        stationStatsList = stationStatsList.filter(s => s.totalFlips >= 2);
+      } else if (relFilter === "DEGRADED") {
+        stationStatsList = stationStatsList.filter(s => s.degradedCount > 0);
+      } else if (relFilter === "HIGH_FLAPS") {
+        stationStatsList = stationStatsList.filter(s => s.totalFlips >= 4);
       }
 
-      return `
-        <tr>
-          <td style="font-size: 0.75rem; white-space: nowrap;">${timeStr}</td>
-          <td><strong style="font-family: 'JetBrains Mono', monospace; color: var(--text-primary);">${evt.name}</strong></td>
-          <td style="font-family: 'JetBrains Mono', monospace; color: var(--primary); font-size: 0.8rem;">${evt.stationId != null ? '#' + evt.stationId : '--'}</td>
-          <td>${badgeHtml}</td>
-          <td style="font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text-muted);">${evt.lat != null ? evt.lat.toFixed(4) + '°, ' + evt.lng.toFixed(4) + '°' : '--'}</td>
-          <td style="text-align: center;">
-            <button class="btn btn-secondary" onclick="window.inspectStationByName('${evt.name}')" style="padding: 2px 6px; font-size: 0.7rem;">View</button>
-          </td>
-        </tr>
-      `;
-    }).join("");
+      // Apply search query
+      if (searchQuery) {
+        stationStatsList = stationStatsList.filter(s => {
+          const mName = (s.name || "").toUpperCase().includes(searchQuery);
+          const mId = s.stationId != null && String(s.stationId).includes(searchQuery);
+          return mName || mId;
+        });
+      }
+
+      if (stationStatsList.length === 0) {
+        reliabilityTableBody.innerHTML = `
+          <tr>
+            <td colspan="10" style="text-align: center; color: var(--text-muted); padding: 24px;">
+              ${stationMap.size === 0 ? "No status transitions detected in this timeframe. All stations operating stably." : "No stations match your selected reliability filter."}
+            </td>
+          </tr>
+        `;
+      } else {
+        reliabilityTableBody.innerHTML = stationStatsList.slice(0, 100).map((st, idx) => {
+          let statusBadge = `<span class="badge badge-live" style="font-size: 0.68rem; padding: 2px 6px;">ACTIVE</span>`;
+          if (st.status === "ONLINE") {
+            statusBadge = `<span class="badge" style="background: rgba(245, 158, 11, 0.15); color: var(--warning); font-size: 0.68rem; padding: 2px 6px;">ONLINE</span>`;
+          } else if (st.status === "OFFLINE") {
+            statusBadge = `<span class="badge" style="background: rgba(239, 68, 68, 0.15); color: var(--danger); font-size: 0.68rem; padding: 2px 6px;">OFFLINE</span>`;
+          }
+
+          let relRatingBadge = `<span class="badge" style="background: rgba(239, 68, 68, 0.15); color: var(--danger); font-size: 0.68rem; padding: 2px 6px;">🔴 Frequent Flaps (&ge;5)</span>`;
+          if (st.totalFlips <= 2) {
+            relRatingBadge = `<span class="badge" style="background: rgba(245, 158, 11, 0.15); color: var(--warning); font-size: 0.68rem; padding: 2px 6px;">🟡 Minor Flaps (1–2)</span>`;
+          } else if (st.totalFlips <= 4) {
+            relRatingBadge = `<span class="badge" style="background: rgba(249, 115, 22, 0.15); color: #f97316; font-size: 0.68rem; padding: 2px 6px;">🟠 Moderate Flaps (3–4)</span>`;
+          }
+
+          const lastTimeStr = new Date(st.lastFlip).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + 
+                              ` <span style="font-size: 0.68rem; color: var(--text-muted);">(${new Date(st.lastFlip).toLocaleDateString([], { month: 'short', day: 'numeric' })})</span>`;
+
+          return `
+            <tr>
+              <td style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text-muted);">${idx + 1}</td>
+              <td><strong style="font-family: 'JetBrains Mono', monospace; color: var(--text-primary);">${st.name}</strong></td>
+              <td style="font-family: 'JetBrains Mono', monospace; color: var(--primary); font-size: 0.8rem;">${st.stationId != null ? '#' + st.stationId : '--'}</td>
+              <td>${statusBadge}</td>
+              <td style="font-family: 'JetBrains Mono', monospace; font-weight: 700; color: ${st.totalFlips >= 4 ? 'var(--danger)' : 'var(--warning)'}; font-size: 0.85rem;">${st.totalFlips}</td>
+              <td style="font-family: 'JetBrains Mono', monospace; color: var(--danger); font-size: 0.8rem;">${st.degradedCount}</td>
+              <td style="font-family: 'JetBrains Mono', monospace; color: var(--success); font-size: 0.8rem;">${st.recoveredCount}</td>
+              <td>${relRatingBadge}</td>
+              <td style="font-size: 0.75rem; white-space: nowrap;">${lastTimeStr}</td>
+              <td style="text-align: center;">
+                <button class="btn btn-secondary" onclick="window.inspectStationByName('${st.name}')" style="padding: 2px 6px; font-size: 0.7rem;">Inspect</button>
+              </td>
+            </tr>
+          `;
+        }).join("");
+      }
+    }
   }
 
   // 10-Minute Auto-Sync Countdown Timer
@@ -3034,7 +3197,7 @@ function initCoverageMap() {
       });
     }
 
-    // Dynamics Time Filter Tabs
+    // Dynamics Time Filter Tabs (24h / 7d / 30d / all)
     const timeTabs = document.querySelectorAll("#dynamics-time-tabs .filter-tab");
     timeTabs.forEach(tab => {
       tab.addEventListener("click", () => {
@@ -3045,10 +3208,39 @@ function initCoverageMap() {
       });
     });
 
-    // Dynamics search and type filter listeners
+    // Dynamics View Switcher Tabs (Events Feed vs Station Reliability)
+    const viewTabs = document.querySelectorAll("#dynamics-view-tabs .filter-tab");
+    const eventsContainer = document.getElementById("dynamics-events-container");
+    const reliabilityContainer = document.getElementById("dynamics-reliability-container");
     const typeFilterEl = document.getElementById("dynamics-type-filter");
+    const reliabilityFilterEl = document.getElementById("dynamics-reliability-filter");
+
+    viewTabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        viewTabs.forEach(t => t.classList.remove("active"));
+        tab.classList.add("active");
+        currentDynamicsView = tab.getAttribute("data-view") || "events";
+
+        if (currentDynamicsView === "events") {
+          if (eventsContainer) eventsContainer.style.display = "block";
+          if (reliabilityContainer) reliabilityContainer.style.display = "none";
+          if (typeFilterEl) typeFilterEl.style.display = "inline-block";
+          if (reliabilityFilterEl) reliabilityFilterEl.style.display = "none";
+        } else {
+          if (eventsContainer) eventsContainer.style.display = "none";
+          if (reliabilityContainer) reliabilityContainer.style.display = "block";
+          if (typeFilterEl) typeFilterEl.style.display = "none";
+          if (reliabilityFilterEl) reliabilityFilterEl.style.display = "inline-block";
+        }
+
+        updateDynamicsDashboardUI();
+      });
+    });
+
+    // Dynamics search, type, and reliability filter listeners
     const searchFilterEl = document.getElementById("dynamics-search-filter");
     if (typeFilterEl) typeFilterEl.addEventListener("change", updateDynamicsDashboardUI);
+    if (reliabilityFilterEl) reliabilityFilterEl.addEventListener("change", updateDynamicsDashboardUI);
     if (searchFilterEl) searchFilterEl.addEventListener("input", updateDynamicsDashboardUI);
   }
 

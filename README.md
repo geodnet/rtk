@@ -111,12 +111,18 @@ The portal integrates directly with GEODNET's public RTK Coverage API endpoint:
   - Employs an IndexedDB-backed state-diffing machine that tracks all network delta transitions over time.
 - **Station Network Dynamics & Transition Analytics**:
   - Summarizes network evolution across selectable timeframes: **Today (24h)**, **This Week (7d)**, **This Month (30d)**, and **All Time**.
+  - **Multi-Timeframe Activity Summary Strip**: Live comparison chips for 24h, 7d, 30d transition counts and overall Network Stability Rate (e.g. `99.4% Active`).
   - 4 Key Transition Metrics:
     - 🟢 **New Active Stations** (Newly deployed & RTK ready)
     - 🟡 **New Online Stations** (Newly connected base stations)
     - 🟠 **Active &rarr; Online / Offline** (Degraded or RTK disabled)
     - 🔵 **Offline / Online &rarr; Active** (Recovered / promoted to RTK ready)
-  - Interactive, searchable transition events feed with 1-click **"View"** navigation to jump directly to and highlight transitioning stations on the map.
+  - **Station Reliability & Flapping Analytics**:
+    - Groups state transition events by individual base station to identify unstable / flapping reference stations.
+    - Shows rank, station UID, RTCM ID, current state, total status flips, degraded count, recovered count, reliability rating (🟡 Minor / 🟠 Moderate / 🔴 Frequent Flaps), and last transition time.
+    - Searchable and filterable by stability thresholds (`Unstable Only (>=2 Flips)`, `Degraded`, `Frequent Flappers (>=4 Flips)`).
+  - **Transition Events Feed**: Chronological stream of individual network delta events with search and state transition type filter.
+  - **Anomaly & Glitch Protection**: Built-in sanity filtering rejects false-positive mass disconnect spikes (>2,000 events) caused by client network dropouts or cold baseline resets.
 - **Population Coverage & RTK Gap Analytics Dashboard**:
   - Quantifies real-time centimeter RTK coverage accessibility relative to global and regional urban populations across major global metropolitan centers.
   - **Global & Regional Coverage Rates**: Live percentage progress bars for North America, Europe, Asia & Pacific, South America, Oceania, Middle East, and Sub-Saharan Africa.

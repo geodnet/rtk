@@ -11,6 +11,7 @@ const DATA_DIR = path.join(__dirname, '..', 'data');
 const BASELINE_FILE = path.join(DATA_DIR, 'station_baseline.json');
 const EVENTS_FILE = path.join(DATA_DIR, 'station_events.json');
 const SUMMARY_FILE = path.join(DATA_DIR, 'daily_summary.json');
+const STATS_FILE = path.join(DATA_DIR, 'station_stats.json');
 
 const API_URL = 'https://rtk.geodnet.com/api/v2/coverage_stations';
 
@@ -69,6 +70,11 @@ async function syncStations() {
   const liveStations = response.data;
   console.log(`Fetched ${liveStations.length} live stations from API.`);
 
+  // Guard against suspicious partial / empty response
+  if (liveStations.length < 5000) {
+    throw new Error(`Suspicious station count received: ${liveStations.length}. Aborting diff to prevent mass false events.`);
+  }
+
   // Build current map
   const currentMap = {};
   liveStations.forEach((s) => {
@@ -83,8 +89,9 @@ async function syncStations() {
   });
 
   const baseline = loadJsonSafe(BASELINE_FILE, null);
-  const events = loadJsonSafe(EVENTS_FILE, []);
+  let events = loadJsonSafe(EVENTS_FILE, []);
   const summary = loadJsonSafe(SUMMARY_FILE, {});
+  const stats = loadJsonSafe(STATS_FILE, {});
   const now = Date.now();
   const dayKey = getDayKey(now);
 
@@ -123,6 +130,7 @@ async function syncStations() {
     saveJsonPretty(BASELINE_FILE, currentMap);
     saveJsonPretty(EVENTS_FILE, events);
     saveJsonPretty(SUMMARY_FILE, summary);
+    saveJsonPretty(STATS_FILE, stats);
     console.log('Baseline initialization complete.');
     return;
   }
@@ -186,17 +194,49 @@ async function syncStations() {
         fromStatus: prev.status,
         toStatus: cur.status
       });
+
+      // Update per-station flapping & reliability record
+      if (!stats[name]) {
+        stats[name] = {
+          name,
+          stationId: cur.stationId != null ? cur.stationId : prev.stationId,
+          lat: cur.lat,
+          lng: cur.lng,
+          status: cur.status,
+          totalFlips: 0,
+          degradedFlips: 0,
+          recoveredFlips: 0,
+          lastFlip: now
+        };
+      }
+      stats[name].status = cur.status;
+      stats[name].totalFlips++;
+      if (eventType === 'ACTIVE_TO_ONLINE' || eventType === 'ACTIVE_TO_OFFLINE') {
+        stats[name].degradedFlips++;
+      } else if (eventType === 'TO_ACTIVE') {
+        stats[name].recoveredFlips++;
+      }
+      stats[name].lastFlip = now;
     }
   }
 
   console.log(`Detected ${newEvents.length} state transitions.`);
 
+  // Anomaly protection: if a single sync cycle detects > 2500 transitions, reject logging to prevent mass spikes
+  if (newEvents.length > 2500) {
+    console.warn(`Spike of ${newEvents.length} transitions detected. Skipping event log to protect historical data integrity.`);
+    saveJsonPretty(BASELINE_FILE, currentMap);
+    return;
+  }
+
   if (newEvents.length > 0) {
     events.unshift(...newEvents);
-    if (events.length > 10000) {
-      events.length = 10000;
+    // Keep up to 20,000 chronological events
+    if (events.length > 20000) {
+      events.length = 20000;
     }
     saveJsonPretty(EVENTS_FILE, events);
+    saveJsonPretty(STATS_FILE, stats);
   }
 
   // Update baseline & summary
