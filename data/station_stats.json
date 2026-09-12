@@ -37,11 +37,11 @@
     "stationId": 3474,
     "lat": 15.357,
     "lng": 75.151,
-    "status": "ONLINE",
-    "totalFlips": 41,
+    "status": "ACTIVE",
+    "totalFlips": 42,
     "degradedFlips": 2,
-    "recoveredFlips": 2,
-    "lastFlip": 1789206484186
+    "recoveredFlips": 3,
+    "lastFlip": 1789211188524
   },
   "****11199": {
     "name": "****11199",
@@ -81,11 +81,11 @@
     "stationId": 2310,
     "lat": 41.188,
     "lng": 1.409,
-    "status": "ACTIVE",
-    "totalFlips": 122,
-    "degradedFlips": 61,
+    "status": "OFFLINE",
+    "totalFlips": 123,
+    "degradedFlips": 62,
     "recoveredFlips": 61,
-    "lastFlip": 1789195066244
+    "lastFlip": 1789211188524
   },
   "****7A62D": {
     "name": "****7A62D",
@@ -268,11 +268,11 @@
     "stationId": 406,
     "lat": -34.746,
     "lng": 139.066,
-    "status": "ONLINE",
-    "totalFlips": 61,
+    "status": "ACTIVE",
+    "totalFlips": 62,
     "degradedFlips": 26,
-    "recoveredFlips": 26,
-    "lastFlip": 1789204097573
+    "recoveredFlips": 27,
+    "lastFlip": 1789211188524
   },
   "KUBN": {
     "name": "KUBN",
@@ -367,11 +367,11 @@
     "stationId": 163,
     "lat": 35.412,
     "lng": -82.37,
-    "status": "ONLINE",
-    "totalFlips": 248,
+    "status": "OFFLINE",
+    "totalFlips": 249,
     "degradedFlips": 0,
     "recoveredFlips": 0,
-    "lastFlip": 1789210053773
+    "lastFlip": 1789211188524
   },
   "****3D43D": {
     "name": "****3D43D",
@@ -477,11 +477,11 @@
     "stationId": 3975,
     "lat": 35.599,
     "lng": -84.464,
-    "status": "ACTIVE",
-    "totalFlips": 227,
-    "degradedFlips": 113,
+    "status": "OFFLINE",
+    "totalFlips": 228,
+    "degradedFlips": 114,
     "recoveredFlips": 114,
-    "lastFlip": 1789210053773
+    "lastFlip": 1789211188524
   },
   "****C34BD": {
     "name": "****C34BD",
@@ -521,11 +521,11 @@
     "stationId": 1386,
     "lat": 40.358,
     "lng": -0.066,
-    "status": "OFFLINE",
-    "totalFlips": 299,
+    "status": "ACTIVE",
+    "totalFlips": 300,
     "degradedFlips": 129,
-    "recoveredFlips": 129,
-    "lastFlip": 1789210053773
+    "recoveredFlips": 130,
+    "lastFlip": 1789211188524
   },
   "****6E8A4": {
     "name": "****6E8A4",
@@ -565,11 +565,11 @@
     "stationId": 1976,
     "lat": 38.51,
     "lng": -0.234,
-    "status": "OFFLINE",
-    "totalFlips": 76,
+    "status": "ACTIVE",
+    "totalFlips": 77,
     "degradedFlips": 38,
-    "recoveredFlips": 38,
-    "lastFlip": 1789210053773
+    "recoveredFlips": 39,
+    "lastFlip": 1789211188524
   },
   "****9C58D": {
     "name": "****9C58D",
@@ -642,11 +642,11 @@
     "stationId": 3655,
     "lat": 32.532,
     "lng": -117.019,
-    "status": "ACTIVE",
-    "totalFlips": 139,
-    "degradedFlips": 69,
+    "status": "OFFLINE",
+    "totalFlips": 140,
+    "degradedFlips": 70,
     "recoveredFlips": 70,
-    "lastFlip": 1789206484186
+    "lastFlip": 1789211188524
   },
   "****EE4A1": {
     "name": "****EE4A1",
@@ -719,11 +719,11 @@
     "stationId": 1590,
     "lat": 51.952,
     "lng": 9.092,
-    "status": "ONLINE",
-    "totalFlips": 60,
+    "status": "ACTIVE",
+    "totalFlips": 61,
     "degradedFlips": 30,
-    "recoveredFlips": 30,
-    "lastFlip": 1789193594347
+    "recoveredFlips": 31,
+    "lastFlip": 1789211188524
   },
   "****1CAE9": {
     "name": "****1CAE9",
@@ -1093,11 +1093,11 @@
     "stationId": 1689,
     "lat": -8.558,
     "lng": 115.123,
-    "status": "ONLINE",
-    "totalFlips": 144,
+    "status": "OFFLINE",
+    "totalFlips": 145,
     "degradedFlips": 0,
     "recoveredFlips": 0,
-    "lastFlip": 1789206484186
+    "lastFlip": 1789211188524
   },
   "****3A7A8": {
     "name": "****3A7A8",
@@ -1115,22 +1115,22 @@
     "stationId": 3454,
     "lat": 39.414,
     "lng": -104.722,
-    "status": "ONLINE",
-    "totalFlips": 86,
+    "status": "ACTIVE",
+    "totalFlips": 87,
     "degradedFlips": 43,
-    "recoveredFlips": 43,
-    "lastFlip": 1789204097573
+    "recoveredFlips": 44,
+    "lastFlip": 1789211188524
   },
   "****E30C4": {
     "name": "****E30C4",
     "stationId": 2679,
     "lat": 49.812,
     "lng": 7.417,
-    "status": "ACTIVE",
-    "totalFlips": 57,
-    "degradedFlips": 28,
+    "status": "ONLINE",
+    "totalFlips": 58,
+    "degradedFlips": 29,
     "recoveredFlips": 29,
-    "lastFlip": 1789207652782
+    "lastFlip": 1789211188524
   },
   "****C4DB6": {
     "name": "****C4DB6",
@@ -1269,22 +1269,22 @@
     "stationId": 2473,
     "lat": 18.443,
     "lng": -66.02,
-    "status": "ONLINE",
-    "totalFlips": 71,
+    "status": "ACTIVE",
+    "totalFlips": 72,
     "degradedFlips": 36,
-    "recoveredFlips": 35,
-    "lastFlip": 1789193594347
+    "recoveredFlips": 36,
+    "lastFlip": 1789211188524
   },
   "****748ED": {
     "name": "****748ED",
     "stationId": 613,
     "lat": 51.617,
     "lng": 16.364,
-    "status": "OFFLINE",
-    "totalFlips": 40,
+    "status": "ACTIVE",
+    "totalFlips": 41,
     "degradedFlips": 19,
-    "recoveredFlips": 19,
-    "lastFlip": 1789210053773
+    "recoveredFlips": 20,
+    "lastFlip": 1789211188524
   },
   "****D8D49": {
     "name": "****D8D49",
@@ -1456,11 +1456,11 @@
     "stationId": 1872,
     "lat": 41.32,
     "lng": -87.475,
-    "status": "ACTIVE",
-    "totalFlips": 191,
-    "degradedFlips": 95,
+    "status": "OFFLINE",
+    "totalFlips": 192,
+    "degradedFlips": 96,
     "recoveredFlips": 96,
-    "lastFlip": 1789192063306
+    "lastFlip": 1789211188524
   },
   "****6E73E": {
     "name": "****6E73E",
@@ -1478,11 +1478,11 @@
     "stationId": 3862,
     "lat": 36.205,
     "lng": -86.711,
-    "status": "ACTIVE",
-    "totalFlips": 71,
-    "degradedFlips": 35,
+    "status": "ONLINE",
+    "totalFlips": 72,
+    "degradedFlips": 36,
     "recoveredFlips": 36,
-    "lastFlip": 1789200611639
+    "lastFlip": 1789211188524
   },
   "****BEBE0": {
     "name": "****BEBE0",
@@ -1918,22 +1918,22 @@
     "stationId": 3614,
     "lat": 6.435,
     "lng": 4.015,
-    "status": "OFFLINE",
-    "totalFlips": 198,
+    "status": "ACTIVE",
+    "totalFlips": 199,
     "degradedFlips": 98,
-    "recoveredFlips": 98,
-    "lastFlip": 1789210053773
+    "recoveredFlips": 99,
+    "lastFlip": 1789211188524
   },
   "****FCECD": {
     "name": "****FCECD",
     "stationId": 3165,
     "lat": 43.408,
     "lng": -101.161,
-    "status": "ACTIVE",
-    "totalFlips": 147,
-    "degradedFlips": 72,
+    "status": "OFFLINE",
+    "totalFlips": 148,
+    "degradedFlips": 73,
     "recoveredFlips": 73,
-    "lastFlip": 1789206484186
+    "lastFlip": 1789211188524
   },
   "****CA59D": {
     "name": "****CA59D",
@@ -1951,11 +1951,11 @@
     "stationId": 658,
     "lat": 33.167,
     "lng": -101.806,
-    "status": "ACTIVE",
-    "totalFlips": 33,
-    "degradedFlips": 16,
+    "status": "ONLINE",
+    "totalFlips": 34,
+    "degradedFlips": 17,
     "recoveredFlips": 17,
-    "lastFlip": 1789193594347
+    "lastFlip": 1789211188524
   },
   "****20C50": {
     "name": "****20C50",
@@ -2006,33 +2006,33 @@
     "stationId": 2200,
     "lat": 37.336,
     "lng": -121.949,
-    "status": "ONLINE",
-    "totalFlips": 101,
+    "status": "ACTIVE",
+    "totalFlips": 102,
     "degradedFlips": 50,
-    "recoveredFlips": 50,
-    "lastFlip": 1789207652782
+    "recoveredFlips": 51,
+    "lastFlip": 1789211188524
   },
   "****C5581": {
     "name": "****C5581",
     "stationId": 1451,
     "lat": 33.921,
     "lng": -80.029,
-    "status": "OFFLINE",
-    "totalFlips": 206,
+    "status": "ACTIVE",
+    "totalFlips": 207,
     "degradedFlips": 102,
-    "recoveredFlips": 102,
-    "lastFlip": 1789210053773
+    "recoveredFlips": 103,
+    "lastFlip": 1789211188524
   },
   "****D4879": {
     "name": "****D4879",
     "stationId": 1096,
     "lat": 39.714,
     "lng": -111.859,
-    "status": "OFFLINE",
-    "totalFlips": 244,
+    "status": "ONLINE",
+    "totalFlips": 245,
     "degradedFlips": 0,
     "recoveredFlips": 0,
-    "lastFlip": 1789210053773
+    "lastFlip": 1789211188524
   },
   "****69A66": {
     "name": "****69A66",
@@ -2094,11 +2094,11 @@
     "stationId": 1944,
     "lat": 34.18,
     "lng": -98.522,
-    "status": "ACTIVE",
-    "totalFlips": 96,
-    "degradedFlips": 45,
+    "status": "OFFLINE",
+    "totalFlips": 97,
+    "degradedFlips": 46,
     "recoveredFlips": 46,
-    "lastFlip": 1789192063306
+    "lastFlip": 1789211188524
   },
   "****C4C81": {
     "name": "****C4C81",
@@ -2633,11 +2633,11 @@
     "stationId": 3175,
     "lat": 34.117,
     "lng": -118.001,
-    "status": "OFFLINE",
-    "totalFlips": 230,
+    "status": "ACTIVE",
+    "totalFlips": 231,
     "degradedFlips": 115,
-    "recoveredFlips": 115,
-    "lastFlip": 1789204097573
+    "recoveredFlips": 116,
+    "lastFlip": 1789211188524
   },
   "****31786": {
     "name": "****31786",
@@ -2765,11 +2765,11 @@
     "stationId": 3039,
     "lat": 48.081,
     "lng": 114.538,
-    "status": "ACTIVE",
-    "totalFlips": 64,
-    "degradedFlips": 13,
+    "status": "OFFLINE",
+    "totalFlips": 65,
+    "degradedFlips": 14,
     "recoveredFlips": 14,
-    "lastFlip": 1789200611639
+    "lastFlip": 1789211188524
   },
   "TCBY": {
     "name": "TCBY",
@@ -2787,11 +2787,11 @@
     "stationId": 138,
     "lat": -46.432,
     "lng": 51.856,
-    "status": "OFFLINE",
-    "totalFlips": 176,
+    "status": "ACTIVE",
+    "totalFlips": 177,
     "degradedFlips": 88,
-    "recoveredFlips": 88,
-    "lastFlip": 1789207652782
+    "recoveredFlips": 89,
+    "lastFlip": 1789211188524
   },
   "EUNG": {
     "name": "EUNG",
@@ -2853,11 +2853,11 @@
     "stationId": 933,
     "lat": -6.479,
     "lng": 108.262,
-    "status": "ONLINE",
-    "totalFlips": 228,
+    "status": "OFFLINE",
+    "totalFlips": 229,
     "degradedFlips": 0,
     "recoveredFlips": 0,
-    "lastFlip": 1789207652782
+    "lastFlip": 1789211188524
   },
   "****19CC1": {
     "name": "****19CC1",
@@ -2941,11 +2941,11 @@
     "stationId": 1071,
     "lat": 34.044,
     "lng": -117.204,
-    "status": "ACTIVE",
-    "totalFlips": 218,
-    "degradedFlips": 109,
+    "status": "OFFLINE",
+    "totalFlips": 219,
+    "degradedFlips": 110,
     "recoveredFlips": 109,
-    "lastFlip": 1789210053773
+    "lastFlip": 1789211188524
   },
   "****E867D": {
     "name": "****E867D",
@@ -3304,11 +3304,11 @@
     "stationId": 573,
     "lat": 40.64,
     "lng": -8.641,
-    "status": "ONLINE",
-    "totalFlips": 63,
+    "status": "ACTIVE",
+    "totalFlips": 64,
     "degradedFlips": 31,
-    "recoveredFlips": 31,
-    "lastFlip": 1789207652782
+    "recoveredFlips": 32,
+    "lastFlip": 1789211188524
   },
   "****79F01": {
     "name": "****79F01",
@@ -3458,11 +3458,11 @@
     "stationId": 3382,
     "lat": 45.271,
     "lng": -88.486,
-    "status": "ACTIVE",
-    "totalFlips": 33,
-    "degradedFlips": 16,
+    "status": "ONLINE",
+    "totalFlips": 34,
+    "degradedFlips": 17,
     "recoveredFlips": 17,
-    "lastFlip": 1789196870838
+    "lastFlip": 1789211188524
   },
   "****EDC8D": {
     "name": "****EDC8D",
@@ -3513,11 +3513,11 @@
     "stationId": 1482,
     "lat": 52.413,
     "lng": 16.9,
-    "status": "OFFLINE",
-    "totalFlips": 104,
+    "status": "ONLINE",
+    "totalFlips": 105,
     "degradedFlips": 34,
     "recoveredFlips": 34,
-    "lastFlip": 1789210053773
+    "lastFlip": 1789211188524
   },
   "****D1C7D": {
     "name": "****D1C7D",
@@ -3645,11 +3645,11 @@
     "stationId": 2796,
     "lat": 49.046,
     "lng": -122.319,
-    "status": "ONLINE",
-    "totalFlips": 60,
+    "status": "ACTIVE",
+    "totalFlips": 61,
     "degradedFlips": 30,
-    "recoveredFlips": 30,
-    "lastFlip": 1789196870838
+    "recoveredFlips": 31,
+    "lastFlip": 1789211188524
   },
   "****CDECC": {
     "name": "****CDECC",
@@ -3876,11 +3876,11 @@
     "stationId": 714,
     "lat": 42.037,
     "lng": 13.425,
-    "status": "ACTIVE",
-    "totalFlips": 21,
-    "degradedFlips": 10,
+    "status": "ONLINE",
+    "totalFlips": 22,
+    "degradedFlips": 11,
     "recoveredFlips": 11,
-    "lastFlip": 1789186169594
+    "lastFlip": 1789211188524
   },
   "****72799": {
     "name": "****72799",
@@ -4162,11 +4162,11 @@
     "stationId": 3415,
     "lat": 16.879,
     "lng": 74.924,
-    "status": "OFFLINE",
-    "totalFlips": 102,
+    "status": "ACTIVE",
+    "totalFlips": 103,
     "degradedFlips": 51,
-    "recoveredFlips": 50,
-    "lastFlip": 1789207652782
+    "recoveredFlips": 51,
+    "lastFlip": 1789211188524
   },
   "****6A81C": {
     "name": "****6A81C",
@@ -4437,11 +4437,11 @@
     "stationId": 1161,
     "lat": 48.84,
     "lng": 16.161,
-    "status": "OFFLINE",
-    "totalFlips": 211,
+    "status": "ACTIVE",
+    "totalFlips": 212,
     "degradedFlips": 106,
-    "recoveredFlips": 105,
-    "lastFlip": 1789210053773
+    "recoveredFlips": 106,
+    "lastFlip": 1789211188524
   },
   "****5D3F9": {
     "name": "****5D3F9",
@@ -4712,11 +4712,11 @@
     "stationId": 1024,
     "lat": 47.643,
     "lng": 26.244,
-    "status": "ACTIVE",
-    "totalFlips": 75,
-    "degradedFlips": 37,
+    "status": "ONLINE",
+    "totalFlips": 76,
+    "degradedFlips": 38,
     "recoveredFlips": 37,
-    "lastFlip": 1789186169594
+    "lastFlip": 1789211188524
   },
   "****F85E1": {
     "name": "****F85E1",
@@ -4778,11 +4778,11 @@
     "stationId": 2698,
     "lat": 41.917,
     "lng": -70.695,
-    "status": "ACTIVE",
-    "totalFlips": 32,
-    "degradedFlips": 15,
+    "status": "ONLINE",
+    "totalFlips": 33,
+    "degradedFlips": 16,
     "recoveredFlips": 16,
-    "lastFlip": 1789182587236
+    "lastFlip": 1789211188524
   },
   "****FCF05": {
     "name": "****FCF05",
@@ -4921,11 +4921,11 @@
     "stationId": 2706,
     "lat": 23.626,
     "lng": 87.658,
-    "status": "ONLINE",
-    "totalFlips": 29,
+    "status": "OFFLINE",
+    "totalFlips": 30,
     "degradedFlips": 3,
     "recoveredFlips": 3,
-    "lastFlip": 1789210053773
+    "lastFlip": 1789211188524
   },
   "****DDDA1": {
     "name": "****DDDA1",
@@ -4954,11 +4954,11 @@
     "stationId": 115,
     "lat": 53.199,
     "lng": 5.992,
-    "status": "ACTIVE",
-    "totalFlips": 88,
-    "degradedFlips": 42,
+    "status": "OFFLINE",
+    "totalFlips": 89,
+    "degradedFlips": 43,
     "recoveredFlips": 42,
-    "lastFlip": 1789210053773
+    "lastFlip": 1789211188524
   },
   "****326FA": {
     "name": "****326FA",
@@ -5020,11 +5020,11 @@
     "stationId": 3402,
     "lat": 36.052,
     "lng": -80.406,
-    "status": "ACTIVE",
-    "totalFlips": 72,
-    "degradedFlips": 36,
+    "status": "ONLINE",
+    "totalFlips": 73,
+    "degradedFlips": 37,
     "recoveredFlips": 36,
-    "lastFlip": 1789186169594
+    "lastFlip": 1789211188524
   },
   "****C0C7C": {
     "name": "****C0C7C",
@@ -5163,11 +5163,11 @@
     "stationId": 3967,
     "lat": 39.021,
     "lng": -76.725,
-    "status": "ACTIVE",
-    "totalFlips": 60,
-    "degradedFlips": 29,
+    "status": "ONLINE",
+    "totalFlips": 61,
+    "degradedFlips": 30,
     "recoveredFlips": 29,
-    "lastFlip": 1789196870838
+    "lastFlip": 1789211188524
   },
   "****6AAF2": {
     "name": "****6AAF2",
@@ -5207,22 +5207,22 @@
     "stationId": 2657,
     "lat": 40.161,
     "lng": -95.953,
-    "status": "ACTIVE",
-    "totalFlips": 44,
-    "degradedFlips": 22,
+    "status": "ONLINE",
+    "totalFlips": 45,
+    "degradedFlips": 23,
     "recoveredFlips": 22,
-    "lastFlip": 1789207652782
+    "lastFlip": 1789211188524
   },
   "****09A2C": {
     "name": "****09A2C",
     "stationId": 1957,
     "lat": 11.315,
     "lng": 79.51,
-    "status": "ACTIVE",
-    "totalFlips": 63,
-    "degradedFlips": 26,
+    "status": "ONLINE",
+    "totalFlips": 64,
+    "degradedFlips": 27,
     "recoveredFlips": 26,
-    "lastFlip": 1789153620694
+    "lastFlip": 1789211188524
   },
   "****6A17E": {
     "name": "****6A17E",
@@ -5273,11 +5273,11 @@
     "stationId": 1294,
     "lat": 48.553,
     "lng": 12.153,
-    "status": "ACTIVE",
-    "totalFlips": 73,
-    "degradedFlips": 36,
+    "status": "ONLINE",
+    "totalFlips": 74,
+    "degradedFlips": 37,
     "recoveredFlips": 37,
-    "lastFlip": 1789193594347
+    "lastFlip": 1789211188524
   },
   "****B8D58": {
     "name": "****B8D58",
@@ -5306,11 +5306,11 @@
     "stationId": 21,
     "lat": -2.593,
     "lng": -44.212,
-    "status": "ACTIVE",
-    "totalFlips": 95,
-    "degradedFlips": 35,
+    "status": "OFFLINE",
+    "totalFlips": 96,
+    "degradedFlips": 36,
     "recoveredFlips": 35,
-    "lastFlip": 1789207652782
+    "lastFlip": 1789211188524
   },
   "****AC361": {
     "name": "****AC361",
@@ -5955,11 +5955,11 @@
     "stationId": 673,
     "lat": 17.095,
     "lng": 75.399,
-    "status": "ACTIVE",
-    "totalFlips": 83,
-    "degradedFlips": 40,
+    "status": "OFFLINE",
+    "totalFlips": 84,
+    "degradedFlips": 41,
     "recoveredFlips": 41,
-    "lastFlip": 1789181377000
+    "lastFlip": 1789211188524
   },
   "****725A9": {
     "name": "****725A9",
@@ -6670,11 +6670,11 @@
     "stationId": 1017,
     "lat": 12.461,
     "lng": 4.205,
-    "status": "OFFLINE",
-    "totalFlips": 9,
+    "status": "ONLINE",
+    "totalFlips": 10,
     "degradedFlips": 5,
     "recoveredFlips": 4,
-    "lastFlip": 1789170460067
+    "lastFlip": 1789211188524
   },
   "****10C11": {
     "name": "****10C11",
@@ -6703,11 +6703,11 @@
     "stationId": 3467,
     "lat": 43.854,
     "lng": 25.965,
-    "status": "OFFLINE",
-    "totalFlips": 22,
+    "status": "ONLINE",
+    "totalFlips": 23,
     "degradedFlips": 10,
     "recoveredFlips": 9,
-    "lastFlip": 1789202517415
+    "lastFlip": 1789211188524
   },
   "****64E41": {
     "name": "****64E41",
@@ -6747,11 +6747,11 @@
     "stationId": 1317,
     "lat": 15.142,
     "lng": 77.602,
-    "status": "OFFLINE",
-    "totalFlips": 77,
+    "status": "ACTIVE",
+    "totalFlips": 78,
     "degradedFlips": 28,
-    "recoveredFlips": 28,
-    "lastFlip": 1789200611639
+    "recoveredFlips": 29,
+    "lastFlip": 1789211188524
   },
   "****E7ED1": {
     "name": "****E7ED1",
@@ -7143,11 +7143,11 @@
     "stationId": 1276,
     "lat": 31.347,
     "lng": -85.855,
-    "status": "ACTIVE",
-    "totalFlips": 61,
-    "degradedFlips": 30,
+    "status": "ONLINE",
+    "totalFlips": 62,
+    "degradedFlips": 31,
     "recoveredFlips": 31,
-    "lastFlip": 1789172522031
+    "lastFlip": 1789211188524
   },
   "****09A36": {
     "name": "****09A36",
@@ -7616,11 +7616,11 @@
     "stationId": 2216,
     "lat": 41.774,
     "lng": -80.469,
-    "status": "OFFLINE",
-    "totalFlips": 72,
+    "status": "ACTIVE",
+    "totalFlips": 73,
     "degradedFlips": 14,
-    "recoveredFlips": 14,
-    "lastFlip": 1789204097573
+    "recoveredFlips": 15,
+    "lastFlip": 1789211188524
   },
   "****67395": {
     "name": "****67395",
@@ -7649,11 +7649,11 @@
     "stationId": 286,
     "lat": 57.101,
     "lng": -135.396,
-    "status": "ONLINE",
-    "totalFlips": 50,
+    "status": "ACTIVE",
+    "totalFlips": 51,
     "degradedFlips": 25,
-    "recoveredFlips": 25,
-    "lastFlip": 1789153620694
+    "recoveredFlips": 26,
+    "lastFlip": 1789211188524
   },
   "****94C69": {
     "name": "****94C69",
@@ -7836,11 +7836,11 @@
     "stationId": 753,
     "lat": 23.493,
     "lng": 85.484,
-    "status": "ACTIVE",
-    "totalFlips": 60,
-    "degradedFlips": 28,
+    "status": "OFFLINE",
+    "totalFlips": 61,
+    "degradedFlips": 29,
     "recoveredFlips": 29,
-    "lastFlip": 1789210053773
+    "lastFlip": 1789211188524
   },
   "****37A29": {
     "name": "****37A29",
@@ -8144,11 +8144,11 @@
     "stationId": 702,
     "lat": 23.654,
     "lng": 85.947,
-    "status": "ACTIVE",
-    "totalFlips": 123,
-    "degradedFlips": 58,
+    "status": "OFFLINE",
+    "totalFlips": 124,
+    "degradedFlips": 59,
     "recoveredFlips": 59,
-    "lastFlip": 1789210053773
+    "lastFlip": 1789211188524
   },
   "****38061": {
     "name": "****38061",
@@ -8419,11 +8419,11 @@
     "stationId": 25,
     "lat": 6.071,
     "lng": 102.369,
-    "status": "ACTIVE",
-    "totalFlips": 98,
-    "degradedFlips": 49,
+    "status": "OFFLINE",
+    "totalFlips": 99,
+    "degradedFlips": 50,
     "recoveredFlips": 49,
-    "lastFlip": 1789206484186
+    "lastFlip": 1789211188524
   },
   "****2A82D": {
     "name": "****2A82D",
@@ -8661,11 +8661,11 @@
     "stationId": 1841,
     "lat": 49.345,
     "lng": 1.021,
-    "status": "ACTIVE",
-    "totalFlips": 37,
-    "degradedFlips": 18,
+    "status": "ONLINE",
+    "totalFlips": 38,
+    "degradedFlips": 19,
     "recoveredFlips": 19,
-    "lastFlip": 1789176547960
+    "lastFlip": 1789211188524
   },
   "****3BDA8": {
     "name": "****3BDA8",
@@ -8804,11 +8804,11 @@
     "stationId": 3244,
     "lat": 31.902,
     "lng": 35.2,
-    "status": "ACTIVE",
-    "totalFlips": 61,
-    "degradedFlips": 30,
+    "status": "ONLINE",
+    "totalFlips": 62,
+    "degradedFlips": 31,
     "recoveredFlips": 31,
-    "lastFlip": 1789193594347
+    "lastFlip": 1789211188524
   },
   "****B14A2": {
     "name": "****B14A2",
@@ -8837,11 +8837,11 @@
     "stationId": 2259,
     "lat": 35.726,
     "lng": -78.91,
-    "status": "ACTIVE",
-    "totalFlips": 44,
-    "degradedFlips": 21,
+    "status": "ONLINE",
+    "totalFlips": 45,
+    "degradedFlips": 22,
     "recoveredFlips": 22,
-    "lastFlip": 1789204097573
+    "lastFlip": 1789211188524
   },
   "****69EC0": {
     "name": "****69EC0",
@@ -9123,11 +9123,11 @@
     "stationId": 3566,
     "lat": 32.949,
     "lng": -103.351,
-    "status": "ONLINE",
-    "totalFlips": 52,
+    "status": "ACTIVE",
+    "totalFlips": 53,
     "degradedFlips": 26,
-    "recoveredFlips": 26,
-    "lastFlip": 1789193594347
+    "recoveredFlips": 27,
+    "lastFlip": 1789211188524
   },
   "****60DB9": {
     "name": "****60DB9",
@@ -9277,11 +9277,11 @@
     "stationId": 2351,
     "lat": 28.348,
     "lng": 76.789,
-    "status": "ONLINE",
-    "totalFlips": 52,
+    "status": "OFFLINE",
+    "totalFlips": 53,
     "degradedFlips": 25,
     "recoveredFlips": 24,
-    "lastFlip": 1789210053773
+    "lastFlip": 1789211188524
   },
   "ALBU": {
     "name": "ALBU",
@@ -9420,11 +9420,11 @@
     "stationId": 24,
     "lat": -7.916,
     "lng": -14.333,
-    "status": "OFFLINE",
-    "totalFlips": 69,
+    "status": "ACTIVE",
+    "totalFlips": 70,
     "degradedFlips": 34,
-    "recoveredFlips": 33,
-    "lastFlip": 1789210053773
+    "recoveredFlips": 34,
+    "lastFlip": 1789211188524
   },
   "****EBAC1": {
     "name": "****EBAC1",
@@ -9838,11 +9838,11 @@
     "stationId": 2602,
     "lat": 22.295,
     "lng": 91.91,
-    "status": "ACTIVE",
-    "totalFlips": 62,
-    "degradedFlips": 27,
+    "status": "OFFLINE",
+    "totalFlips": 63,
+    "degradedFlips": 28,
     "recoveredFlips": 27,
-    "lastFlip": 1789207652782
+    "lastFlip": 1789211188524
   },
   "****29F90": {
     "name": "****29F90",
@@ -10168,11 +10168,11 @@
     "stationId": 2910,
     "lat": 44.298,
     "lng": -89.187,
-    "status": "ONLINE",
-    "totalFlips": 48,
+    "status": "ACTIVE",
+    "totalFlips": 49,
     "degradedFlips": 24,
-    "recoveredFlips": 24,
-    "lastFlip": 1789204097573
+    "recoveredFlips": 25,
+    "lastFlip": 1789211188524
   },
   "****2A759": {
     "name": "****2A759",
@@ -10817,11 +10817,11 @@
     "stationId": 2033,
     "lat": 6.554,
     "lng": 100.404,
-    "status": "ACTIVE",
-    "totalFlips": 22,
-    "degradedFlips": 11,
+    "status": "ONLINE",
+    "totalFlips": 23,
+    "degradedFlips": 12,
     "recoveredFlips": 11,
-    "lastFlip": 1789196870838
+    "lastFlip": 1789211188524
   },
   "****6E420": {
     "name": "****6E420",
@@ -10850,11 +10850,11 @@
     "stationId": 2499,
     "lat": 41.927,
     "lng": 23.477,
-    "status": "ACTIVE",
-    "totalFlips": 42,
-    "degradedFlips": 21,
+    "status": "OFFLINE",
+    "totalFlips": 43,
+    "degradedFlips": 22,
     "recoveredFlips": 21,
-    "lastFlip": 1789200611639
+    "lastFlip": 1789211188524
   },
   "****C4A49": {
     "name": "****C4A49",
@@ -10883,11 +10883,11 @@
     "stationId": 238,
     "lat": 39.636,
     "lng": -84.147,
-    "status": "ONLINE",
-    "totalFlips": 61,
+    "status": "ACTIVE",
+    "totalFlips": 62,
     "degradedFlips": 31,
-    "recoveredFlips": 30,
-    "lastFlip": 1789204097573
+    "recoveredFlips": 31,
+    "lastFlip": 1789211188524
   },
   "G015": {
     "name": "G015",
@@ -11059,11 +11059,11 @@
     "stationId": 3628,
     "lat": 16.018,
     "lng": 74.412,
-    "status": "ONLINE",
-    "totalFlips": 80,
+    "status": "OFFLINE",
+    "totalFlips": 81,
     "degradedFlips": 16,
     "recoveredFlips": 16,
-    "lastFlip": 1789195066244
+    "lastFlip": 1789211188524
   },
   "****112ED": {
     "name": "****112ED",
@@ -11114,11 +11114,11 @@
     "stationId": 594,
     "lat": -30.867,
     "lng": 144.414,
-    "status": "OFFLINE",
-    "totalFlips": 149,
+    "status": "ACTIVE",
+    "totalFlips": 150,
     "degradedFlips": 75,
-    "recoveredFlips": 74,
-    "lastFlip": 1789207652782
+    "recoveredFlips": 75,
+    "lastFlip": 1789211188524
   },
   "****89601": {
     "name": "****89601",
@@ -11367,11 +11367,11 @@
     "stationId": 1124,
     "lat": 35.215,
     "lng": 139.677,
-    "status": "OFFLINE",
-    "totalFlips": 110,
+    "status": "ONLINE",
+    "totalFlips": 111,
     "degradedFlips": 31,
     "recoveredFlips": 31,
-    "lastFlip": 1789210053773
+    "lastFlip": 1789211188524
   },
   "****3F151": {
     "name": "****3F151",
@@ -12555,11 +12555,11 @@
     "stationId": 3097,
     "lat": 29.788,
     "lng": 77.265,
-    "status": "ACTIVE",
-    "totalFlips": 24,
-    "degradedFlips": 12,
+    "status": "OFFLINE",
+    "totalFlips": 25,
+    "degradedFlips": 13,
     "recoveredFlips": 12,
-    "lastFlip": 1789195066244
+    "lastFlip": 1789211188524
   },
   "****18D31": {
     "name": "****18D31",
@@ -13039,11 +13039,11 @@
     "stationId": 2760,
     "lat": 16.515,
     "lng": 74.954,
-    "status": "ACTIVE",
-    "totalFlips": 59,
-    "degradedFlips": 24,
+    "status": "OFFLINE",
+    "totalFlips": 60,
+    "degradedFlips": 25,
     "recoveredFlips": 24,
-    "lastFlip": 1789150172662
+    "lastFlip": 1789211188524
   },
   "****FC0BD": {
     "name": "****FC0BD",
@@ -13215,11 +13215,11 @@
     "stationId": 3153,
     "lat": 23.443,
     "lng": 72.937,
-    "status": "OFFLINE",
-    "totalFlips": 21,
+    "status": "ONLINE",
+    "totalFlips": 22,
     "degradedFlips": 10,
     "recoveredFlips": 9,
-    "lastFlip": 1789186169594
+    "lastFlip": 1789211188524
   },
   "****D9E7D": {
     "name": "****D9E7D",
@@ -13446,11 +13446,11 @@
     "stationId": 3927,
     "lat": 48.083,
     "lng": 19.309,
-    "status": "ACTIVE",
-    "totalFlips": 41,
-    "degradedFlips": 20,
+    "status": "ONLINE",
+    "totalFlips": 42,
+    "degradedFlips": 21,
     "recoveredFlips": 21,
-    "lastFlip": 1789189674375
+    "lastFlip": 1789211188524
   },
   "****37508": {
     "name": "****37508",
@@ -13545,11 +13545,11 @@
     "stationId": 4076,
     "lat": 32.789,
     "lng": -97.626,
-    "status": "ACTIVE",
-    "totalFlips": 27,
-    "degradedFlips": 13,
+    "status": "ONLINE",
+    "totalFlips": 28,
+    "degradedFlips": 14,
     "recoveredFlips": 14,
-    "lastFlip": 1789193594347
+    "lastFlip": 1789211188524
   },
   "****BFCCE": {
     "name": "****BFCCE",
@@ -13567,11 +13567,11 @@
     "stationId": 1682,
     "lat": 39.818,
     "lng": -84.194,
-    "status": "ACTIVE",
-    "totalFlips": 29,
-    "degradedFlips": 12,
+    "status": "ONLINE",
+    "totalFlips": 30,
+    "degradedFlips": 13,
     "recoveredFlips": 13,
-    "lastFlip": 1789196870838
+    "lastFlip": 1789211188524
   },
   "****6FFDD": {
     "name": "****6FFDD",
@@ -13699,11 +13699,11 @@
     "stationId": 1658,
     "lat": 34.397,
     "lng": 35.803,
-    "status": "OFFLINE",
-    "totalFlips": 31,
+    "status": "ACTIVE",
+    "totalFlips": 32,
     "degradedFlips": 15,
-    "recoveredFlips": 14,
-    "lastFlip": 1789210053773
+    "recoveredFlips": 15,
+    "lastFlip": 1789211188524
   },
   "****E4461": {
     "name": "****E4461",
@@ -13919,11 +13919,11 @@
     "stationId": 2674,
     "lat": 9.736,
     "lng": 118.757,
-    "status": "ONLINE",
-    "totalFlips": 27,
+    "status": "ACTIVE",
+    "totalFlips": 28,
     "degradedFlips": 6,
-    "recoveredFlips": 6,
-    "lastFlip": 1788999700430
+    "recoveredFlips": 7,
+    "lastFlip": 1789211188524
   },
   "****007E5": {
     "name": "****007E5",
@@ -14194,11 +14194,11 @@
     "stationId": 3150,
     "lat": 43.814,
     "lng": 23.895,
-    "status": "OFFLINE",
-    "totalFlips": 9,
+    "status": "ACTIVE",
+    "totalFlips": 10,
     "degradedFlips": 5,
-    "recoveredFlips": 4,
-    "lastFlip": 1789207652782
+    "recoveredFlips": 5,
+    "lastFlip": 1789211188524
   },
   "****652E5": {
     "name": "****652E5",
@@ -14271,11 +14271,11 @@
     "stationId": 1908,
     "lat": -40.595,
     "lng": 175.28,
-    "status": "ACTIVE",
-    "totalFlips": 24,
-    "degradedFlips": 10,
+    "status": "OFFLINE",
+    "totalFlips": 25,
+    "degradedFlips": 11,
     "recoveredFlips": 10,
-    "lastFlip": 1789130272180
+    "lastFlip": 1789211188524
   },
   "****EBA05": {
     "name": "****EBA05",
@@ -15074,11 +15074,11 @@
     "stationId": 1445,
     "lat": 14.771,
     "lng": 77.526,
-    "status": "ONLINE",
-    "totalFlips": 25,
+    "status": "OFFLINE",
+    "totalFlips": 26,
     "degradedFlips": 0,
     "recoveredFlips": 0,
-    "lastFlip": 1789196870838
+    "lastFlip": 1789211188524
   },
   "****E7A3D": {
     "name": "****E7A3D",
@@ -15195,11 +15195,11 @@
     "stationId": 1665,
     "lat": 40.475,
     "lng": -79.976,
-    "status": "ACTIVE",
-    "totalFlips": 78,
-    "degradedFlips": 39,
+    "status": "ONLINE",
+    "totalFlips": 79,
+    "degradedFlips": 40,
     "recoveredFlips": 39,
-    "lastFlip": 1789196870838
+    "lastFlip": 1789211188524
   },
   "****327D4": {
     "name": "****327D4",
@@ -15382,11 +15382,11 @@
     "stationId": 2153,
     "lat": 50.71,
     "lng": 12.759,
-    "status": "ACTIVE",
-    "totalFlips": 74,
-    "degradedFlips": 37,
+    "status": "OFFLINE",
+    "totalFlips": 75,
+    "degradedFlips": 38,
     "recoveredFlips": 37,
-    "lastFlip": 1789204097573
+    "lastFlip": 1789211188524
   },
   "****CDCA5": {
     "name": "****CDCA5",
@@ -15580,11 +15580,11 @@
     "stationId": 3131,
     "lat": 9.812,
     "lng": 77.504,
-    "status": "ACTIVE",
-    "totalFlips": 74,
-    "degradedFlips": 37,
+    "status": "OFFLINE",
+    "totalFlips": 75,
+    "degradedFlips": 38,
     "recoveredFlips": 37,
-    "lastFlip": 1789207652782
+    "lastFlip": 1789211188524
   },
   "****A0651": {
     "name": "****A0651",
@@ -15624,11 +15624,11 @@
     "stationId": 3604,
     "lat": 22.014,
     "lng": 73.145,
-    "status": "OFFLINE",
-    "totalFlips": 15,
+    "status": "ACTIVE",
+    "totalFlips": 16,
     "degradedFlips": 6,
-    "recoveredFlips": 6,
-    "lastFlip": 1789210053773
+    "recoveredFlips": 7,
+    "lastFlip": 1789211188524
   },
   "****64FE5": {
     "name": "****64FE5",
@@ -15745,11 +15745,11 @@
     "stationId": 744,
     "lat": 44.796,
     "lng": 24.256,
-    "status": "ONLINE",
-    "totalFlips": 38,
+    "status": "OFFLINE",
+    "totalFlips": 39,
     "degradedFlips": 13,
     "recoveredFlips": 12,
-    "lastFlip": 1789207652782
+    "lastFlip": 1789211188524
   },
   "****8F2F5": {
     "name": "****8F2F5",
@@ -16361,11 +16361,11 @@
     "stationId": 501,
     "lat": 9.623,
     "lng": 123.839,
-    "status": "ACTIVE",
-    "totalFlips": 20,
-    "degradedFlips": 10,
+    "status": "OFFLINE",
+    "totalFlips": 21,
+    "degradedFlips": 11,
     "recoveredFlips": 10,
-    "lastFlip": 1789134457106
+    "lastFlip": 1789211188524
   },
   "****3C8B6": {
     "name": "****3C8B6",
@@ -16394,11 +16394,11 @@
     "stationId": 3571,
     "lat": 9.623,
     "lng": 123.839,
-    "status": "ACTIVE",
-    "totalFlips": 20,
-    "degradedFlips": 10,
+    "status": "OFFLINE",
+    "totalFlips": 21,
+    "degradedFlips": 11,
     "recoveredFlips": 10,
-    "lastFlip": 1789132102858
+    "lastFlip": 1789211188524
   },
   "****1597D": {
     "name": "****1597D",
@@ -16482,11 +16482,11 @@
     "stationId": 3260,
     "lat": 22.596,
     "lng": 73.605,
-    "status": "ACTIVE",
-    "totalFlips": 1,
-    "degradedFlips": 0,
+    "status": "OFFLINE",
+    "totalFlips": 2,
+    "degradedFlips": 1,
     "recoveredFlips": 1,
-    "lastFlip": 1788336739710
+    "lastFlip": 1789211188524
   },
   "****CADE0": {
     "name": "****CADE0",
@@ -17098,11 +17098,11 @@
     "stationId": 1238,
     "lat": 6.733,
     "lng": 81.1,
-    "status": "ONLINE",
-    "totalFlips": 19,
+    "status": "ACTIVE",
+    "totalFlips": 20,
     "degradedFlips": 6,
-    "recoveredFlips": 6,
-    "lastFlip": 1789206484186
+    "recoveredFlips": 7,
+    "lastFlip": 1789211188524
   },
   "****716F9": {
     "name": "****716F9",
@@ -17692,11 +17692,11 @@
     "stationId": 1888,
     "lat": 10.432,
     "lng": 124.005,
-    "status": "ACTIVE",
-    "totalFlips": 14,
-    "degradedFlips": 7,
+    "status": "OFFLINE",
+    "totalFlips": 15,
+    "degradedFlips": 8,
     "recoveredFlips": 7,
-    "lastFlip": 1789116635260
+    "lastFlip": 1789211188524
   },
   "****099BA": {
     "name": "****099BA",
@@ -17736,11 +17736,11 @@
     "stationId": 3346,
     "lat": 35.936,
     "lng": 129.257,
-    "status": "ACTIVE",
-    "totalFlips": 24,
-    "degradedFlips": 12,
+    "status": "ONLINE",
+    "totalFlips": 25,
+    "degradedFlips": 13,
     "recoveredFlips": 12,
-    "lastFlip": 1789204097573
+    "lastFlip": 1789211188524
   },
   "****69A6E": {
     "name": "****69A6E",
@@ -17780,11 +17780,11 @@
     "stationId": 888,
     "lat": -6.64,
     "lng": 107.387,
-    "status": "OFFLINE",
-    "totalFlips": 203,
+    "status": "ONLINE",
+    "totalFlips": 204,
     "degradedFlips": 1,
     "recoveredFlips": 0,
-    "lastFlip": 1789210053773
+    "lastFlip": 1789211188524
   },
   "****FC6A1": {
     "name": "****FC6A1",
@@ -18000,22 +18000,22 @@
     "stationId": 3735,
     "lat": 8.619,
     "lng": 76.987,
-    "status": "OFFLINE",
-    "totalFlips": 60,
+    "status": "ONLINE",
+    "totalFlips": 61,
     "degradedFlips": 19,
     "recoveredFlips": 19,
-    "lastFlip": 1789192063306
+    "lastFlip": 1789211188524
   },
   "RHPT": {
     "name": "RHPT",
     "stationId": 485,
     "lat": -41.065,
     "lng": 145.962,
-    "status": "ACTIVE",
-    "totalFlips": 24,
-    "degradedFlips": 12,
+    "status": "OFFLINE",
+    "totalFlips": 25,
+    "degradedFlips": 13,
     "recoveredFlips": 12,
-    "lastFlip": 1789210053773
+    "lastFlip": 1789211188524
   },
   "****1685D": {
     "name": "****1685D",
@@ -18484,11 +18484,11 @@
     "stationId": 436,
     "lat": 47.184,
     "lng": -1.432,
-    "status": "OFFLINE",
-    "totalFlips": 26,
+    "status": "ONLINE",
+    "totalFlips": 27,
     "degradedFlips": 9,
     "recoveredFlips": 9,
-    "lastFlip": 1789159679740
+    "lastFlip": 1789211188524
   },
   "****60145": {
     "name": "****60145",
@@ -18781,11 +18781,11 @@
     "stationId": 2256,
     "lat": 52.315,
     "lng": 10.002,
-    "status": "ACTIVE",
-    "totalFlips": 14,
-    "degradedFlips": 7,
+    "status": "ONLINE",
+    "totalFlips": 15,
+    "degradedFlips": 8,
     "recoveredFlips": 7,
-    "lastFlip": 1789200611639
+    "lastFlip": 1789211188524
   },
   "****A1BF5": {
     "name": "****A1BF5",
@@ -18902,11 +18902,11 @@
     "stationId": 368,
     "lat": 3.774,
     "lng": 102.544,
-    "status": "ACTIVE",
-    "totalFlips": 20,
-    "degradedFlips": 10,
+    "status": "OFFLINE",
+    "totalFlips": 21,
+    "degradedFlips": 11,
     "recoveredFlips": 10,
-    "lastFlip": 1789084063392
+    "lastFlip": 1789211188524
   },
   "****17289": {
     "name": "****17289",
@@ -19067,11 +19067,11 @@
     "stationId": 469,
     "lat": 12.941,
     "lng": 79.245,
-    "status": "OFFLINE",
-    "totalFlips": 15,
+    "status": "ACTIVE",
+    "totalFlips": 16,
     "degradedFlips": 8,
-    "recoveredFlips": 7,
-    "lastFlip": 1789210053773
+    "recoveredFlips": 8,
+    "lastFlip": 1789211188524
   },
   "****7941D": {
     "name": "****7941D",
@@ -19100,11 +19100,11 @@
     "stationId": 4086,
     "lat": 50.982,
     "lng": 5.148,
-    "status": "ACTIVE",
-    "totalFlips": 38,
-    "degradedFlips": 19,
+    "status": "OFFLINE",
+    "totalFlips": 39,
+    "degradedFlips": 20,
     "recoveredFlips": 19,
-    "lastFlip": 1789056531055
+    "lastFlip": 1789211188524
   },
   "****93215": {
     "name": "****93215",
@@ -19518,11 +19518,11 @@
     "stationId": 3686,
     "lat": 43.127,
     "lng": -7.421,
-    "status": "ACTIVE",
-    "totalFlips": 22,
-    "degradedFlips": 11,
+    "status": "OFFLINE",
+    "totalFlips": 23,
+    "degradedFlips": 12,
     "recoveredFlips": 11,
-    "lastFlip": 1789127304911
+    "lastFlip": 1789211188524
   },
   "****15F19": {
     "name": "****15F19",
@@ -19562,11 +19562,11 @@
     "stationId": 2337,
     "lat": 47.351,
     "lng": 19.543,
-    "status": "ACTIVE",
-    "totalFlips": 72,
-    "degradedFlips": 36,
+    "status": "OFFLINE",
+    "totalFlips": 73,
+    "degradedFlips": 37,
     "recoveredFlips": 36,
-    "lastFlip": 1789176547960
+    "lastFlip": 1789211188524
   },
   "****65B45": {
     "name": "****65B45",
@@ -19716,11 +19716,11 @@
     "stationId": 105,
     "lat": 51.15,
     "lng": 6.461,
-    "status": "ACTIVE",
-    "totalFlips": 23,
-    "degradedFlips": 11,
+    "status": "ONLINE",
+    "totalFlips": 24,
+    "degradedFlips": 12,
     "recoveredFlips": 11,
-    "lastFlip": 1788966489212
+    "lastFlip": 1789211188524
   },
   "****BBFD1": {
     "name": "****BBFD1",
@@ -19782,11 +19782,11 @@
     "stationId": 567,
     "lat": 43.219,
     "lng": -7.687,
-    "status": "ACTIVE",
-    "totalFlips": 20,
-    "degradedFlips": 10,
+    "status": "OFFLINE",
+    "totalFlips": 21,
+    "degradedFlips": 11,
     "recoveredFlips": 10,
-    "lastFlip": 1789127304911
+    "lastFlip": 1789211188524
   },
   "****96471": {
     "name": "****96471",
@@ -20365,11 +20365,11 @@
     "stationId": 4056,
     "lat": 47.36,
     "lng": 13.17,
-    "status": "ACTIVE",
-    "totalFlips": 71,
-    "degradedFlips": 28,
+    "status": "OFFLINE",
+    "totalFlips": 72,
+    "degradedFlips": 29,
     "recoveredFlips": 28,
-    "lastFlip": 1789210053773
+    "lastFlip": 1789211188524
   },
   "****E0785": {
     "name": "****E0785",
@@ -21905,11 +21905,11 @@
     "stationId": 1918,
     "lat": 39.644,
     "lng": 22.407,
-    "status": "ONLINE",
-    "totalFlips": 43,
+    "status": "ACTIVE",
+    "totalFlips": 44,
     "degradedFlips": 22,
-    "recoveredFlips": 21,
-    "lastFlip": 1789207652782
+    "recoveredFlips": 22,
+    "lastFlip": 1789211188524
   },
   "TATU": {
     "name": "TATU",
@@ -22829,11 +22829,11 @@
     "stationId": 3033,
     "lat": 51.846,
     "lng": 15.467,
-    "status": "ACTIVE",
-    "totalFlips": 48,
-    "degradedFlips": 24,
+    "status": "ONLINE",
+    "totalFlips": 49,
+    "degradedFlips": 25,
     "recoveredFlips": 24,
-    "lastFlip": 1789182587236
+    "lastFlip": 1789211188524
   },
   "****CB645": {
     "name": "****CB645",
@@ -23423,11 +23423,11 @@
     "stationId": 99,
     "lat": 32.455,
     "lng": 74.484,
-    "status": "OFFLINE",
-    "totalFlips": 15,
+    "status": "ACTIVE",
+    "totalFlips": 16,
     "degradedFlips": 8,
-    "recoveredFlips": 7,
-    "lastFlip": 1789210053773
+    "recoveredFlips": 8,
+    "lastFlip": 1789211188524
   },
   "****ADB99": {
     "name": "****ADB99",
@@ -23973,11 +23973,11 @@
     "stationId": 1459,
     "lat": -5.375,
     "lng": 105.085,
-    "status": "OFFLINE",
-    "totalFlips": 10,
+    "status": "ONLINE",
+    "totalFlips": 11,
     "degradedFlips": 2,
     "recoveredFlips": 1,
-    "lastFlip": 1789019260241
+    "lastFlip": 1789211188524
   },
   "****23158": {
     "name": "****23158",
@@ -24710,11 +24710,11 @@
     "stationId": 1529,
     "lat": 28.58,
     "lng": 76.634,
-    "status": "ONLINE",
-    "totalFlips": 28,
+    "status": "ACTIVE",
+    "totalFlips": 29,
     "degradedFlips": 11,
-    "recoveredFlips": 10,
-    "lastFlip": 1789206484186
+    "recoveredFlips": 11,
+    "lastFlip": 1789211188524
   },
   "****1E805": {
     "name": "****1E805",
@@ -25106,11 +25106,11 @@
     "stationId": 22,
     "lat": -8.709,
     "lng": -63.896,
-    "status": "OFFLINE",
-    "totalFlips": 88,
+    "status": "ACTIVE",
+    "totalFlips": 89,
     "degradedFlips": 43,
-    "recoveredFlips": 42,
-    "lastFlip": 1789210053773
+    "recoveredFlips": 43,
+    "lastFlip": 1789211188524
   },
   "****115E5": {
     "name": "****115E5",
@@ -25491,22 +25491,22 @@
     "stationId": 1578,
     "lat": 44.451,
     "lng": 24.896,
-    "status": "ONLINE",
-    "totalFlips": 4,
+    "status": "ACTIVE",
+    "totalFlips": 5,
     "degradedFlips": 2,
-    "recoveredFlips": 1,
-    "lastFlip": 1789206484186
+    "recoveredFlips": 2,
+    "lastFlip": 1789211188524
   },
   "****3C968": {
     "name": "****3C968",
     "stationId": 298,
     "lat": 44.451,
     "lng": 24.896,
-    "status": "ONLINE",
-    "totalFlips": 4,
+    "status": "ACTIVE",
+    "totalFlips": 5,
     "degradedFlips": 2,
-    "recoveredFlips": 1,
-    "lastFlip": 1789206484186
+    "recoveredFlips": 2,
+    "lastFlip": 1789211188524
   },
   "****163E5": {
     "name": "****163E5",
@@ -25667,11 +25667,11 @@
     "stationId": 236,
     "lat": -22.739,
     "lng": -45.628,
-    "status": "ACTIVE",
-    "totalFlips": 26,
-    "degradedFlips": 12,
+    "status": "ONLINE",
+    "totalFlips": 27,
+    "degradedFlips": 13,
     "recoveredFlips": 13,
-    "lastFlip": 1789176547960
+    "lastFlip": 1789211188524
   },
   "****1FF75": {
     "name": "****1FF75",
@@ -25711,11 +25711,11 @@
     "stationId": 32,
     "lat": 47.643,
     "lng": -97.472,
-    "status": "ACTIVE",
-    "totalFlips": 130,
-    "degradedFlips": 65,
+    "status": "OFFLINE",
+    "totalFlips": 131,
+    "degradedFlips": 66,
     "recoveredFlips": 65,
-    "lastFlip": 1789179117385
+    "lastFlip": 1789211188524
   },
   "****69A48": {
     "name": "****69A48",
@@ -28087,11 +28087,11 @@
     "stationId": 288,
     "lat": 50.679,
     "lng": -120.355,
-    "status": "ACTIVE",
-    "totalFlips": 17,
-    "degradedFlips": 7,
+    "status": "ONLINE",
+    "totalFlips": 18,
+    "degradedFlips": 8,
     "recoveredFlips": 8,
-    "lastFlip": 1789207652782
+    "lastFlip": 1789211188524
   },
   "****F13F9": {
     "name": "****F13F9",
@@ -28109,22 +28109,22 @@
     "stationId": 3446,
     "lat": 33.66,
     "lng": 72.965,
-    "status": "ACTIVE",
-    "totalFlips": 9,
-    "degradedFlips": 3,
+    "status": "OFFLINE",
+    "totalFlips": 10,
+    "degradedFlips": 4,
     "recoveredFlips": 3,
-    "lastFlip": 1789144715846
+    "lastFlip": 1789211188524
   },
   "****D0E5E": {
     "name": "****D0E5E",
     "stationId": 710,
     "lat": 33.66,
     "lng": 72.965,
-    "status": "ACTIVE",
-    "totalFlips": 9,
-    "degradedFlips": 3,
+    "status": "OFFLINE",
+    "totalFlips": 10,
+    "degradedFlips": 4,
     "recoveredFlips": 3,
-    "lastFlip": 1789144715846
+    "lastFlip": 1789211188524
   },
   "****06E79": {
     "name": "****06E79",
@@ -28758,11 +28758,11 @@
     "stationId": 700,
     "lat": 46.96,
     "lng": -122.264,
-    "status": "ONLINE",
-    "totalFlips": 10,
+    "status": "ACTIVE",
+    "totalFlips": 11,
     "degradedFlips": 4,
-    "recoveredFlips": 4,
-    "lastFlip": 1788883810024
+    "recoveredFlips": 5,
+    "lastFlip": 1789211188524
   },
   "****2114D": {
     "name": "****2114D",
@@ -28879,11 +28879,11 @@
     "stationId": 1984,
     "lat": 55.975,
     "lng": 27.409,
-    "status": "OFFLINE",
-    "totalFlips": 29,
+    "status": "ACTIVE",
+    "totalFlips": 30,
     "degradedFlips": 15,
-    "recoveredFlips": 14,
-    "lastFlip": 1789210053773
+    "recoveredFlips": 15,
+    "lastFlip": 1789211188524
   },
   "****11365": {
     "name": "****11365",
@@ -29726,11 +29726,11 @@
     "stationId": 310,
     "lat": -8.596,
     "lng": -48.933,
-    "status": "OFFLINE",
-    "totalFlips": 10,
+    "status": "ONLINE",
+    "totalFlips": 11,
     "degradedFlips": 5,
     "recoveredFlips": 4,
-    "lastFlip": 1789164467231
+    "lastFlip": 1789211188524
   },
   "****BF529": {
     "name": "****BF529",
@@ -30815,11 +30815,11 @@
     "stationId": 3743,
     "lat": 11.546,
     "lng": 78.648,
-    "status": "ACTIVE",
-    "totalFlips": 71,
-    "degradedFlips": 35,
+    "status": "OFFLINE",
+    "totalFlips": 72,
+    "degradedFlips": 36,
     "recoveredFlips": 35,
-    "lastFlip": 1789210053773
+    "lastFlip": 1789211188524
   },
   "****D3BB5": {
     "name": "****D3BB5",
@@ -31343,11 +31343,11 @@
     "stationId": 157,
     "lat": -23.44,
     "lng": -50.249,
-    "status": "ONLINE",
-    "totalFlips": 4,
+    "status": "ACTIVE",
+    "totalFlips": 5,
     "degradedFlips": 2,
-    "recoveredFlips": 1,
-    "lastFlip": 1789207652782
+    "recoveredFlips": 2,
+    "lastFlip": 1789211188524
   },
   "****D37ED": {
     "name": "****D37ED",
@@ -31552,11 +31552,11 @@
     "stationId": 112,
     "lat": 28.358,
     "lng": 77.338,
-    "status": "ACTIVE",
-    "totalFlips": 16,
-    "degradedFlips": 8,
+    "status": "OFFLINE",
+    "totalFlips": 17,
+    "degradedFlips": 9,
     "recoveredFlips": 8,
-    "lastFlip": 1789199313135
+    "lastFlip": 1789211188524
   },
   "****6A158": {
     "name": "****6A158",
@@ -31926,11 +31926,11 @@
     "stationId": 1534,
     "lat": -8.312,
     "lng": 113.475,
-    "status": "OFFLINE",
-    "totalFlips": 3,
+    "status": "ONLINE",
+    "totalFlips": 4,
     "degradedFlips": 2,
     "recoveredFlips": 1,
-    "lastFlip": 1789099846195
+    "lastFlip": 1789211188524
   },
   "****6F9C9": {
     "name": "****6F9C9",
@@ -33356,11 +33356,11 @@
     "stationId": 2426,
     "lat": 37.266,
     "lng": -97.764,
-    "status": "ACTIVE",
-    "totalFlips": 81,
-    "degradedFlips": 40,
+    "status": "OFFLINE",
+    "totalFlips": 82,
+    "degradedFlips": 41,
     "recoveredFlips": 41,
-    "lastFlip": 1789210053773
+    "lastFlip": 1789211188524
   },
   "****14245": {
     "name": "****14245",
@@ -33697,11 +33697,11 @@
     "stationId": 784,
     "lat": 51.112,
     "lng": 6.952,
-    "status": "ACTIVE",
-    "totalFlips": 53,
-    "degradedFlips": 24,
+    "status": "ONLINE",
+    "totalFlips": 54,
+    "degradedFlips": 25,
     "recoveredFlips": 25,
-    "lastFlip": 1789196870838
+    "lastFlip": 1789211188524
   },
   "****8D5F1": {
     "name": "****8D5F1",
@@ -34962,11 +34962,11 @@
     "stationId": 2837,
     "lat": 47.105,
     "lng": 28.87,
-    "status": "ONLINE",
-    "totalFlips": 3,
+    "status": "OFFLINE",
+    "totalFlips": 4,
     "degradedFlips": 2,
     "recoveredFlips": 1,
-    "lastFlip": 1789184518455
+    "lastFlip": 1789211188524
   },
   "****18E39": {
     "name": "****18E39",
@@ -35006,11 +35006,11 @@
     "stationId": 1592,
     "lat": 16.656,
     "lng": 74.486,
-    "status": "OFFLINE",
-    "totalFlips": 10,
+    "status": "ACTIVE",
+    "totalFlips": 11,
     "degradedFlips": 5,
-    "recoveredFlips": 4,
-    "lastFlip": 1789210053773
+    "recoveredFlips": 5,
+    "lastFlip": 1789211188524
   },
   "****F4511": {
     "name": "****F4511",
@@ -35050,11 +35050,11 @@
     "stationId": 3349,
     "lat": 37.756,
     "lng": 39.305,
-    "status": "ONLINE",
-    "totalFlips": 14,
+    "status": "OFFLINE",
+    "totalFlips": 15,
     "degradedFlips": 7,
     "recoveredFlips": 6,
-    "lastFlip": 1789210053773
+    "lastFlip": 1789211188524
   },
   "****207B5": {
     "name": "****207B5",
@@ -35534,11 +35534,11 @@
     "stationId": 752,
     "lat": 40.139,
     "lng": 27.674,
-    "status": "ACTIVE",
-    "totalFlips": 6,
-    "degradedFlips": 3,
+    "status": "OFFLINE",
+    "totalFlips": 7,
+    "degradedFlips": 4,
     "recoveredFlips": 3,
-    "lastFlip": 1789199313135
+    "lastFlip": 1789211188524
   },
   "****2F8B8": {
     "name": "****2F8B8",
@@ -36260,11 +36260,11 @@
     "stationId": 2015,
     "lat": 40.978,
     "lng": 27.548,
-    "status": "ONLINE",
-    "totalFlips": 25,
+    "status": "ACTIVE",
+    "totalFlips": 26,
     "degradedFlips": 13,
-    "recoveredFlips": 12,
-    "lastFlip": 1789207652782
+    "recoveredFlips": 13,
+    "lastFlip": 1789211188524
   },
   "****37FA9": {
     "name": "****37FA9",
@@ -36623,11 +36623,11 @@
     "stationId": 2764,
     "lat": 19.209,
     "lng": 72.978,
-    "status": "ACTIVE",
-    "totalFlips": 7,
-    "degradedFlips": 3,
+    "status": "OFFLINE",
+    "totalFlips": 8,
+    "degradedFlips": 4,
     "recoveredFlips": 3,
-    "lastFlip": 1789117762261
+    "lastFlip": 1789211188524
   },
   "****209D5": {
     "name": "****209D5",
@@ -36788,11 +36788,11 @@
     "stationId": 1493,
     "lat": -1.513,
     "lng": 36.951,
-    "status": "ACTIVE",
-    "totalFlips": 15,
-    "degradedFlips": 7,
+    "status": "OFFLINE",
+    "totalFlips": 16,
+    "degradedFlips": 8,
     "recoveredFlips": 7,
-    "lastFlip": 1789160825085
+    "lastFlip": 1789211188524
   },
   "****C103D": {
     "name": "****C103D",
@@ -36821,11 +36821,11 @@
     "stationId": 2699,
     "lat": 28.922,
     "lng": 77.064,
-    "status": "ACTIVE",
-    "totalFlips": 57,
-    "degradedFlips": 26,
+    "status": "OFFLINE",
+    "totalFlips": 58,
+    "degradedFlips": 27,
     "recoveredFlips": 26,
-    "lastFlip": 1789210053773
+    "lastFlip": 1789211188524
   },
   "****699D6": {
     "name": "****699D6",
@@ -36843,11 +36843,11 @@
     "stationId": 1982,
     "lat": 28.583,
     "lng": 77.548,
-    "status": "ACTIVE",
-    "totalFlips": 22,
-    "degradedFlips": 11,
+    "status": "OFFLINE",
+    "totalFlips": 23,
+    "degradedFlips": 12,
     "recoveredFlips": 11,
-    "lastFlip": 1789132102858
+    "lastFlip": 1789211188524
   },
   "****BD8E9": {
     "name": "****BD8E9",
@@ -37624,11 +37624,11 @@
     "stationId": 1691,
     "lat": 47.002,
     "lng": 26.862,
-    "status": "ACTIVE",
-    "totalFlips": 6,
-    "degradedFlips": 3,
+    "status": "OFFLINE",
+    "totalFlips": 7,
+    "degradedFlips": 4,
     "recoveredFlips": 3,
-    "lastFlip": 1788923439334
+    "lastFlip": 1789211188524
   },
   "****11649": {
     "name": "****11649",
@@ -37745,11 +37745,11 @@
     "stationId": 3271,
     "lat": 0.262,
     "lng": 32.563,
-    "status": "OFFLINE",
-    "totalFlips": 13,
+    "status": "ACTIVE",
+    "totalFlips": 14,
     "degradedFlips": 7,
-    "recoveredFlips": 6,
-    "lastFlip": 1789207652782
+    "recoveredFlips": 7,
+    "lastFlip": 1789211188524
   },
   "****AA425": {
     "name": "****AA425",
@@ -38020,11 +38020,11 @@
     "stationId": 812,
     "lat": 19.079,
     "lng": 74.746,
-    "status": "OFFLINE",
-    "totalFlips": 9,
+    "status": "ACTIVE",
+    "totalFlips": 10,
     "degradedFlips": 5,
-    "recoveredFlips": 4,
-    "lastFlip": 1789206484186
+    "recoveredFlips": 5,
+    "lastFlip": 1789211188524
   },
   "****00D19": {
     "name": "****00D19",
@@ -38163,11 +38163,11 @@
     "stationId": 2920,
     "lat": 57.787,
     "lng": 13.027,
-    "status": "ACTIVE",
-    "totalFlips": 10,
-    "degradedFlips": 5,
+    "status": "ONLINE",
+    "totalFlips": 11,
+    "degradedFlips": 6,
     "recoveredFlips": 5,
-    "lastFlip": 1789189674375
+    "lastFlip": 1789211188524
   },
   "****DF945": {
     "name": "****DF945",
@@ -38416,11 +38416,11 @@
     "stationId": 1833,
     "lat": 22.313,
     "lng": 72.606,
-    "status": "ACTIVE",
-    "totalFlips": 6,
-    "degradedFlips": 3,
+    "status": "OFFLINE",
+    "totalFlips": 7,
+    "degradedFlips": 4,
     "recoveredFlips": 3,
-    "lastFlip": 1789038480909
+    "lastFlip": 1789211188524
   },
   "****3276A": {
     "name": "****3276A",
@@ -40231,11 +40231,11 @@
     "stationId": 1114,
     "lat": -32.585,
     "lng": 26.925,
-    "status": "ACTIVE",
-    "totalFlips": 66,
-    "degradedFlips": 33,
+    "status": "OFFLINE",
+    "totalFlips": 67,
+    "degradedFlips": 34,
     "recoveredFlips": 33,
-    "lastFlip": 1789207652782
+    "lastFlip": 1789211188524
   },
   "****E3251": {
     "name": "****E3251",
@@ -40979,11 +40979,11 @@
     "stationId": 1931,
     "lat": 25.364,
     "lng": 85.371,
-    "status": "ACTIVE",
-    "totalFlips": 2,
-    "degradedFlips": 1,
+    "status": "OFFLINE",
+    "totalFlips": 3,
+    "degradedFlips": 2,
     "recoveredFlips": 1,
-    "lastFlip": 1788451800602
+    "lastFlip": 1789211188524
   },
   "****BFC39": {
     "name": "****BFC39",
@@ -41287,11 +41287,11 @@
     "stationId": 758,
     "lat": 38.976,
     "lng": 38.986,
-    "status": "OFFLINE",
-    "totalFlips": 5,
+    "status": "ACTIVE",
+    "totalFlips": 6,
     "degradedFlips": 3,
-    "recoveredFlips": 2,
-    "lastFlip": 1789195066244
+    "recoveredFlips": 3,
+    "lastFlip": 1789211188524
   },
   "****F89AD": {
     "name": "****F89AD",
@@ -41826,11 +41826,11 @@
     "stationId": 644,
     "lat": 40.339,
     "lng": -74.332,
-    "status": "ONLINE",
-    "totalFlips": 5,
+    "status": "ACTIVE",
+    "totalFlips": 6,
     "degradedFlips": 2,
-    "recoveredFlips": 1,
-    "lastFlip": 1789206484186
+    "recoveredFlips": 2,
+    "lastFlip": 1789211188524
   },
   "****773BD": {
     "name": "****773BD",
@@ -42431,11 +42431,11 @@
     "stationId": 2422,
     "lat": 43.141,
     "lng": -70.906,
-    "status": "ACTIVE",
-    "totalFlips": 31,
-    "degradedFlips": 9,
+    "status": "ONLINE",
+    "totalFlips": 32,
+    "degradedFlips": 10,
     "recoveredFlips": 9,
-    "lastFlip": 1789206484186
+    "lastFlip": 1789211188524
   },
   "****E216D": {
     "name": "****E216D",
@@ -43124,11 +43124,11 @@
     "stationId": 1916,
     "lat": 23.4,
     "lng": 90.927,
-    "status": "ONLINE",
-    "totalFlips": 11,
+    "status": "ACTIVE",
+    "totalFlips": 12,
     "degradedFlips": 5,
-    "recoveredFlips": 4,
-    "lastFlip": 1789206484186
+    "recoveredFlips": 5,
+    "lastFlip": 1789211188524
   },
   "****70CDE": {
     "name": "****70CDE",
@@ -43223,11 +43223,11 @@
     "stationId": 678,
     "lat": 51.466,
     "lng": 5.231,
-    "status": "ACTIVE",
-    "totalFlips": 7,
-    "degradedFlips": 3,
+    "status": "OFFLINE",
+    "totalFlips": 8,
+    "degradedFlips": 4,
     "recoveredFlips": 3,
-    "lastFlip": 1788876611515
+    "lastFlip": 1789211188524
   },
   "****FACA9": {
     "name": "****FACA9",
@@ -43377,11 +43377,11 @@
     "stationId": 3411,
     "lat": 40.323,
     "lng": -1.106,
-    "status": "OFFLINE",
-    "totalFlips": 21,
+    "status": "ACTIVE",
+    "totalFlips": 22,
     "degradedFlips": 11,
-    "recoveredFlips": 10,
-    "lastFlip": 1789210053773
+    "recoveredFlips": 11,
+    "lastFlip": 1789211188524
   },
   "****251A4": {
     "name": "****251A4",
@@ -45049,11 +45049,11 @@
     "stationId": 888,
     "lat": -10.566,
     "lng": -58.549,
-    "status": "ACTIVE",
-    "totalFlips": 4,
-    "degradedFlips": 2,
+    "status": "OFFLINE",
+    "totalFlips": 5,
+    "degradedFlips": 3,
     "recoveredFlips": 2,
-    "lastFlip": 1788605261089
+    "lastFlip": 1789211188524
   },
   "****0B615": {
     "name": "****0B615",
@@ -45951,11 +45951,11 @@
     "stationId": 3392,
     "lat": 28.901,
     "lng": 76.566,
-    "status": "ACTIVE",
-    "totalFlips": 24,
-    "degradedFlips": 12,
+    "status": "OFFLINE",
+    "totalFlips": 25,
+    "degradedFlips": 13,
     "recoveredFlips": 12,
-    "lastFlip": 1789200611639
+    "lastFlip": 1789211188524
   },
   "****A1341": {
     "name": "****A1341",
@@ -46215,11 +46215,11 @@
     "stationId": 507,
     "lat": 23.763,
     "lng": 86.228,
-    "status": "ONLINE",
-    "totalFlips": 7,
+    "status": "ACTIVE",
+    "totalFlips": 8,
     "degradedFlips": 4,
-    "recoveredFlips": 3,
-    "lastFlip": 1789207652782
+    "recoveredFlips": 4,
+    "lastFlip": 1789211188524
   },
   "****D0F3E": {
     "name": "****D0F3E",
@@ -46369,11 +46369,11 @@
     "stationId": 28,
     "lat": 33.178,
     "lng": -84.033,
-    "status": "ACTIVE",
-    "totalFlips": 19,
-    "degradedFlips": 8,
+    "status": "ONLINE",
+    "totalFlips": 20,
+    "degradedFlips": 9,
     "recoveredFlips": 9,
-    "lastFlip": 1789196870838
+    "lastFlip": 1789211188524
   },
   "****CCDE1": {
     "name": "****CCDE1",
@@ -46809,11 +46809,11 @@
     "stationId": 3809,
     "lat": 14.237,
     "lng": 100.709,
-    "status": "OFFLINE",
-    "totalFlips": 7,
+    "status": "ACTIVE",
+    "totalFlips": 8,
     "degradedFlips": 4,
-    "recoveredFlips": 3,
-    "lastFlip": 1789210053773
+    "recoveredFlips": 4,
+    "lastFlip": 1789211188524
   },
   "****2D818": {
     "name": "****2D818",
@@ -46908,11 +46908,11 @@
     "stationId": 1773,
     "lat": -4.054,
     "lng": 39.672,
-    "status": "ONLINE",
-    "totalFlips": 13,
+    "status": "ACTIVE",
+    "totalFlips": 14,
     "degradedFlips": 6,
-    "recoveredFlips": 6,
-    "lastFlip": 1789206484186
+    "recoveredFlips": 7,
+    "lastFlip": 1789211188524
   },
   "****1B4A9": {
     "name": "****1B4A9",
@@ -48877,33 +48877,33 @@
     "stationId": 3276,
     "lat": 38.698,
     "lng": -0.487,
-    "status": "ACTIVE",
-    "totalFlips": 6,
-    "degradedFlips": 3,
+    "status": "OFFLINE",
+    "totalFlips": 7,
+    "degradedFlips": 4,
     "recoveredFlips": 3,
-    "lastFlip": 1789127304911
+    "lastFlip": 1789211188524
   },
   "****A0EB1": {
     "name": "****A0EB1",
     "stationId": 3154,
     "lat": 17.081,
     "lng": 74.279,
-    "status": "OFFLINE",
-    "totalFlips": 9,
+    "status": "ACTIVE",
+    "totalFlips": 10,
     "degradedFlips": 5,
-    "recoveredFlips": 4,
-    "lastFlip": 1789210053773
+    "recoveredFlips": 5,
+    "lastFlip": 1789211188524
   },
   "****69E88": {
     "name": "****69E88",
     "stationId": 1259,
     "lat": 50.968,
     "lng": 6.46,
-    "status": "OFFLINE",
-    "totalFlips": 17,
+    "status": "ACTIVE",
+    "totalFlips": 18,
     "degradedFlips": 9,
-    "recoveredFlips": 8,
-    "lastFlip": 1789210053773
+    "recoveredFlips": 9,
+    "lastFlip": 1789211188524
   },
   "****0B781": {
     "name": "****0B781",
@@ -49152,11 +49152,11 @@
     "stationId": 159,
     "lat": 39.348,
     "lng": 32.76,
-    "status": "OFFLINE",
-    "totalFlips": 7,
+    "status": "ACTIVE",
+    "totalFlips": 8,
     "degradedFlips": 4,
-    "recoveredFlips": 3,
-    "lastFlip": 1789206484186
+    "recoveredFlips": 4,
+    "lastFlip": 1789211188524
   },
   "****18F61": {
     "name": "****18F61",
@@ -51418,11 +51418,11 @@
     "stationId": 1162,
     "lat": 55.782,
     "lng": 21.567,
-    "status": "OFFLINE",
-    "totalFlips": 3,
+    "status": "ACTIVE",
+    "totalFlips": 4,
     "degradedFlips": 2,
-    "recoveredFlips": 1,
-    "lastFlip": 1789207652782
+    "recoveredFlips": 2,
+    "lastFlip": 1789211188524
   },
   "****21090": {
     "name": "****21090",
@@ -51913,11 +51913,11 @@
     "stationId": 3599,
     "lat": 28.758,
     "lng": 77.167,
-    "status": "OFFLINE",
-    "totalFlips": 5,
+    "status": "ACTIVE",
+    "totalFlips": 6,
     "degradedFlips": 3,
-    "recoveredFlips": 2,
-    "lastFlip": 1789200611639
+    "recoveredFlips": 3,
+    "lastFlip": 1789211188524
   },
   "****5BD51": {
     "name": "****5BD51",
@@ -54685,11 +54685,11 @@
     "stationId": 701,
     "lat": 41.031,
     "lng": 14.301,
-    "status": "OFFLINE",
-    "totalFlips": 3,
+    "status": "ACTIVE",
+    "totalFlips": 4,
     "degradedFlips": 2,
-    "recoveredFlips": 1,
-    "lastFlip": 1789210053773
+    "recoveredFlips": 2,
+    "lastFlip": 1789211188524
   },
   "****1F331": {
     "name": "****1F331",
@@ -54740,11 +54740,11 @@
     "stationId": 523,
     "lat": -1.397,
     "lng": -48.474,
-    "status": "ONLINE",
-    "totalFlips": 12,
+    "status": "OFFLINE",
+    "totalFlips": 13,
     "degradedFlips": 0,
     "recoveredFlips": 0,
-    "lastFlip": 1789210053773
+    "lastFlip": 1789211188524
   },
   "****C007D": {
     "name": "****C007D",
@@ -56599,11 +56599,11 @@
     "stationId": 2072,
     "lat": -25.598,
     "lng": 28.001,
-    "status": "ONLINE",
-    "totalFlips": 41,
+    "status": "ACTIVE",
+    "totalFlips": 42,
     "degradedFlips": 21,
-    "recoveredFlips": 20,
-    "lastFlip": 1789196870838
+    "recoveredFlips": 21,
+    "lastFlip": 1789211188524
   },
   "WEIA": {
     "name": "WEIA",
@@ -58535,11 +58535,11 @@
     "stationId": 571,
     "lat": 9.924,
     "lng": 78.156,
-    "status": "ACTIVE",
-    "totalFlips": 100,
-    "degradedFlips": 50,
+    "status": "OFFLINE",
+    "totalFlips": 101,
+    "degradedFlips": 51,
     "recoveredFlips": 50,
-    "lastFlip": 1789090307171
+    "lastFlip": 1789211188524
   },
   "****1CAC1": {
     "name": "****1CAC1",
@@ -59316,11 +59316,11 @@
     "stationId": 309,
     "lat": 8.849,
     "lng": -79.751,
-    "status": "ACTIVE",
-    "totalFlips": 24,
-    "degradedFlips": 11,
+    "status": "OFFLINE",
+    "totalFlips": 25,
+    "degradedFlips": 12,
     "recoveredFlips": 11,
-    "lastFlip": 1789181377000
+    "lastFlip": 1789211188524
   },
   "****00051": {
     "name": "****00051",
@@ -59657,11 +59657,11 @@
     "stationId": 3991,
     "lat": 9.033,
     "lng": -79.627,
-    "status": "ACTIVE",
-    "totalFlips": 6,
-    "degradedFlips": 3,
+    "status": "OFFLINE",
+    "totalFlips": 7,
+    "degradedFlips": 4,
     "recoveredFlips": 3,
-    "lastFlip": 1789202517415
+    "lastFlip": 1789211188524
   },
   "****164C9": {
     "name": "****164C9",
@@ -59767,11 +59767,11 @@
     "stationId": 3443,
     "lat": 49.422,
     "lng": 7.634,
-    "status": "ACTIVE",
-    "totalFlips": 8,
-    "degradedFlips": 4,
+    "status": "OFFLINE",
+    "totalFlips": 9,
+    "degradedFlips": 5,
     "recoveredFlips": 4,
-    "lastFlip": 1789179117385
+    "lastFlip": 1789211188524
   },
   "****7B259": {
     "name": "****7B259",
@@ -60526,22 +60526,22 @@
     "stationId": 1358,
     "lat": 56.969,
     "lng": 24.184,
-    "status": "ONLINE",
-    "totalFlips": 3,
+    "status": "ACTIVE",
+    "totalFlips": 4,
     "degradedFlips": 2,
-    "recoveredFlips": 1,
-    "lastFlip": 1789207652782
+    "recoveredFlips": 2,
+    "lastFlip": 1789211188524
   },
   "****20C26": {
     "name": "****20C26",
     "stationId": 1815,
     "lat": 39.858,
     "lng": -74.214,
-    "status": "ACTIVE",
-    "totalFlips": 11,
-    "degradedFlips": 5,
+    "status": "ONLINE",
+    "totalFlips": 12,
+    "degradedFlips": 6,
     "recoveredFlips": 6,
-    "lastFlip": 1789207652782
+    "lastFlip": 1789211188524
   },
   "SYM1": {
     "name": "SYM1",
@@ -60977,11 +60977,11 @@
     "stationId": 3671,
     "lat": 35.206,
     "lng": -80.759,
-    "status": "ACTIVE",
-    "totalFlips": 10,
-    "degradedFlips": 5,
+    "status": "ONLINE",
+    "totalFlips": 11,
+    "degradedFlips": 6,
     "recoveredFlips": 5,
-    "lastFlip": 1789132102858
+    "lastFlip": 1789211188524
   },
   "****BFE3D": {
     "name": "****BFE3D",
@@ -62055,11 +62055,11 @@
     "stationId": 1069,
     "lat": 25.761,
     "lng": -80.245,
-    "status": "ACTIVE",
-    "totalFlips": 168,
-    "degradedFlips": 84,
+    "status": "OFFLINE",
+    "totalFlips": 169,
+    "degradedFlips": 85,
     "recoveredFlips": 84,
-    "lastFlip": 1789204097573
+    "lastFlip": 1789211188524
   },
   "****A2349": {
     "name": "****A2349",
@@ -62748,11 +62748,11 @@
     "stationId": 693,
     "lat": 23.138,
     "lng": 72.527,
-    "status": "OFFLINE",
-    "totalFlips": 25,
+    "status": "ACTIVE",
+    "totalFlips": 26,
     "degradedFlips": 9,
-    "recoveredFlips": 8,
-    "lastFlip": 1789210053773
+    "recoveredFlips": 9,
+    "lastFlip": 1789211188524
   },
   "****DB2E9": {
     "name": "****DB2E9",
@@ -63694,11 +63694,11 @@
     "stationId": 2799,
     "lat": 23.978,
     "lng": 72.013,
-    "status": "OFFLINE",
-    "totalFlips": 55,
+    "status": "ACTIVE",
+    "totalFlips": 56,
     "degradedFlips": 14,
-    "recoveredFlips": 13,
-    "lastFlip": 1789186169594
+    "recoveredFlips": 14,
+    "lastFlip": 1789211188524
   },
   "****C78D9": {
     "name": "****C78D9",
@@ -64123,11 +64123,11 @@
     "stationId": 1328,
     "lat": -7.072,
     "lng": 109.262,
-    "status": "ONLINE",
-    "totalFlips": 107,
+    "status": "OFFLINE",
+    "totalFlips": 108,
     "degradedFlips": 1,
     "recoveredFlips": 0,
-    "lastFlip": 1789200611639
+    "lastFlip": 1789211188524
   },
   "****20CAE": {
     "name": "****20CAE",
@@ -64211,11 +64211,11 @@
     "stationId": 429,
     "lat": 40.319,
     "lng": -96.443,
-    "status": "OFFLINE",
-    "totalFlips": 7,
+    "status": "ACTIVE",
+    "totalFlips": 8,
     "degradedFlips": 4,
-    "recoveredFlips": 3,
-    "lastFlip": 1789207652782
+    "recoveredFlips": 4,
+    "lastFlip": 1789211188524
   },
   "****0C339": {
     "name": "****0C339",
@@ -65421,11 +65421,11 @@
     "stationId": 3903,
     "lat": 46.264,
     "lng": 15.169,
-    "status": "OFFLINE",
-    "totalFlips": 17,
+    "status": "ONLINE",
+    "totalFlips": 18,
     "degradedFlips": 9,
     "recoveredFlips": 8,
-    "lastFlip": 1789019260241
+    "lastFlip": 1789211188524
   },
   "****196C9": {
     "name": "****196C9",
@@ -67588,22 +67588,22 @@
     "stationId": 2057,
     "lat": -26.632,
     "lng": 30.652,
-    "status": "OFFLINE",
-    "totalFlips": 17,
+    "status": "ACTIVE",
+    "totalFlips": 18,
     "degradedFlips": 9,
-    "recoveredFlips": 8,
-    "lastFlip": 1789206484186
+    "recoveredFlips": 9,
+    "lastFlip": 1789211188524
   },
   "****FFBCD": {
     "name": "****FFBCD",
     "stationId": 1687,
     "lat": 35.074,
     "lng": 25.177,
-    "status": "ACTIVE",
-    "totalFlips": 4,
-    "degradedFlips": 2,
+    "status": "OFFLINE",
+    "totalFlips": 5,
+    "degradedFlips": 3,
     "recoveredFlips": 2,
-    "lastFlip": 1789207652782
+    "lastFlip": 1789211188524
   },
   "****177D1": {
     "name": "****177D1",
@@ -67863,11 +67863,11 @@
     "stationId": 3562,
     "lat": 19.507,
     "lng": 74.619,
-    "status": "OFFLINE",
-    "totalFlips": 7,
+    "status": "ACTIVE",
+    "totalFlips": 8,
     "degradedFlips": 4,
-    "recoveredFlips": 3,
-    "lastFlip": 1789207652782
+    "recoveredFlips": 4,
+    "lastFlip": 1789211188524
   },
   "****79F85": {
     "name": "****79F85",
@@ -68248,11 +68248,11 @@
     "stationId": 1604,
     "lat": 38.652,
     "lng": -8.219,
-    "status": "OFFLINE",
-    "totalFlips": 3,
+    "status": "ACTIVE",
+    "totalFlips": 4,
     "degradedFlips": 2,
-    "recoveredFlips": 1,
-    "lastFlip": 1789210053773
+    "recoveredFlips": 2,
+    "lastFlip": 1789211188524
   },
   "****EA4B9": {
     "name": "****EA4B9",
@@ -68501,11 +68501,11 @@
     "stationId": 2553,
     "lat": 50.687,
     "lng": 15.305,
-    "status": "OFFLINE",
-    "totalFlips": 9,
+    "status": "ACTIVE",
+    "totalFlips": 10,
     "degradedFlips": 5,
-    "recoveredFlips": 4,
-    "lastFlip": 1789206484186
+    "recoveredFlips": 5,
+    "lastFlip": 1789211188524
   },
   "****D522D": {
     "name": "****D522D",
@@ -68798,11 +68798,11 @@
     "stationId": 3858,
     "lat": 52.441,
     "lng": -1.047,
-    "status": "OFFLINE",
-    "totalFlips": 7,
+    "status": "ACTIVE",
+    "totalFlips": 8,
     "degradedFlips": 4,
-    "recoveredFlips": 3,
-    "lastFlip": 1789210053773
+    "recoveredFlips": 4,
+    "lastFlip": 1789211188524
   },
   "****0C6BD": {
     "name": "****0C6BD",
@@ -69788,11 +69788,11 @@
     "stationId": 1528,
     "lat": -8.03,
     "lng": 113.269,
-    "status": "ONLINE",
-    "totalFlips": 81,
+    "status": "OFFLINE",
+    "totalFlips": 82,
     "degradedFlips": 3,
     "recoveredFlips": 2,
-    "lastFlip": 1789210053773
+    "lastFlip": 1789211188524
   },
   "****70C79": {
     "name": "****70C79",
@@ -72329,11 +72329,11 @@
     "stationId": 2081,
     "lat": -31.91,
     "lng": 115.897,
-    "status": "OFFLINE",
-    "totalFlips": 1,
+    "status": "ONLINE",
+    "totalFlips": 2,
     "degradedFlips": 1,
     "recoveredFlips": 0,
-    "lastFlip": 1788748190161
+    "lastFlip": 1789211188524
   },
   "****C8949": {
     "name": "****C8949",
@@ -72362,22 +72362,22 @@
     "stationId": 750,
     "lat": 29.303,
     "lng": 76.513,
-    "status": "OFFLINE",
-    "totalFlips": 5,
+    "status": "ONLINE",
+    "totalFlips": 6,
     "degradedFlips": 3,
     "recoveredFlips": 2,
-    "lastFlip": 1789153620694
+    "lastFlip": 1789211188524
   },
   "****CEE92": {
     "name": "****CEE92",
     "stationId": 781,
     "lat": -21.587,
     "lng": -48.805,
-    "status": "OFFLINE",
-    "totalFlips": 5,
+    "status": "ACTIVE",
+    "totalFlips": 6,
     "degradedFlips": 3,
-    "recoveredFlips": 2,
-    "lastFlip": 1789207652782
+    "recoveredFlips": 3,
+    "lastFlip": 1789211188524
   },
   "****D4499": {
     "name": "****D4499",
@@ -75035,11 +75035,11 @@
     "stationId": 950,
     "lat": -7.12,
     "lng": 108.388,
-    "status": "OFFLINE",
-    "totalFlips": 3,
+    "status": "ONLINE",
+    "totalFlips": 4,
     "degradedFlips": 1,
     "recoveredFlips": 1,
-    "lastFlip": 1788900468764
+    "lastFlip": 1789211188524
   },
   "****DB791": {
     "name": "****DB791",
@@ -75772,11 +75772,11 @@
     "stationId": 523,
     "lat": 54.923,
     "lng": 23.669,
-    "status": "ONLINE",
-    "totalFlips": 5,
+    "status": "ACTIVE",
+    "totalFlips": 6,
     "degradedFlips": 3,
-    "recoveredFlips": 2,
-    "lastFlip": 1789207652782
+    "recoveredFlips": 3,
+    "lastFlip": 1789211188524
   },
   "****D4279": {
     "name": "****D4279",
@@ -77532,11 +77532,11 @@
     "stationId": 2807,
     "lat": 55.619,
     "lng": 26.194,
-    "status": "ACTIVE",
-    "totalFlips": 8,
-    "degradedFlips": 4,
+    "status": "ONLINE",
+    "totalFlips": 9,
+    "degradedFlips": 5,
     "recoveredFlips": 4,
-    "lastFlip": 1789040869816
+    "lastFlip": 1789211188524
   },
   "****CAE14": {
     "name": "****CAE14",
@@ -78412,11 +78412,11 @@
     "stationId": 1001,
     "lat": -7.813,
     "lng": 108.399,
-    "status": "OFFLINE",
-    "totalFlips": 90,
+    "status": "ACTIVE",
+    "totalFlips": 91,
     "degradedFlips": 22,
-    "recoveredFlips": 21,
-    "lastFlip": 1789206484186
+    "recoveredFlips": 22,
+    "lastFlip": 1789211188524
   },
   "****14DA1": {
     "name": "****14DA1",
@@ -80106,11 +80106,11 @@
     "stationId": 1511,
     "lat": 30.465,
     "lng": -97.685,
-    "status": "ONLINE",
-    "totalFlips": 9,
+    "status": "ACTIVE",
+    "totalFlips": 10,
     "degradedFlips": 4,
-    "recoveredFlips": 3,
-    "lastFlip": 1789207652782
+    "recoveredFlips": 4,
+    "lastFlip": 1789211188524
   },
   "****0DAFE": {
     "name": "****0DAFE",
@@ -82757,11 +82757,11 @@
     "stationId": 706,
     "lat": 51.568,
     "lng": 6.365,
-    "status": "OFFLINE",
-    "totalFlips": 3,
+    "status": "ONLINE",
+    "totalFlips": 4,
     "degradedFlips": 0,
     "recoveredFlips": 0,
-    "lastFlip": 1789210053773
+    "lastFlip": 1789211188524
   },
   "****ED3A1": {
     "name": "****ED3A1",
@@ -86629,11 +86629,11 @@
     "stationId": 792,
     "lat": 43.081,
     "lng": 24.247,
-    "status": "OFFLINE",
-    "totalFlips": 3,
+    "status": "ACTIVE",
+    "totalFlips": 4,
     "degradedFlips": 1,
-    "recoveredFlips": 1,
-    "lastFlip": 1789210053773
+    "recoveredFlips": 2,
+    "lastFlip": 1789211188524
   },
   "****A0455": {
     "name": "****A0455",
@@ -88532,11 +88532,11 @@
     "stationId": 1511,
     "lat": 25.129,
     "lng": 85.688,
-    "status": "ACTIVE",
-    "totalFlips": 20,
-    "degradedFlips": 10,
+    "status": "OFFLINE",
+    "totalFlips": 21,
+    "degradedFlips": 11,
     "recoveredFlips": 10,
-    "lastFlip": 1789200611639
+    "lastFlip": 1789211188524
   },
   "****0BB7D": {
     "name": "****0BB7D",
@@ -89104,11 +89104,11 @@
     "stationId": 1844,
     "lat": 36.215,
     "lng": 139.977,
-    "status": "ACTIVE",
-    "totalFlips": 6,
-    "degradedFlips": 3,
+    "status": "OFFLINE",
+    "totalFlips": 7,
+    "degradedFlips": 4,
     "recoveredFlips": 3,
-    "lastFlip": 1789181377000
+    "lastFlip": 1789211188524
   },
   "****C641D": {
     "name": "****C641D",
@@ -91205,11 +91205,11 @@
     "stationId": 460,
     "lat": 52.411,
     "lng": 12.517,
-    "status": "ACTIVE",
-    "totalFlips": 18,
-    "degradedFlips": 9,
+    "status": "OFFLINE",
+    "totalFlips": 19,
+    "degradedFlips": 10,
     "recoveredFlips": 9,
-    "lastFlip": 1789192063306
+    "lastFlip": 1789211188524
   },
   "****B6DF4": {
     "name": "****B6DF4",
@@ -91843,11 +91843,11 @@
     "stationId": 689,
     "lat": 44.055,
     "lng": 10.174,
-    "status": "ONLINE",
-    "totalFlips": 6,
+    "status": "ACTIVE",
+    "totalFlips": 7,
     "degradedFlips": 3,
-    "recoveredFlips": 2,
-    "lastFlip": 1789204097573
+    "recoveredFlips": 3,
+    "lastFlip": 1789211188524
   },
   "****11025": {
     "name": "****11025",
@@ -94538,11 +94538,11 @@
     "stationId": 2044,
     "lat": 56.02,
     "lng": 23.514,
-    "status": "ONLINE",
-    "totalFlips": 42,
+    "status": "OFFLINE",
+    "totalFlips": 43,
     "degradedFlips": 17,
     "recoveredFlips": 16,
-    "lastFlip": 1789210053773
+    "lastFlip": 1789211188524
   },
   "****E588D": {
     "name": "****E588D",
@@ -95484,11 +95484,11 @@
     "stationId": 3657,
     "lat": 37.169,
     "lng": -100.717,
-    "status": "ACTIVE",
-    "totalFlips": 12,
-    "degradedFlips": 6,
+    "status": "OFFLINE",
+    "totalFlips": 13,
+    "degradedFlips": 7,
     "recoveredFlips": 6,
-    "lastFlip": 1789080467166
+    "lastFlip": 1789211188524
   },
   "****15701": {
     "name": "****15701",
@@ -97541,11 +97541,11 @@
     "stationId": 1956,
     "lat": 59.432,
     "lng": 24.727,
-    "status": "ONLINE",
-    "totalFlips": 8,
+    "status": "ACTIVE",
+    "totalFlips": 9,
     "degradedFlips": 4,
-    "recoveredFlips": 4,
-    "lastFlip": 1789176547960
+    "recoveredFlips": 5,
+    "lastFlip": 1789211188524
   },
   "****60615": {
     "name": "****60615",
@@ -98575,11 +98575,11 @@
     "stationId": 3105,
     "lat": 35.848,
     "lng": -78.098,
-    "status": "ACTIVE",
-    "totalFlips": 34,
-    "degradedFlips": 17,
+    "status": "OFFLINE",
+    "totalFlips": 35,
+    "degradedFlips": 18,
     "recoveredFlips": 17,
-    "lastFlip": 1789207652782
+    "lastFlip": 1789211188524
   },
   "****19945": {
     "name": "****19945",
@@ -100423,11 +100423,11 @@
     "stationId": 772,
     "lat": -23.794,
     "lng": -54.229,
-    "status": "ONLINE",
-    "totalFlips": 8,
+    "status": "ACTIVE",
+    "totalFlips": 9,
     "degradedFlips": 4,
-    "recoveredFlips": 3,
-    "lastFlip": 1789206484186
+    "recoveredFlips": 4,
+    "lastFlip": 1789211188524
   },
   "****1CFD9": {
     "name": "****1CFD9",
@@ -100841,11 +100841,11 @@
     "stationId": 1033,
     "lat": -6.597,
     "lng": 106.311,
-    "status": "ONLINE",
-    "totalFlips": 31,
+    "status": "OFFLINE",
+    "totalFlips": 32,
     "degradedFlips": 3,
     "recoveredFlips": 2,
-    "lastFlip": 1789206484186
+    "lastFlip": 1789211188524
   },
   "****1FD12": {
     "name": "****1FD12",
@@ -102568,11 +102568,11 @@
     "stationId": 590,
     "lat": 36.14,
     "lng": 138.352,
-    "status": "ACTIVE",
-    "totalFlips": 5,
-    "degradedFlips": 2,
+    "status": "ONLINE",
+    "totalFlips": 6,
+    "degradedFlips": 3,
     "recoveredFlips": 3,
-    "lastFlip": 1789204097573
+    "lastFlip": 1789211188524
   },
   "****5D16D": {
     "name": "****5D16D",
@@ -102590,11 +102590,11 @@
     "stationId": 3523,
     "lat": 36.869,
     "lng": 36.948,
-    "status": "ACTIVE",
-    "totalFlips": 4,
-    "degradedFlips": 2,
+    "status": "OFFLINE",
+    "totalFlips": 5,
+    "degradedFlips": 3,
     "recoveredFlips": 2,
-    "lastFlip": 1789117762261
+    "lastFlip": 1789211188524
   },
   "****BFA35": {
     "name": "****BFA35",
@@ -105417,11 +105417,11 @@
     "stationId": 583,
     "lat": -3.994,
     "lng": -38.507,
-    "status": "OFFLINE",
-    "totalFlips": 11,
+    "status": "ACTIVE",
+    "totalFlips": 12,
     "degradedFlips": 5,
-    "recoveredFlips": 4,
-    "lastFlip": 1789206484186
+    "recoveredFlips": 5,
+    "lastFlip": 1789211188524
   },
   "****5CB21": {
     "name": "****5CB21",
@@ -106209,11 +106209,11 @@
     "stationId": 1047,
     "lat": 4.342,
     "lng": -74.36,
-    "status": "OFFLINE",
-    "totalFlips": 1,
+    "status": "ONLINE",
+    "totalFlips": 2,
     "degradedFlips": 1,
     "recoveredFlips": 0,
-    "lastFlip": 1789163250500
+    "lastFlip": 1789211188524
   },
   "****C2135": {
     "name": "****C2135",
@@ -106506,11 +106506,11 @@
     "stationId": 3243,
     "lat": 35.433,
     "lng": 139.522,
-    "status": "ONLINE",
-    "totalFlips": 2,
+    "status": "ACTIVE",
+    "totalFlips": 3,
     "degradedFlips": 1,
-    "recoveredFlips": 0,
-    "lastFlip": 1789206484186
+    "recoveredFlips": 1,
+    "lastFlip": 1789211188524
   },
   "****008CD": {
     "name": "****008CD",
@@ -106726,11 +106726,11 @@
     "stationId": 832,
     "lat": 2.501,
     "lng": 103.014,
-    "status": "OFFLINE",
-    "totalFlips": 1,
+    "status": "ONLINE",
+    "totalFlips": 2,
     "degradedFlips": 1,
     "recoveredFlips": 0,
-    "lastFlip": 1789181377000
+    "lastFlip": 1789211188524
   },
   "****DFB9D": {
     "name": "****DFB9D",
@@ -107672,11 +107672,11 @@
     "stationId": 2066,
     "lat": 22.977,
     "lng": 86.854,
-    "status": "ACTIVE",
-    "totalFlips": 2,
-    "degradedFlips": 1,
+    "status": "OFFLINE",
+    "totalFlips": 3,
+    "degradedFlips": 2,
     "recoveredFlips": 1,
-    "lastFlip": 1789207652782
+    "lastFlip": 1789211188524
   },
   "****206C1": {
     "name": "****206C1",
@@ -107903,11 +107903,11 @@
     "stationId": 1978,
     "lat": 35.294,
     "lng": -119.019,
-    "status": "ONLINE",
-    "totalFlips": 2,
+    "status": "OFFLINE",
+    "totalFlips": 3,
     "degradedFlips": 0,
     "recoveredFlips": 0,
-    "lastFlip": 1789206484186
+    "lastFlip": 1789211188524
   },
   "****11741": {
     "name": "****11741",
@@ -108464,11 +108464,11 @@
     "stationId": 1267,
     "lat": -7.132,
     "lng": 113.558,
-    "status": "OFFLINE",
-    "totalFlips": 1,
+    "status": "ACTIVE",
+    "totalFlips": 2,
     "degradedFlips": 1,
-    "recoveredFlips": 0,
-    "lastFlip": 1789210053773
+    "recoveredFlips": 1,
+    "lastFlip": 1789211188524
   },
   "****EB34D": {
     "name": "****EB34D",
@@ -108486,32 +108486,197 @@
     "stationId": 2720,
     "lat": 53.114,
     "lng": 9.806,
-    "status": "OFFLINE",
-    "totalFlips": 1,
+    "status": "ACTIVE",
+    "totalFlips": 2,
     "degradedFlips": 1,
-    "recoveredFlips": 0,
-    "lastFlip": 1789210053773
+    "recoveredFlips": 1,
+    "lastFlip": 1789211188524
   },
   "****1CB49": {
     "name": "****1CB49",
     "stationId": 2376,
     "lat": 46.529,
     "lng": 16.751,
-    "status": "OFFLINE",
-    "totalFlips": 1,
+    "status": "ACTIVE",
+    "totalFlips": 2,
     "degradedFlips": 1,
-    "recoveredFlips": 0,
-    "lastFlip": 1789210053773
+    "recoveredFlips": 1,
+    "lastFlip": 1789211188524
   },
   "****13FC1": {
     "name": "****13FC1",
     "stationId": 321,
     "lat": -5.65,
     "lng": -48.093,
+    "status": "ACTIVE",
+    "totalFlips": 2,
+    "degradedFlips": 1,
+    "recoveredFlips": 1,
+    "lastFlip": 1789211188524
+  },
+  "****69A72": {
+    "name": "****69A72",
+    "stationId": 262,
+    "lat": 46.293,
+    "lng": -79.455,
     "status": "OFFLINE",
     "totalFlips": 1,
     "degradedFlips": 1,
     "recoveredFlips": 0,
-    "lastFlip": 1789210053773
+    "lastFlip": 1789211188524
+  },
+  "****D35D5": {
+    "name": "****D35D5",
+    "stationId": 250,
+    "lat": 47.632,
+    "lng": 26.225,
+    "status": "OFFLINE",
+    "totalFlips": 1,
+    "degradedFlips": 1,
+    "recoveredFlips": 0,
+    "lastFlip": 1789211188524
+  },
+  "****EE341": {
+    "name": "****EE341",
+    "stationId": 706,
+    "lat": 40.125,
+    "lng": 18.293,
+    "status": "OFFLINE",
+    "totalFlips": 1,
+    "degradedFlips": 1,
+    "recoveredFlips": 0,
+    "lastFlip": 1789211188524
+  },
+  "****C3EB5": {
+    "name": "****C3EB5",
+    "stationId": 4016,
+    "lat": 41.761,
+    "lng": 26.341,
+    "status": "OFFLINE",
+    "totalFlips": 1,
+    "degradedFlips": 1,
+    "recoveredFlips": 0,
+    "lastFlip": 1789211188524
+  },
+  "****69E2C": {
+    "name": "****69E2C",
+    "stationId": 3664,
+    "lat": 19.173,
+    "lng": 74.764,
+    "status": "OFFLINE",
+    "totalFlips": 1,
+    "degradedFlips": 1,
+    "recoveredFlips": 0,
+    "lastFlip": 1789211188524
+  },
+  "****0AC5D": {
+    "name": "****0AC5D",
+    "stationId": 546,
+    "lat": 46.572,
+    "lng": -120.367,
+    "status": "OFFLINE",
+    "totalFlips": 1,
+    "degradedFlips": 1,
+    "recoveredFlips": 0,
+    "lastFlip": 1789211188524
+  },
+  "****77D4D": {
+    "name": "****77D4D",
+    "stationId": 879,
+    "lat": 32.3,
+    "lng": -111.003,
+    "status": "OFFLINE",
+    "totalFlips": 1,
+    "degradedFlips": 1,
+    "recoveredFlips": 0,
+    "lastFlip": 1789211188524
+  },
+  "****1CF61": {
+    "name": "****1CF61",
+    "stationId": 849,
+    "lat": -33.975,
+    "lng": 25.588,
+    "status": "OFFLINE",
+    "totalFlips": 1,
+    "degradedFlips": 1,
+    "recoveredFlips": 0,
+    "lastFlip": 1789211188524
+  },
+  "****11781": {
+    "name": "****11781",
+    "stationId": 1638,
+    "lat": 44.078,
+    "lng": -87.668,
+    "status": "OFFLINE",
+    "totalFlips": 1,
+    "degradedFlips": 1,
+    "recoveredFlips": 0,
+    "lastFlip": 1789211188524
+  },
+  "****5A9D5": {
+    "name": "****5A9D5",
+    "stationId": 1520,
+    "lat": 41.707,
+    "lng": 33.439,
+    "status": "OFFLINE",
+    "totalFlips": 1,
+    "degradedFlips": 1,
+    "recoveredFlips": 0,
+    "lastFlip": 1789211188524
+  },
+  "****AB131": {
+    "name": "****AB131",
+    "stationId": 185,
+    "lat": 41.713,
+    "lng": 33.438,
+    "status": "OFFLINE",
+    "totalFlips": 1,
+    "degradedFlips": 1,
+    "recoveredFlips": 0,
+    "lastFlip": 1789211188524
+  },
+  "****9FDB5": {
+    "name": "****9FDB5",
+    "stationId": 604,
+    "lat": 10.238,
+    "lng": 77.486,
+    "status": "OFFLINE",
+    "totalFlips": 1,
+    "degradedFlips": 1,
+    "recoveredFlips": 0,
+    "lastFlip": 1789211188524
+  },
+  "****CDEA2": {
+    "name": "****CDEA2",
+    "stationId": 776,
+    "lat": 52.616,
+    "lng": -2.491,
+    "status": "OFFLINE",
+    "totalFlips": 1,
+    "degradedFlips": 1,
+    "recoveredFlips": 0,
+    "lastFlip": 1789211188524
+  },
+  "****1C3DD": {
+    "name": "****1C3DD",
+    "stationId": 1225,
+    "lat": 51.026,
+    "lng": -3.103,
+    "status": "OFFLINE",
+    "totalFlips": 1,
+    "degradedFlips": 1,
+    "recoveredFlips": 0,
+    "lastFlip": 1789211188524
+  },
+  "****D7AA1": {
+    "name": "****D7AA1",
+    "stationId": 3153,
+    "lat": 50.437,
+    "lng": 2.2,
+    "status": "ACTIVE",
+    "totalFlips": 1,
+    "degradedFlips": 0,
+    "recoveredFlips": 1,
+    "lastFlip": 1789211188524
   }
 }
