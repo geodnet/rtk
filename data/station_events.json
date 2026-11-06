@@ -1,5 +1,2265 @@
 [
   {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****C9B45",
+    "stationId": 3795,
+    "lat": 51.753,
+    "lng": 10.376,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****E9B59",
+    "stationId": 688,
+    "lat": 15.774,
+    "lng": 74.645,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****D7219",
+    "stationId": 1499,
+    "lat": 20.982,
+    "lng": -89.224,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****6A0E4",
+    "stationId": 839,
+    "lat": -19.585,
+    "lng": -44.034,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ONLINE_TO_OFFLINE",
+    "name": "****DF271",
+    "stationId": 256,
+    "lat": 14.03,
+    "lng": 78.516,
+    "fromStatus": "ONLINE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "BRBI",
+    "stationId": 483,
+    "lat": -27.009,
+    "lng": 153.163,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "EUNG",
+    "stationId": 808,
+    "lat": -21.131,
+    "lng": 148.494,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ONLINE_TO_OFFLINE",
+    "name": "KOUG",
+    "stationId": 1967,
+    "lat": 5.098,
+    "lng": -52.64,
+    "fromStatus": "ONLINE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ONLINE_TO_OFFLINE",
+    "name": "CPLA",
+    "stationId": 861,
+    "lat": -23.122,
+    "lng": 148.04,
+    "fromStatus": "ONLINE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "CUDG",
+    "stationId": 805,
+    "lat": -22.194,
+    "lng": 147.276,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "MCHY",
+    "stationId": 508,
+    "lat": -26.667,
+    "lng": 153.093,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****196E5",
+    "stationId": 1153,
+    "lat": 38.701,
+    "lng": -9.35,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ONLINE_TO_OFFLINE",
+    "name": "****8C5E9",
+    "stationId": 3351,
+    "lat": 50.601,
+    "lng": 7.507,
+    "fromStatus": "ONLINE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****CCEB4",
+    "stationId": 1509,
+    "lat": 43.669,
+    "lng": 24.011,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****4E6F9",
+    "stationId": 421,
+    "lat": -13.483,
+    "lng": -61.053,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****BEA59",
+    "stationId": 346,
+    "lat": 22.975,
+    "lng": 90.782,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****B4D54",
+    "stationId": 838,
+    "lat": -22.881,
+    "lng": -47.128,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "MTDN",
+    "stationId": 549,
+    "lat": -22.133,
+    "lng": 131.493,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "RIVN",
+    "stationId": 557,
+    "lat": -17.712,
+    "lng": 129.992,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "OFFLINE_TO_ONLINE",
+    "name": "****E3199",
+    "stationId": 2632,
+    "lat": 55.418,
+    "lng": 25.434,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****20C18",
+    "stationId": 2909,
+    "lat": 35.602,
+    "lng": 45.134,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "OFFLINE_TO_ONLINE",
+    "name": "****C534D",
+    "stationId": 2523,
+    "lat": 46.786,
+    "lng": 1.75,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****C8C65",
+    "stationId": 969,
+    "lat": -26.119,
+    "lng": -52.853,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "OAKV",
+    "stationId": 169,
+    "lat": -29.503,
+    "lng": 130.866,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****0DC76",
+    "stationId": 366,
+    "lat": -24.999,
+    "lng": -53.163,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****69E60",
+    "stationId": 3068,
+    "lat": 9.927,
+    "lng": -84.098,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****E0A6D",
+    "stationId": 333,
+    "lat": 51.729,
+    "lng": 7.042,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****14DFD",
+    "stationId": 1631,
+    "lat": 31.935,
+    "lng": -110.793,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****65FC1",
+    "stationId": 3346,
+    "lat": 55.157,
+    "lng": 26.582,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ONLINE_TO_OFFLINE",
+    "name": "****66009",
+    "stationId": 891,
+    "lat": -6.707,
+    "lng": 107.365,
+    "fromStatus": "ONLINE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ONLINE_TO_OFFLINE",
+    "name": "****E4031",
+    "stationId": 1291,
+    "lat": -6.893,
+    "lng": 112.452,
+    "fromStatus": "ONLINE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ONLINE_TO_OFFLINE",
+    "name": "****D0F00",
+    "stationId": 3247,
+    "lat": 45.562,
+    "lng": 8.939,
+    "fromStatus": "ONLINE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****B7D88",
+    "stationId": 845,
+    "lat": -22.831,
+    "lng": -42.066,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****CA7A1",
+    "stationId": 886,
+    "lat": -27.759,
+    "lng": -53.687,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****C5AB9",
+    "stationId": 882,
+    "lat": -20.399,
+    "lng": -54.942,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ONLINE_TO_OFFLINE",
+    "name": "****20615",
+    "stationId": 832,
+    "lat": -6.427,
+    "lng": 106.147,
+    "fromStatus": "ONLINE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****1C47D",
+    "stationId": 2318,
+    "lat": 14.79,
+    "lng": 75.402,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****A8CA1",
+    "stationId": 2930,
+    "lat": 47.074,
+    "lng": 2.363,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****CB26D",
+    "stationId": 3436,
+    "lat": 26.129,
+    "lng": -80.389,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ONLINE_TO_OFFLINE",
+    "name": "****E4C6D",
+    "stationId": 115,
+    "lat": 53.199,
+    "lng": 5.992,
+    "fromStatus": "ONLINE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****E7E39",
+    "stationId": 148,
+    "lat": -25.335,
+    "lng": -54.388,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****D8D69",
+    "stationId": 2683,
+    "lat": 22.502,
+    "lng": 73.476,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****95AA5",
+    "stationId": 498,
+    "lat": 46.292,
+    "lng": 1.418,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****C3075",
+    "stationId": 447,
+    "lat": 29.699,
+    "lng": 76.399,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****C9E3A",
+    "stationId": 3581,
+    "lat": 46.462,
+    "lng": 16.383,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****BDDD9",
+    "stationId": 1828,
+    "lat": 5.335,
+    "lng": 73.463,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****6E718",
+    "stationId": 2595,
+    "lat": 38.658,
+    "lng": -9.043,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****C2B59",
+    "stationId": 1754,
+    "lat": 51.151,
+    "lng": -108.516,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "OFFLINE_TO_ONLINE",
+    "name": "****C98B1",
+    "stationId": 2143,
+    "lat": 35.369,
+    "lng": -78.456,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ONLINE_TO_OFFLINE",
+    "name": "****C8A69",
+    "stationId": 1393,
+    "lat": 35.794,
+    "lng": -78.779,
+    "fromStatus": "ONLINE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ONLINE_TO_OFFLINE",
+    "name": "****6E5C4",
+    "stationId": 1098,
+    "lat": 35.794,
+    "lng": -78.779,
+    "fromStatus": "ONLINE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****4B371",
+    "stationId": 391,
+    "lat": 43.736,
+    "lng": 25.26,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "MOON",
+    "stationId": 531,
+    "lat": -27.716,
+    "lng": 150.372,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****A7B0D",
+    "stationId": 573,
+    "lat": 34.212,
+    "lng": -77.893,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "CZTG",
+    "stationId": 138,
+    "lat": -46.432,
+    "lng": 51.856,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "OFFLINE_TO_ONLINE",
+    "name": "****AEAFD",
+    "stationId": 687,
+    "lat": 38.647,
+    "lng": 35.462,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****B036D",
+    "stationId": 538,
+    "lat": 39.008,
+    "lng": -9.143,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****06D89",
+    "stationId": 689,
+    "lat": 38.444,
+    "lng": 32.808,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "OFFLINE_TO_ONLINE",
+    "name": "****009A1",
+    "stationId": 855,
+    "lat": 40.686,
+    "lng": 29.598,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ONLINE_TO_OFFLINE",
+    "name": "****A0621",
+    "stationId": 446,
+    "lat": 41.295,
+    "lng": -97.272,
+    "fromStatus": "ONLINE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****DB22D",
+    "stationId": 1061,
+    "lat": 42.697,
+    "lng": 27.261,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****1C961",
+    "stationId": 3259,
+    "lat": 41.781,
+    "lng": 35.149,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_ONLINE",
+    "name": "****1C265",
+    "stationId": 3194,
+    "lat": 32.554,
+    "lng": -116.633,
+    "fromStatus": "ACTIVE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****196D5",
+    "stationId": 1799,
+    "lat": 50.741,
+    "lng": 19.159,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****1A4D5",
+    "stationId": 1990,
+    "lat": 50.887,
+    "lng": 4.726,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ONLINE_TO_OFFLINE",
+    "name": "****19C99",
+    "stationId": 2422,
+    "lat": 43.141,
+    "lng": -70.906,
+    "fromStatus": "ONLINE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_ONLINE",
+    "name": "****6528D",
+    "stationId": 2633,
+    "lat": 7.197,
+    "lng": 3.292,
+    "fromStatus": "ACTIVE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "OFFLINE_TO_ONLINE",
+    "name": "****20399",
+    "stationId": 933,
+    "lat": -6.479,
+    "lng": 108.262,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "OFFLINE_TO_ONLINE",
+    "name": "****A9949",
+    "stationId": 1002,
+    "lat": -7.797,
+    "lng": 108.234,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****146A5",
+    "stationId": 2861,
+    "lat": 47.09,
+    "lng": 22.755,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****EAC7D",
+    "stationId": 3171,
+    "lat": 40.193,
+    "lng": -84.354,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****8E81D",
+    "stationId": 1310,
+    "lat": -7.287,
+    "lng": 111.664,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****E2CB9",
+    "stationId": 1326,
+    "lat": -6.926,
+    "lng": 110.935,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****2A4BD",
+    "stationId": 1362,
+    "lat": 53.476,
+    "lng": 7.062,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****D6945",
+    "stationId": 3240,
+    "lat": 47.572,
+    "lng": 14.007,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_ONLINE",
+    "name": "****E50AD",
+    "stationId": 3919,
+    "lat": 5.987,
+    "lng": -73.659,
+    "fromStatus": "ACTIVE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****E746D",
+    "stationId": 493,
+    "lat": 29.389,
+    "lng": 78.679,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****FFAA5",
+    "stationId": 1362,
+    "lat": -26.879,
+    "lng": 27.469,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****D41F5",
+    "stationId": 4042,
+    "lat": 29.239,
+    "lng": 77.017,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "OFFLINE_TO_ONLINE",
+    "name": "****CD119",
+    "stationId": 1393,
+    "lat": -7.077,
+    "lng": 107.906,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****E43B9",
+    "stationId": 3566,
+    "lat": 49.521,
+    "lng": 5.902,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****CB3B9",
+    "stationId": 3650,
+    "lat": 39.02,
+    "lng": 26.212,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****A713D",
+    "stationId": 1156,
+    "lat": 49.8,
+    "lng": 7.465,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_ONLINE",
+    "name": "****231D4",
+    "stationId": 2988,
+    "lat": 52.361,
+    "lng": 5.182,
+    "fromStatus": "ACTIVE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****00445",
+    "stationId": 3973,
+    "lat": 45.006,
+    "lng": -90.373,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****E7785",
+    "stationId": 160,
+    "lat": -22.757,
+    "lng": -50.333,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****5E8B5",
+    "stationId": 754,
+    "lat": 40.973,
+    "lng": 29.865,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "OFFLINE_TO_ONLINE",
+    "name": "****210D6",
+    "stationId": 1958,
+    "lat": 38.648,
+    "lng": 35.462,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ONLINE_TO_OFFLINE",
+    "name": "****74779",
+    "stationId": 2089,
+    "lat": -28.629,
+    "lng": 21.08,
+    "fromStatus": "ONLINE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****1D1A5",
+    "stationId": 1714,
+    "lat": -25.334,
+    "lng": 30.715,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****739D1",
+    "stationId": 3954,
+    "lat": 42.154,
+    "lng": 25.634,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****FBAAD",
+    "stationId": 3033,
+    "lat": 45.849,
+    "lng": 21.32,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "OFFLINE_TO_ONLINE",
+    "name": "****19149",
+    "stationId": 1138,
+    "lat": 45.776,
+    "lng": 14.357,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_ONLINE",
+    "name": "****30780",
+    "stationId": 3535,
+    "lat": 29.585,
+    "lng": -90.69,
+    "fromStatus": "ACTIVE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****8FA8D",
+    "stationId": 1698,
+    "lat": -30.741,
+    "lng": 30.441,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****C8E20",
+    "stationId": 1354,
+    "lat": 41.232,
+    "lng": -96.125,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****EBA32",
+    "stationId": 580,
+    "lat": 43.643,
+    "lng": 1.32,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_ONLINE",
+    "name": "****2D80A",
+    "stationId": 1261,
+    "lat": 53.676,
+    "lng": 10.115,
+    "fromStatus": "ACTIVE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****D0E92",
+    "stationId": 355,
+    "lat": 46.066,
+    "lng": 14.614,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_ONLINE",
+    "name": "****30704",
+    "stationId": 3847,
+    "lat": 50.077,
+    "lng": 12.371,
+    "fromStatus": "ACTIVE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****26134",
+    "stationId": 689,
+    "lat": 53.559,
+    "lng": -1.443,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****2F7D6",
+    "stationId": 3877,
+    "lat": 57.496,
+    "lng": 13.086,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****17085",
+    "stationId": 3355,
+    "lat": 42.18,
+    "lng": -3.775,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****2E8E0",
+    "stationId": 2253,
+    "lat": 54.082,
+    "lng": -6.57,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****A76C9",
+    "stationId": 1503,
+    "lat": 36.868,
+    "lng": 28.962,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****C9E14",
+    "stationId": 596,
+    "lat": 50.853,
+    "lng": 7.227,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "OFFLINE_TO_ONLINE",
+    "name": "****D1959",
+    "stationId": 163,
+    "lat": 35.412,
+    "lng": -82.37,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****8442D",
+    "stationId": 3737,
+    "lat": 39.541,
+    "lng": 32.626,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****C1CAE",
+    "stationId": 500,
+    "lat": 45.787,
+    "lng": 24.035,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****D3685",
+    "stationId": 3708,
+    "lat": 28.644,
+    "lng": 77.048,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_ONLINE",
+    "name": "****2108E",
+    "stationId": 884,
+    "lat": 51.02,
+    "lng": 5.315,
+    "fromStatus": "ACTIVE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****D7879",
+    "stationId": 3659,
+    "lat": 48.983,
+    "lng": 13.278,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****D5309",
+    "stationId": 1327,
+    "lat": 56.415,
+    "lng": 24.2,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****66689",
+    "stationId": 236,
+    "lat": 25.565,
+    "lng": 89.52,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****CDE6A",
+    "stationId": 3844,
+    "lat": 28.134,
+    "lng": -82.295,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****3E298",
+    "stationId": 1995,
+    "lat": 44.535,
+    "lng": 26.053,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****FDDBE",
+    "stationId": 1790,
+    "lat": 39.248,
+    "lng": -77.256,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****C3D0C",
+    "stationId": 823,
+    "lat": 43.341,
+    "lng": -72.183,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****D7A49",
+    "stationId": 3123,
+    "lat": 28.981,
+    "lng": 76.813,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****20C40",
+    "stationId": 3485,
+    "lat": 33.947,
+    "lng": -78.313,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****CEE0E",
+    "stationId": 3118,
+    "lat": 57.995,
+    "lng": 15.638,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****C67FD",
+    "stationId": 158,
+    "lat": 53.402,
+    "lng": 8.359,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****22C1E",
+    "stationId": 2072,
+    "lat": 43.149,
+    "lng": -72.866,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****1FA35",
+    "stationId": 2877,
+    "lat": 47.553,
+    "lng": -1.407,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "NEW_ONLINE",
+    "name": "****C4CF2",
+    "stationId": 3476,
+    "lat": 50.223,
+    "lng": 19.153,
+    "fromStatus": "NONE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_ONLINE",
+    "name": "****22B92",
+    "stationId": 2821,
+    "lat": 53.315,
+    "lng": -6.383,
+    "fromStatus": "ACTIVE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ONLINE_TO_OFFLINE",
+    "name": "****7BBDD",
+    "stationId": 1463,
+    "lat": 36.262,
+    "lng": 29.74,
+    "fromStatus": "ONLINE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****0FC20",
+    "stationId": 3219,
+    "lat": 40.194,
+    "lng": -75.528,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****C309D",
+    "stationId": 1872,
+    "lat": 39.167,
+    "lng": 34.85,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "OFFLINE_TO_ONLINE",
+    "name": "****7D5E9",
+    "stationId": 2674,
+    "lat": 48.524,
+    "lng": 16.765,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ONLINE_TO_OFFLINE",
+    "name": "****C4D12",
+    "stationId": 1916,
+    "lat": -32.74,
+    "lng": 27.661,
+    "fromStatus": "ONLINE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****19AB2",
+    "stationId": 483,
+    "lat": -20.062,
+    "lng": -47.445,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_ONLINE",
+    "name": "****C2CCA",
+    "stationId": 3628,
+    "lat": 38.964,
+    "lng": -112.334,
+    "fromStatus": "ACTIVE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_ONLINE",
+    "name": "****31826",
+    "stationId": 1313,
+    "lat": 58.062,
+    "lng": -5.026,
+    "fromStatus": "ACTIVE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****1FC58",
+    "stationId": 2987,
+    "lat": 42.524,
+    "lng": -96.385,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****BCFA1",
+    "stationId": 406,
+    "lat": 5.465,
+    "lng": 73.037,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_ONLINE",
+    "name": "****6A0E8",
+    "stationId": 1762,
+    "lat": 39.177,
+    "lng": -8.602,
+    "fromStatus": "ACTIVE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****7B3CD",
+    "stationId": 3566,
+    "lat": 4.942,
+    "lng": -73.966,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****53385",
+    "stationId": 3685,
+    "lat": 2.771,
+    "lng": 32.317,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****6E5F0",
+    "stationId": 3091,
+    "lat": 4.453,
+    "lng": -75.192,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****6E86A",
+    "stationId": 651,
+    "lat": -22.813,
+    "lng": -46.686,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****6A456",
+    "stationId": 4013,
+    "lat": 42.116,
+    "lng": -72.481,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****6A416",
+    "stationId": 1680,
+    "lat": 37.623,
+    "lng": -112.099,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****6E8D8",
+    "stationId": 756,
+    "lat": -17.389,
+    "lng": -52.326,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****6E708",
+    "stationId": 812,
+    "lat": -19.139,
+    "lng": -52.375,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****B6DCE",
+    "stationId": 824,
+    "lat": -24.724,
+    "lng": -53.863,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "OFFLINE_TO_ONLINE",
+    "name": "****26A99",
+    "stationId": 3156,
+    "lat": 25.287,
+    "lng": 89.23,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****CB0F5",
+    "stationId": 3211,
+    "lat": 34.514,
+    "lng": -98.682,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****B14A2",
+    "stationId": 2502,
+    "lat": 42.428,
+    "lng": -71.029,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_ONLINE",
+    "name": "****C2429",
+    "stationId": 604,
+    "lat": 34.154,
+    "lng": 135.256,
+    "fromStatus": "ACTIVE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****8D9CD",
+    "stationId": 2018,
+    "lat": -20.263,
+    "lng": 57.474,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****C96A1",
+    "stationId": 1727,
+    "lat": 45.261,
+    "lng": 10.804,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****69A70",
+    "stationId": 176,
+    "lat": 47.546,
+    "lng": 19.069,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****69E66",
+    "stationId": 3306,
+    "lat": 35.12,
+    "lng": -81.029,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****C22C1",
+    "stationId": 32,
+    "lat": 47.643,
+    "lng": -97.472,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****69DB0",
+    "stationId": 908,
+    "lat": -2.457,
+    "lng": -54.759,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****6E64E",
+    "stationId": 2294,
+    "lat": 39.354,
+    "lng": -76.766,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_ONLINE",
+    "name": "****C1C12",
+    "stationId": 1554,
+    "lat": 51.624,
+    "lng": -0.102,
+    "fromStatus": "ACTIVE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****C4A49",
+    "stationId": 737,
+    "lat": 32.096,
+    "lng": -82.856,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_ONLINE",
+    "name": "****B6E06",
+    "stationId": 930,
+    "lat": -20.276,
+    "lng": -45.535,
+    "fromStatus": "ACTIVE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****0B9B8",
+    "stationId": 3930,
+    "lat": 42.641,
+    "lng": 26.305,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****81779",
+    "stationId": 3179,
+    "lat": 42.231,
+    "lng": -97.031,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_OFFLINE",
+    "name": "****42281",
+    "stationId": 2229,
+    "lat": 6.24,
+    "lng": 7.108,
+    "fromStatus": "ACTIVE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****83B55",
+    "stationId": 305,
+    "lat": 46.654,
+    "lng": -113.162,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****673D9",
+    "stationId": 754,
+    "lat": 46.682,
+    "lng": 23.045,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "WAIK",
+    "stationId": 422,
+    "lat": -34.182,
+    "lng": 140.033,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "BLKT",
+    "stationId": 53,
+    "lat": -33.772,
+    "lng": 150.909,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "CLUM",
+    "stationId": 519,
+    "lat": -17.85,
+    "lng": 146.107,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "WYRL",
+    "stationId": 537,
+    "lat": -27.927,
+    "lng": 152.79,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "TLWD",
+    "stationId": 522,
+    "lat": -28.488,
+    "lng": 149.468,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "SURT",
+    "stationId": 521,
+    "lat": -27.159,
+    "lng": 149.072,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "YLRB",
+    "stationId": 523,
+    "lat": -28.632,
+    "lng": 150.732,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "MAMU",
+    "stationId": 492,
+    "lat": -17.624,
+    "lng": 145.816,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "KUNU",
+    "stationId": 545,
+    "lat": -15.677,
+    "lng": 128.763,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "OFFLINE_TO_ONLINE",
+    "name": "GVNR",
+    "stationId": 1553,
+    "lat": -21.975,
+    "lng": 148.011,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "RIO2",
+    "stationId": 13,
+    "lat": -53.785,
+    "lng": -67.751,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "SEYG",
+    "stationId": 140,
+    "lat": -4.679,
+    "lng": 55.531,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "RGDG",
+    "stationId": 41,
+    "lat": -53.786,
+    "lng": -67.752,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "JOG2",
+    "stationId": 864,
+    "lat": -7.764,
+    "lng": 110.372,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "DJIG",
+    "stationId": 3049,
+    "lat": 11.526,
+    "lng": 42.847,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "G044",
+    "stationId": 106,
+    "lat": -2.501,
+    "lng": 28.875,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "OFFLINE_TO_ONLINE",
+    "name": "****8C0BD",
+    "stationId": 617,
+    "lat": 35.153,
+    "lng": -78.833,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****ED421",
+    "stationId": 2741,
+    "lat": 33.107,
+    "lng": -117.049,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_ONLINE",
+    "name": "****37805",
+    "stationId": 573,
+    "lat": 32.63,
+    "lng": -116.959,
+    "fromStatus": "ACTIVE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****75C81",
+    "stationId": 698,
+    "lat": 8.804,
+    "lng": 78.144,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "OFFLINE_TO_ONLINE",
+    "name": "****0AD01",
+    "stationId": 573,
+    "lat": 35.081,
+    "lng": -80.987,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_ONLINE",
+    "name": "****37FE9",
+    "stationId": 679,
+    "lat": 43.432,
+    "lng": -103.152,
+    "fromStatus": "ACTIVE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****37D61",
+    "stationId": 713,
+    "lat": 28.029,
+    "lng": -82.411,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****7765D",
+    "stationId": 3223,
+    "lat": 53.864,
+    "lng": 10.74,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "OFFLINE_TO_ONLINE",
+    "name": "****FDF41",
+    "stationId": 721,
+    "lat": 30.66,
+    "lng": -88.112,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_ONLINE",
+    "name": "****65F79",
+    "stationId": 1918,
+    "lat": 48.107,
+    "lng": 8.738,
+    "fromStatus": "ACTIVE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****199DD",
+    "stationId": 1928,
+    "lat": 47.706,
+    "lng": 17.642,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****1B3FD",
+    "stationId": 1944,
+    "lat": 1.475,
+    "lng": 103.656,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****18295",
+    "stationId": 1958,
+    "lat": 45.835,
+    "lng": 26.067,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****1A375",
+    "stationId": 2149,
+    "lat": 53.051,
+    "lng": 9.024,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****1B489",
+    "stationId": 1473,
+    "lat": 36.552,
+    "lng": -119.817,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****2A469",
+    "stationId": 2914,
+    "lat": 39.745,
+    "lng": -8.178,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****10CF5",
+    "stationId": 2540,
+    "lat": 46.229,
+    "lng": 24.575,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ONLINE_TO_OFFLINE",
+    "name": "****14D7D",
+    "stationId": 281,
+    "lat": -6.205,
+    "lng": 107.105,
+    "fromStatus": "ONLINE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****10EA5",
+    "stationId": 3321,
+    "lat": 48.136,
+    "lng": 10.583,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_ONLINE",
+    "name": "****20CED",
+    "stationId": 1783,
+    "lat": 42.587,
+    "lng": -83.059,
+    "fromStatus": "ACTIVE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "OFFLINE_TO_ONLINE",
+    "name": "****7C0BD",
+    "stationId": 2813,
+    "lat": 6.639,
+    "lng": 3.406,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_ONLINE",
+    "name": "****2063D",
+    "stationId": 2518,
+    "lat": 36.324,
+    "lng": -119.25,
+    "fromStatus": "ACTIVE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****2A7D5",
+    "stationId": 3595,
+    "lat": 48.975,
+    "lng": 18.213,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ONLINE_TO_OFFLINE",
+    "name": "****AC9DD",
+    "stationId": 1027,
+    "lat": -7.367,
+    "lng": 109.358,
+    "fromStatus": "ONLINE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ONLINE_TO_OFFLINE",
+    "name": "****2A501",
+    "stationId": 1157,
+    "lat": -8.248,
+    "lng": 111.444,
+    "fromStatus": "ONLINE",
+    "toStatus": "OFFLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "OFFLINE_TO_ONLINE",
+    "name": "****00085",
+    "stationId": 3750,
+    "lat": 39.323,
+    "lng": -2.271,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****C1425",
+    "stationId": 2750,
+    "lat": 48.941,
+    "lng": 9.345,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "OFFLINE_TO_ONLINE",
+    "name": "****CC940",
+    "stationId": 2354,
+    "lat": 34.432,
+    "lng": -118.477,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****FBE21",
+    "stationId": 4025,
+    "lat": 53.604,
+    "lng": -113.924,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****241A4",
+    "stationId": 2714,
+    "lat": 46.763,
+    "lng": -114.331,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_ONLINE",
+    "name": "****CFEC2",
+    "stationId": 1029,
+    "lat": 19.569,
+    "lng": -99.262,
+    "fromStatus": "ACTIVE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "ACTIVE_TO_ONLINE",
+    "name": "****0EB64",
+    "stationId": 764,
+    "lat": 47.255,
+    "lng": -123.006,
+    "fromStatus": "ACTIVE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****71345",
+    "stationId": 2724,
+    "lat": 14.785,
+    "lng": -89.539,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****20C0A",
+    "stationId": 660,
+    "lat": 28.426,
+    "lng": 70.336,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****C610D",
+    "stationId": 3355,
+    "lat": 40.293,
+    "lng": -76.122,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****24061",
+    "stationId": 3566,
+    "lat": 53.157,
+    "lng": -6.957,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****20C3E",
+    "stationId": 1326,
+    "lat": 44.936,
+    "lng": -93.176,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****0EC3C",
+    "stationId": 491,
+    "lat": -22.456,
+    "lng": -46.808,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****0B9CE",
+    "stationId": 1674,
+    "lat": 42.725,
+    "lng": -70.929,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****21BB6",
+    "stationId": 2273,
+    "lat": 43.382,
+    "lng": -80.433,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "OFFLINE_TO_ONLINE",
+    "name": "****C5581",
+    "stationId": 1451,
+    "lat": 33.921,
+    "lng": -80.029,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****69D4E",
+    "stationId": 3671,
+    "lat": 35.206,
+    "lng": -80.759,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "OFFLINE_TO_ONLINE",
+    "name": "****7CE81",
+    "stationId": 1944,
+    "lat": 34.18,
+    "lng": -98.522,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ONLINE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "TO_ACTIVE",
+    "name": "****BE1C5",
+    "stationId": 466,
+    "lat": 44.968,
+    "lng": -73.249,
+    "fromStatus": "ONLINE",
+    "toStatus": "ACTIVE"
+  },
+  {
+    "timestamp": 1793988484925,
+    "type": "OFFLINE_TO_ONLINE",
+    "name": "****9AC21",
+    "stationId": 1886,
+    "lat": 32.999,
+    "lng": -111.146,
+    "fromStatus": "OFFLINE",
+    "toStatus": "ONLINE"
+  },
+  {
     "timestamp": 1793987269746,
     "type": "TO_ACTIVE",
     "name": "****20759",
@@ -197738,2265 +199998,5 @@
     "lng": 13.126,
     "fromStatus": "ACTIVE",
     "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "TO_ACTIVE",
-    "name": "ERMG",
-    "stationId": 150,
-    "lat": -26.712,
-    "lng": 143.262,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "TO_ACTIVE",
-    "name": "RHPT",
-    "stationId": 485,
-    "lat": -41.065,
-    "lng": 145.962,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "ACTIVE_TO_ONLINE",
-    "name": "DAV1",
-    "stationId": 158,
-    "lat": -68.577,
-    "lng": 77.973,
-    "fromStatus": "ACTIVE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "TO_ACTIVE",
-    "name": "KUNU",
-    "stationId": 545,
-    "lat": -15.677,
-    "lng": 128.763,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "TO_ACTIVE",
-    "name": "PNGM",
-    "stationId": 1113,
-    "lat": -2.043,
-    "lng": 147.366,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "TO_ACTIVE",
-    "name": "****972B9",
-    "stationId": 124,
-    "lat": 40.626,
-    "lng": 22.112,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "TO_ACTIVE",
-    "name": "DUAR",
-    "stationId": 858,
-    "lat": -23.687,
-    "lng": 149.813,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "OFFLINE_TO_ONLINE",
-    "name": "GVNR",
-    "stationId": 1553,
-    "lat": -21.975,
-    "lng": 148.011,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "WNGA",
-    "stationId": 634,
-    "lat": -36.355,
-    "lng": 146.323,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "TO_ACTIVE",
-    "name": "TLPA",
-    "stationId": 594,
-    "lat": -30.867,
-    "lng": 144.414,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "TO_ACTIVE",
-    "name": "NLND",
-    "stationId": 507,
-    "lat": -21.213,
-    "lng": 147.892,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "TO_ACTIVE",
-    "name": "LCL2",
-    "stationId": 664,
-    "lat": -37.628,
-    "lng": 146.622,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "TO_ACTIVE",
-    "name": "DUBO",
-    "stationId": 2159,
-    "lat": 50.259,
-    "lng": -95.866,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "ACTIVE_TO_ONLINE",
-    "name": "KRGG",
-    "stationId": 142,
-    "lat": -49.352,
-    "lng": 70.256,
-    "fromStatus": "ACTIVE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "TO_ACTIVE",
-    "name": "****0700D",
-    "stationId": 1973,
-    "lat": 12.657,
-    "lng": 79.547,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "TO_ACTIVE",
-    "name": "****73A31",
-    "stationId": 771,
-    "lat": 17.493,
-    "lng": 78.384,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "OFFLINE_TO_ONLINE",
-    "name": "****EE341",
-    "stationId": 706,
-    "lat": 40.125,
-    "lng": 18.293,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "TO_ACTIVE",
-    "name": "****0B5DD",
-    "stationId": 570,
-    "lat": 34.127,
-    "lng": -84.189,
-    "fromStatus": "ONLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "TO_ACTIVE",
-    "name": "****0B569",
-    "stationId": 743,
-    "lat": 28.453,
-    "lng": 77.061,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****37FE9",
-    "stationId": 679,
-    "lat": 43.432,
-    "lng": -103.152,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "TO_ACTIVE",
-    "name": "****A0F01",
-    "stationId": 1555,
-    "lat": 22.509,
-    "lng": 73.472,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "ACTIVE_TO_ONLINE",
-    "name": "****77CA1",
-    "stationId": 1956,
-    "lat": 59.432,
-    "lng": 24.727,
-    "fromStatus": "ACTIVE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****1781D",
-    "stationId": 1255,
-    "lat": 28.957,
-    "lng": -13.773,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "OFFLINE_TO_ONLINE",
-    "name": "****65E19",
-    "stationId": 2110,
-    "lat": 48.809,
-    "lng": 11.452,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "TO_ACTIVE",
-    "name": "****19A0D",
-    "stationId": 2177,
-    "lat": 47.533,
-    "lng": 26.871,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "TO_ACTIVE",
-    "name": "****1B489",
-    "stationId": 1473,
-    "lat": 36.552,
-    "lng": -119.817,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "ACTIVE_TO_ONLINE",
-    "name": "****1137D",
-    "stationId": 2294,
-    "lat": 38.817,
-    "lng": -90.709,
-    "fromStatus": "ACTIVE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "ONLINE_TO_OFFLINE",
-    "name": "****14D7D",
-    "stationId": 281,
-    "lat": -6.205,
-    "lng": 107.105,
-    "fromStatus": "ONLINE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "ONLINE_TO_OFFLINE",
-    "name": "****20615",
-    "stationId": 832,
-    "lat": -6.427,
-    "lng": 106.147,
-    "fromStatus": "ONLINE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "TO_ACTIVE",
-    "name": "****1C3A5",
-    "stationId": 837,
-    "lat": -6.475,
-    "lng": 105.878,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "ONLINE_TO_OFFLINE",
-    "name": "****1CE79",
-    "stationId": 882,
-    "lat": -6.166,
-    "lng": 107.312,
-    "fromStatus": "ONLINE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "ONLINE_TO_OFFLINE",
-    "name": "****20399",
-    "stationId": 933,
-    "lat": -6.479,
-    "lng": 108.262,
-    "fromStatus": "ONLINE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "TO_ACTIVE",
-    "name": "****14BED",
-    "stationId": 3657,
-    "lat": 43.355,
-    "lng": 19.358,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "OFFLINE_TO_ONLINE",
-    "name": "****2A6D9",
-    "stationId": 3686,
-    "lat": 40.165,
-    "lng": 28.679,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "TO_ACTIVE",
-    "name": "****64CB1",
-    "stationId": 3218,
-    "lat": 23.359,
-    "lng": 72.702,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "OFFLINE_TO_ONLINE",
-    "name": "****F80F1",
-    "stationId": 1938,
-    "lat": 39.954,
-    "lng": 32.743,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "TO_ACTIVE",
-    "name": "****E3B11",
-    "stationId": 4048,
-    "lat": 37.357,
-    "lng": 27.442,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "TO_ACTIVE",
-    "name": "****E0F01",
-    "stationId": 925,
-    "lat": 42.27,
-    "lng": 27.495,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "ONLINE_TO_OFFLINE",
-    "name": "****DFFB5",
-    "stationId": 1242,
-    "lat": -7.676,
-    "lng": 112.651,
-    "fromStatus": "ONLINE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "TO_ACTIVE",
-    "name": "****CA919",
-    "stationId": 3413,
-    "lat": 40.475,
-    "lng": -1.152,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "TO_ACTIVE",
-    "name": "****E3134",
-    "stationId": 2801,
-    "lat": 47.935,
-    "lng": 12.593,
-    "fromStatus": "ONLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "TO_ACTIVE",
-    "name": "****21709",
-    "stationId": 1265,
-    "lat": 43.983,
-    "lng": 20.876,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "OFFLINE_TO_ONLINE",
-    "name": "****C2D7D",
-    "stationId": 3315,
-    "lat": 26.177,
-    "lng": -98.067,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****72A1D",
-    "stationId": 483,
-    "lat": 37.063,
-    "lng": -86.447,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "TO_ACTIVE",
-    "name": "****BC571",
-    "stationId": 567,
-    "lat": 43.219,
-    "lng": -7.687,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "OFFLINE_TO_ONLINE",
-    "name": "****7EAD1",
-    "stationId": 2545,
-    "lat": 37.2,
-    "lng": -83.614,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793792845024,
-    "type": "TO_ACTIVE",
-    "name": "****4758D",
-    "stationId": 1890,
-    "lat": 37.522,
-    "lng": -105.152,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "OFFLINE_TO_ONLINE",
-    "name": "****E9A09",
-    "stationId": 3797,
-    "lat": 37.559,
-    "lng": -3.09,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****E1CED",
-    "stationId": 2773,
-    "lat": 23.617,
-    "lng": 72.421,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****BC2FD",
-    "stationId": 3689,
-    "lat": 41.747,
-    "lng": 26.55,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "OFFLINE_TO_ONLINE",
-    "name": "****242A1",
-    "stationId": 3437,
-    "lat": 44.843,
-    "lng": 25.454,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****FF8B1",
-    "stationId": 634,
-    "lat": 15.648,
-    "lng": 74.502,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****D7569",
-    "stationId": 2390,
-    "lat": 39.184,
-    "lng": 27.851,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****23190",
-    "stationId": 435,
-    "lat": 37.011,
-    "lng": 35.282,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ONLINE_TO_OFFLINE",
-    "name": "GVNR",
-    "stationId": 1553,
-    "lat": -21.975,
-    "lng": 148.011,
-    "fromStatus": "ONLINE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "NLND",
-    "stationId": 507,
-    "lat": -21.213,
-    "lng": 147.892,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****34CD9",
-    "stationId": 1468,
-    "lat": 42.667,
-    "lng": 21.153,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ONLINE_TO_OFFLINE",
-    "name": "****E4031",
-    "stationId": 1291,
-    "lat": -6.893,
-    "lng": 112.452,
-    "fromStatus": "ONLINE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****E4C6D",
-    "stationId": 115,
-    "lat": 53.199,
-    "lng": 5.992,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****67B91",
-    "stationId": 389,
-    "lat": 15.333,
-    "lng": 120.9,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****14B51",
-    "stationId": 2361,
-    "lat": 36.324,
-    "lng": 29.466,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ONLINE_TO_OFFLINE",
-    "name": "****6E6A6",
-    "stationId": 1577,
-    "lat": 32.236,
-    "lng": -80.963,
-    "fromStatus": "ONLINE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "TLPA",
-    "stationId": 594,
-    "lat": -30.867,
-    "lng": 144.414,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "KOUG",
-    "stationId": 1967,
-    "lat": 5.098,
-    "lng": -52.64,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "LCL2",
-    "stationId": 664,
-    "lat": -37.628,
-    "lng": 146.622,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ONLINE_TO_OFFLINE",
-    "name": "G041",
-    "stationId": 106,
-    "lat": -5.087,
-    "lng": 119.52,
-    "fromStatus": "ONLINE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****A0F01",
-    "stationId": 1555,
-    "lat": 22.509,
-    "lng": 73.472,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ONLINE_TO_OFFLINE",
-    "name": "****18D01",
-    "stationId": 1302,
-    "lat": 6.799,
-    "lng": 3.467,
-    "fromStatus": "ONLINE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****72649",
-    "stationId": 296,
-    "lat": 40.035,
-    "lng": 28.395,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****69E9A",
-    "stationId": 3261,
-    "lat": 22.509,
-    "lng": 73.472,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "RHPT",
-    "stationId": 485,
-    "lat": -41.065,
-    "lng": 145.962,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ONLINE_TO_OFFLINE",
-    "name": "CHBN",
-    "stationId": 3039,
-    "lat": 48.081,
-    "lng": 114.538,
-    "fromStatus": "ONLINE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****E2101",
-    "stationId": 1505,
-    "lat": 27.604,
-    "lng": 75.14,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****E5091",
-    "stationId": 354,
-    "lat": 29.706,
-    "lng": 75.901,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ONLINE_TO_OFFLINE",
-    "name": "****64EF5",
-    "stationId": 2117,
-    "lat": 23.487,
-    "lng": 72.461,
-    "fromStatus": "ONLINE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****FAAC9",
-    "stationId": 517,
-    "lat": 22.025,
-    "lng": 73.091,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****C1CAE",
-    "stationId": 500,
-    "lat": 45.787,
-    "lng": 24.035,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ONLINE_TO_OFFLINE",
-    "name": "****24061",
-    "stationId": 3566,
-    "lat": 53.157,
-    "lng": -6.957,
-    "fromStatus": "ONLINE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****20CAA",
-    "stationId": 2882,
-    "lat": 41.612,
-    "lng": -8.425,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****C2B20",
-    "stationId": 2753,
-    "lat": 45.506,
-    "lng": 28.027,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ONLINE_TO_OFFLINE",
-    "name": "****C5581",
-    "stationId": 1451,
-    "lat": 33.921,
-    "lng": -80.029,
-    "fromStatus": "ONLINE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "ERMG",
-    "stationId": 150,
-    "lat": -26.712,
-    "lng": 143.262,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ONLINE_TO_OFFLINE",
-    "name": "BEGS",
-    "stationId": 46,
-    "lat": -12.796,
-    "lng": 130.98,
-    "fromStatus": "ONLINE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****758C5",
-    "stationId": 545,
-    "lat": 61.603,
-    "lng": -6.965,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****E395D",
-    "stationId": 3192,
-    "lat": 21.373,
-    "lng": 79.149,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****365AE",
-    "stationId": 450,
-    "lat": 50.885,
-    "lng": 5.095,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****BDA55",
-    "stationId": 1681,
-    "lat": 36.694,
-    "lng": 35.539,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****BF0CD",
-    "stationId": 487,
-    "lat": 13.811,
-    "lng": 79.83,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****840ED",
-    "stationId": 781,
-    "lat": 43.192,
-    "lng": 27.703,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "LIPO",
-    "stationId": 638,
-    "lat": -34.105,
-    "lng": 141.011,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****0700D",
-    "stationId": 1973,
-    "lat": 12.657,
-    "lng": 79.547,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****65A25",
-    "stationId": 2363,
-    "lat": 50.905,
-    "lng": 13.348,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****1B49D",
-    "stationId": 2083,
-    "lat": 52.325,
-    "lng": 8.887,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****1C3A5",
-    "stationId": 837,
-    "lat": -6.475,
-    "lng": 105.878,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****F1305",
-    "stationId": 3363,
-    "lat": 8.89,
-    "lng": -79.624,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****DF271",
-    "stationId": 256,
-    "lat": 14.03,
-    "lng": 78.516,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "OFFLINE_TO_ONLINE",
-    "name": "****E3199",
-    "stationId": 2632,
-    "lat": 55.418,
-    "lng": 25.434,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "OFFLINE_TO_ONLINE",
-    "name": "****FCC29",
-    "stationId": 1384,
-    "lat": -7.46,
-    "lng": 107.597,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****71B2D",
-    "stationId": 3686,
-    "lat": 43.127,
-    "lng": -7.421,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****88CC1",
-    "stationId": 1833,
-    "lat": 22.313,
-    "lng": 72.606,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****A0EBD",
-    "stationId": 3897,
-    "lat": 11.132,
-    "lng": 77.949,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****8F3DD",
-    "stationId": 1202,
-    "lat": 19.355,
-    "lng": 72.909,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****C9B69",
-    "stationId": 44,
-    "lat": 39.608,
-    "lng": 32.847,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****21709",
-    "stationId": 1265,
-    "lat": 43.983,
-    "lng": 20.876,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****C40CD",
-    "stationId": 1041,
-    "lat": 36.202,
-    "lng": 29.64,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****20DC4",
-    "stationId": 3903,
-    "lat": 46.264,
-    "lng": 15.169,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****C1BF6",
-    "stationId": 4037,
-    "lat": 30.107,
-    "lng": -90.423,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****54D49",
-    "stationId": 2030,
-    "lat": 37.41,
-    "lng": -121.852,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "PNGM",
-    "stationId": 1113,
-    "lat": -2.043,
-    "lng": 147.366,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****861F1",
-    "stationId": 248,
-    "lat": 41.252,
-    "lng": -8.402,
-    "fromStatus": "ONLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****972B9",
-    "stationId": 124,
-    "lat": 40.626,
-    "lng": 22.112,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****A6D11",
-    "stationId": 705,
-    "lat": 40.681,
-    "lng": 36.574,
-    "fromStatus": "ONLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "DUBO",
-    "stationId": 2159,
-    "lat": 50.259,
-    "lng": -95.866,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****0C251",
-    "stationId": 10,
-    "lat": 37.02,
-    "lng": 37.386,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ONLINE_TO_OFFLINE",
-    "name": "****6048D",
-    "stationId": 538,
-    "lat": 11.881,
-    "lng": 79.514,
-    "fromStatus": "ONLINE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****EB9ED",
-    "stationId": 163,
-    "lat": -33.577,
-    "lng": -71.587,
-    "fromStatus": "ONLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "OFFLINE_TO_ONLINE",
-    "name": "****06DE5",
-    "stationId": 676,
-    "lat": 39.501,
-    "lng": 26.988,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****73A31",
-    "stationId": 771,
-    "lat": 17.493,
-    "lng": 78.384,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****0B569",
-    "stationId": 743,
-    "lat": 28.453,
-    "lng": 77.061,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "OFFLINE_TO_ONLINE",
-    "name": "****DB899",
-    "stationId": 753,
-    "lat": 23.493,
-    "lng": 85.484,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "OFFLINE_TO_ONLINE",
-    "name": "****7C1ED",
-    "stationId": 1374,
-    "lat": 37.785,
-    "lng": 30.119,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****19A0D",
-    "stationId": 2177,
-    "lat": 47.533,
-    "lng": 26.871,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "OFFLINE_TO_ONLINE",
-    "name": "****10E19",
-    "stationId": 2429,
-    "lat": 40.603,
-    "lng": 32.404,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****11199",
-    "stationId": 2296,
-    "lat": 22.545,
-    "lng": 72.911,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****10F2D",
-    "stationId": 3330,
-    "lat": 23.945,
-    "lng": 87.839,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_ONLINE",
-    "name": "****64C89",
-    "stationId": 1855,
-    "lat": 57.496,
-    "lng": -4.113,
-    "fromStatus": "ACTIVE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****21935",
-    "stationId": 2725,
-    "lat": 26.802,
-    "lng": 75.865,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "OFFLINE_TO_ONLINE",
-    "name": "****20615",
-    "stationId": 832,
-    "lat": -6.427,
-    "lng": 106.147,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****64F9D",
-    "stationId": 3557,
-    "lat": 23.977,
-    "lng": 87.75,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "OFFLINE_TO_ONLINE",
-    "name": "****20399",
-    "stationId": 933,
-    "lat": -6.479,
-    "lng": 108.262,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****14BED",
-    "stationId": 3657,
-    "lat": 43.355,
-    "lng": 19.358,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_ONLINE",
-    "name": "****ABB29",
-    "stationId": 2752,
-    "lat": 44.267,
-    "lng": -70.536,
-    "fromStatus": "ACTIVE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "OFFLINE_TO_ONLINE",
-    "name": "****8C9DD",
-    "stationId": 992,
-    "lat": -7.166,
-    "lng": 107.897,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "OFFLINE_TO_ONLINE",
-    "name": "****A9949",
-    "stationId": 1002,
-    "lat": -7.797,
-    "lng": 108.234,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****64CB1",
-    "stationId": 3218,
-    "lat": 23.359,
-    "lng": 72.702,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****2A5D1",
-    "stationId": 3045,
-    "lat": 39.345,
-    "lng": -9.339,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****8EFDD",
-    "stationId": 3548,
-    "lat": 47.273,
-    "lng": 23.594,
-    "fromStatus": "ONLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ONLINE_TO_OFFLINE",
-    "name": "****F30CD",
-    "stationId": 1267,
-    "lat": -7.132,
-    "lng": 113.558,
-    "fromStatus": "ONLINE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ONLINE_TO_OFFLINE",
-    "name": "****8E81D",
-    "stationId": 1310,
-    "lat": -7.287,
-    "lng": 111.664,
-    "fromStatus": "ONLINE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****D4DB9",
-    "stationId": 1743,
-    "lat": 27.949,
-    "lng": 75.227,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****CCB35",
-    "stationId": 2064,
-    "lat": 23.758,
-    "lng": 73.114,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****E4479",
-    "stationId": 2370,
-    "lat": 42.924,
-    "lng": 12.054,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****CA77D",
-    "stationId": 2232,
-    "lat": 23.466,
-    "lng": 72.054,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "OFFLINE_TO_ONLINE",
-    "name": "****DF3C5",
-    "stationId": 3846,
-    "lat": 3.644,
-    "lng": -76.275,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****EE96D",
-    "stationId": 3591,
-    "lat": 17.68,
-    "lng": 75.335,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****D1B21",
-    "stationId": 3298,
-    "lat": 37.493,
-    "lng": 28.521,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****CEC9D",
-    "stationId": 1395,
-    "lat": -32.472,
-    "lng": 26.93,
-    "fromStatus": "ONLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****E1E69",
-    "stationId": 2460,
-    "lat": 9.871,
-    "lng": 78.026,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****CE0C9",
-    "stationId": 213,
-    "lat": 40.604,
-    "lng": 26.213,
-    "fromStatus": "ONLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****CE931",
-    "stationId": 2629,
-    "lat": 20.334,
-    "lng": 74.237,
-    "fromStatus": "ONLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****5E5F9",
-    "stationId": 2426,
-    "lat": 22.032,
-    "lng": 70.7,
-    "fromStatus": "ONLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****5B0E1",
-    "stationId": 1480,
-    "lat": -5.039,
-    "lng": 104.08,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****C0765",
-    "stationId": 193,
-    "lat": 42.074,
-    "lng": 12.337,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****3D684",
-    "stationId": 4016,
-    "lat": 29.871,
-    "lng": -90.105,
-    "fromStatus": "ONLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****DCED1",
-    "stationId": 3163,
-    "lat": 37.458,
-    "lng": 41.296,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****E426D",
-    "stationId": 2147,
-    "lat": 38.196,
-    "lng": 39.784,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_ONLINE",
-    "name": "****30824",
-    "stationId": 3567,
-    "lat": 59.555,
-    "lng": 11.075,
-    "fromStatus": "ACTIVE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****FAA19",
-    "stationId": 25,
-    "lat": 6.071,
-    "lng": 102.369,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****95AA5",
-    "stationId": 498,
-    "lat": 46.292,
-    "lng": 1.418,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "OFFLINE_TO_ONLINE",
-    "name": "****1F4F1",
-    "stationId": 1664,
-    "lat": -8.568,
-    "lng": 116.529,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****BEC25",
-    "stationId": 1056,
-    "lat": 17.508,
-    "lng": 75.444,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****8F54D",
-    "stationId": 264,
-    "lat": 10.958,
-    "lng": 78.07,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_ONLINE",
-    "name": "****EBA32",
-    "stationId": 580,
-    "lat": 43.643,
-    "lng": 1.32,
-    "fromStatus": "ACTIVE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****73E4D",
-    "stationId": 2530,
-    "lat": 54.3,
-    "lng": 16.876,
-    "fromStatus": "ONLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****67A2D",
-    "stationId": 3283,
-    "lat": 39.487,
-    "lng": 33.013,
-    "fromStatus": "ONLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_ONLINE",
-    "name": "****AFB75",
-    "stationId": 2160,
-    "lat": 28.635,
-    "lng": 76.202,
-    "fromStatus": "ACTIVE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_ONLINE",
-    "name": "****26134",
-    "stationId": 689,
-    "lat": 53.559,
-    "lng": -1.443,
-    "fromStatus": "ACTIVE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_ONLINE",
-    "name": "****2517A",
-    "stationId": 2313,
-    "lat": 41.247,
-    "lng": -95.997,
-    "fromStatus": "ACTIVE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_ONLINE",
-    "name": "****67B8D",
-    "stationId": 274,
-    "lat": -32.781,
-    "lng": -60.73,
-    "fromStatus": "ACTIVE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****336AC",
-    "stationId": 3040,
-    "lat": 36.662,
-    "lng": -4.543,
-    "fromStatus": "ONLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****D60A9",
-    "stationId": 191,
-    "lat": 36.482,
-    "lng": 36.202,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****C1D30",
-    "stationId": 1543,
-    "lat": 34.543,
-    "lng": 36.077,
-    "fromStatus": "ONLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_ONLINE",
-    "name": "****C4D50",
-    "stationId": 518,
-    "lat": 39.553,
-    "lng": -107.641,
-    "fromStatus": "ACTIVE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ONLINE_TO_OFFLINE",
-    "name": "****11BCD",
-    "stationId": 345,
-    "lat": 22.422,
-    "lng": 91.829,
-    "fromStatus": "ONLINE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****145B9",
-    "stationId": 889,
-    "lat": 51.626,
-    "lng": 10.454,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "OFFLINE_TO_ONLINE",
-    "name": "****E9CB4",
-    "stationId": 1376,
-    "lat": 6.176,
-    "lng": -75.45,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "OFFLINE_TO_ONLINE",
-    "name": "****D1959",
-    "stationId": 163,
-    "lat": 35.412,
-    "lng": -82.37,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_ONLINE",
-    "name": "****21148",
-    "stationId": 1048,
-    "lat": 31.592,
-    "lng": -85.867,
-    "fromStatus": "ACTIVE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****4BDFD",
-    "stationId": 346,
-    "lat": -6.79,
-    "lng": -43.57,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "OFFLINE_TO_ONLINE",
-    "name": "****19C75",
-    "stationId": 334,
-    "lat": -12.389,
-    "lng": -54.931,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****C1D0A",
-    "stationId": 1956,
-    "lat": 40.426,
-    "lng": -0.256,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****22182",
-    "stationId": 1386,
-    "lat": 40.358,
-    "lng": -0.066,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****A0CF1",
-    "stationId": 2332,
-    "lat": 17.253,
-    "lng": 75.592,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****CEE0E",
-    "stationId": 3118,
-    "lat": 57.995,
-    "lng": 15.638,
-    "fromStatus": "ONLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_ONLINE",
-    "name": "****316BE",
-    "stationId": 3419,
-    "lat": 33.586,
-    "lng": -84.135,
-    "fromStatus": "ACTIVE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****C5E79",
-    "stationId": 3191,
-    "lat": 38.194,
-    "lng": 39.782,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****0995C",
-    "stationId": 3389,
-    "lat": 52.707,
-    "lng": 21.843,
-    "fromStatus": "ONLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_ONLINE",
-    "name": "****09952",
-    "stationId": 2502,
-    "lat": 43.827,
-    "lng": -92.619,
-    "fromStatus": "ACTIVE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_ONLINE",
-    "name": "****09AB8",
-    "stationId": 3249,
-    "lat": 43.816,
-    "lng": -84.017,
-    "fromStatus": "ACTIVE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "OFFLINE_TO_ONLINE",
-    "name": "****BEEC9",
-    "stationId": 2154,
-    "lat": 10.662,
-    "lng": 122.993,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****22BCE",
-    "stationId": 3687,
-    "lat": 41.252,
-    "lng": -8.402,
-    "fromStatus": "ONLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****C3BE1",
-    "stationId": 3975,
-    "lat": 37.497,
-    "lng": 28.469,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****B0841",
-    "stationId": 2612,
-    "lat": 17.452,
-    "lng": 74.55,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_ONLINE",
-    "name": "****0ECDE",
-    "stationId": 435,
-    "lat": -32.781,
-    "lng": -60.73,
-    "fromStatus": "ACTIVE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****0ABF4",
-    "stationId": 439,
-    "lat": -16.765,
-    "lng": -49.302,
-    "fromStatus": "ONLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_ONLINE",
-    "name": "****09A2E",
-    "stationId": 3207,
-    "lat": 30.551,
-    "lng": -88.219,
-    "fromStatus": "ACTIVE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_ONLINE",
-    "name": "****099BA",
-    "stationId": 3744,
-    "lat": 44.689,
-    "lng": -116.092,
-    "fromStatus": "ACTIVE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****17B3C",
-    "stationId": 461,
-    "lat": -22.862,
-    "lng": -47.064,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****CA929",
-    "stationId": 2155,
-    "lat": 38.306,
-    "lng": 36.941,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****C2181",
-    "stationId": 1153,
-    "lat": 27.019,
-    "lng": 75.789,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****6AB54",
-    "stationId": 769,
-    "lat": 48.251,
-    "lng": 11.659,
-    "fromStatus": "ONLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****C9D70",
-    "stationId": 1938,
-    "lat": -37.707,
-    "lng": 144.884,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "OFFLINE_TO_ONLINE",
-    "name": "****31722",
-    "stationId": 521,
-    "lat": 10.381,
-    "lng": 78.819,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****22C28",
-    "stationId": 606,
-    "lat": -20.315,
-    "lng": -40.294,
-    "fromStatus": "ONLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****BE3BD",
-    "stationId": 786,
-    "lat": 17.858,
-    "lng": 83.281,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****BE3DD",
-    "stationId": 1810,
-    "lat": 17.013,
-    "lng": 75.423,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****6A17E",
-    "stationId": 2897,
-    "lat": 61.436,
-    "lng": -150.054,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_ONLINE",
-    "name": "****1BD58",
-    "stationId": 1592,
-    "lat": 44.716,
-    "lng": -93.186,
-    "fromStatus": "ACTIVE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****6E434",
-    "stationId": 2705,
-    "lat": 38.387,
-    "lng": -1.026,
-    "fromStatus": "ONLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****AB0F9",
-    "stationId": 4043,
-    "lat": 33.325,
-    "lng": -96.711,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_ONLINE",
-    "name": "****6AB66",
-    "stationId": 3963,
-    "lat": 35.459,
-    "lng": -79.048,
-    "fromStatus": "ACTIVE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_ONLINE",
-    "name": "****B0608",
-    "stationId": 3346,
-    "lat": 35.936,
-    "lng": 129.257,
-    "fromStatus": "ACTIVE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****84C55",
-    "stationId": 753,
-    "lat": 23.388,
-    "lng": 72.411,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "OFFLINE_TO_ONLINE",
-    "name": "****BE3D1",
-    "stationId": 1693,
-    "lat": 11.213,
-    "lng": 77.362,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****BC571",
-    "stationId": 567,
-    "lat": 43.219,
-    "lng": -7.687,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ONLINE_TO_OFFLINE",
-    "name": "****6E42E",
-    "stationId": 697,
-    "lat": 18.248,
-    "lng": -66.027,
-    "fromStatus": "ONLINE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "OFFLINE_TO_ONLINE",
-    "name": "****C98B1",
-    "stationId": 2143,
-    "lat": 35.369,
-    "lng": -78.456,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****6A47A",
-    "stationId": 127,
-    "lat": 40.116,
-    "lng": -80.828,
-    "fromStatus": "ONLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****E314E",
-    "stationId": 2047,
-    "lat": -6.984,
-    "lng": 110.397,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_ONLINE",
-    "name": "****699FA",
-    "stationId": 919,
-    "lat": -15.939,
-    "lng": -47.726,
-    "fromStatus": "ACTIVE",
-    "toStatus": "ONLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****20CF6",
-    "stationId": 203,
-    "lat": 47.94,
-    "lng": -0.921,
-    "fromStatus": "ONLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "ACTIVE_TO_OFFLINE",
-    "name": "****4758D",
-    "stationId": 1890,
-    "lat": 37.522,
-    "lng": -105.152,
-    "fromStatus": "ACTIVE",
-    "toStatus": "OFFLINE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****0C5B1",
-    "stationId": 431,
-    "lat": 54.948,
-    "lng": 23.804,
-    "fromStatus": "ONLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****82F89",
-    "stationId": 446,
-    "lat": 49.08,
-    "lng": 9.144,
-    "fromStatus": "ONLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "****A7BC1",
-    "stationId": 706,
-    "lat": 40.97,
-    "lng": 27.897,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
-  },
-  {
-    "timestamp": 1793791997480,
-    "type": "TO_ACTIVE",
-    "name": "5MTB",
-    "stationId": 756,
-    "lat": -35.053,
-    "lng": 138.845,
-    "fromStatus": "OFFLINE",
-    "toStatus": "ACTIVE"
   }
 ]
